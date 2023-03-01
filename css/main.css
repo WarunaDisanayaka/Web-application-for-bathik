@@ -1,4 +1,7 @@
-
+*{
+    margin: 0;
+    padding: 0;
+}
 
 
 
@@ -64,11 +67,22 @@
   .star.active {
     background-color: #ffce00;
   }
+
+  /* Hero section */
+  .hero {
+    background-size: cover;
+    background-position: center center;
+    width: auto;
+    height: 10rem;
+  }
   
 
   /* Footer */
   footer{
-    background-color: #F6F4F9;
-    padding-top: 30px;
+  bottom: 0;
+  width: 100%;
+  background-color: #F6F4F9;
+  padding-top: 30px;
   padding-bottom: 30px;
   }
+

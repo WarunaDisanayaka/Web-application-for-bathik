@@ -41,7 +41,7 @@
       </ul>
       <ul class="nav">
         <li class="nav-item">
-          <i class="fas fa-user"></i>
+          <a href="login.php"><i class="fas fa-user"></i></a>
         </li>
       </ul>
     </div>
