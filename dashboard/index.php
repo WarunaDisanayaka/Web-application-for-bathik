@@ -46,7 +46,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="blank.php">
+                <a class="nav-link" href="shop.php">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Shops</span></a>
             </li>

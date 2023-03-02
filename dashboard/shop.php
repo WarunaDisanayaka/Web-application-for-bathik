@@ -3,6 +3,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $location = $_POST['location'];
     $image = $_FILES['image']['name'];
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($image);
+    move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+
+    $image_path = $target_dir . $image;
 
     // Connect to the database
     $dsn = 'mysql:host=localhost;dbname=bathik';
@@ -13,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insert the data into the "mytable" table
     $stmt = $pdo->prepare('INSERT INTO shop (title, location, image) VALUES (?, ?, ?)');
-    $stmt->execute([$title, $location, $image]);
+    $stmt->execute([$title, $location, $image_path]);
 }
 ?>
 
@@ -64,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="blank.php">
+                <a class="nav-link" href="shop.php">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Shops</span></a>
             </li>
@@ -379,18 +384,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Begin Page Content -->
                 <div class="container-md">
-                    <form>
+                <form method="POST" action="shop.php" enctype="multipart/form-data">
                       <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title">
+                        <input type="text" class="form-control" id="title" name="title">
                       </div>
                       <div class="form-group">
                         <label for="title">Location</label>
-                        <input type="text" class="form-control" id="title">
+                        <input type="text" class="form-control" id="title" name="location">
                       </div>
                       <div class="form-group">
                         <label for="image">Image:</label>
-                        <input type="file" class="form-control-file" id="image">
+                        <input type="file" class="form-control-file" id="image" name="image">
                       </div>
                       <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
