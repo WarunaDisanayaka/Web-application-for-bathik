@@ -1,3 +1,16 @@
+<?php
+// Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+// Select all shops with images
+$stmt = $pdo->query('SELECT title, location, image FROM shop WHERE image IS NOT NULL');
+
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -101,11 +114,15 @@
 <!-- Shops start  -->
 <div class="container mt-5">
 <div class="row">
+  <?php
+  while ($row = $stmt->fetch()) {
+    
+  ?>
   <div class="col-md-3">
     <div class="card border-0">
-      <img src="img/shop4.jpeg" class="card-img-top" alt="...">
+      <img src="uploads/<?php echo $row['image'] ?>" class="card-img-top" alt="...">
       <div class="card-body d-flex flex-column justify-content-center">
-        <h5 class="card-title text-center">Card Title</h5>
+        <h5 class="card-title text-center"><?php echo $row['title']?></h5>
         <div class="rating text-center">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
@@ -116,8 +133,11 @@
       </div>
     </div>
   </div>
+  <?php
+  }
+  ?>
   
-  <div class="col-md-3">
+  <!-- <div class="col-md-3">
     <div class="card border-0">
       <img src="img/shop3.png" class="card-img-top" alt="...">
       <div class="card-body d-flex flex-column justify-content-center">
@@ -229,7 +249,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 </div>

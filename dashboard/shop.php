@@ -3,11 +3,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $location = $_POST['location'];
     $image = $_FILES['image']['name'];
-    $target_dir = "uploads/";
+    $target_dir = "../uploads/";
     $target_file = $target_dir . basename($image);
     move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
 
-    $image_path = $target_dir . $image;
+    $image_path = $image;
 
     // Connect to the database
     $dsn = 'mysql:host=localhost;dbname=bathik';
