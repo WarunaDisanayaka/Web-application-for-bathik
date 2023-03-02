@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['username'] = $row['username'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['phone'] = $row['phone'];
-            header('Location: dashboard.php');
+            header('Location: dashboard');
             exit;
         } else {
             // Incorrect password
