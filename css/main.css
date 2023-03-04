@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+
+/* Card styling */
+.card{
+    margin-bottom: 3rem;
+}
+.card img{
+    width: 291px;
+    height: 268px;
+    padding: 1rem;
+}
+  .card-img-top {
+    height: 10rem;
+    object-fit: cover;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-text {
+    font-size: 0.875rem;
+    color: #777;
+  }
+  
+  .btn {
+    background-color: #333;
+    border-color: #333;
+  }
+  
+  .btn:hover {
+    background-color: #111;
+    border-color: #111;
+  }
+  
+  /* Star rating styling */
+
+  .rating .fas {
+    color: rgb(253, 203, 4);
+  }
+  
+
+  .rating {
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .star {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #ccc;
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .star.active {
+    background-color: #ffce00;
+  }
+
+  /* Hero section */
+  .hero {
+    background-size: cover;
+    background-position: center center;
+    width: auto;
+    height: 10rem;
+  }
+  
+
+  /* Footer */
+  footer{
+  bottom: 0;
+  width: 100%;
+  background-color: #F6F4F9;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  }
+
