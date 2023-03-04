@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,13 +9,16 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-     <!-- Add Font Awesome CSS link -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <!-- Add Font Awesome CSS link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
-    <title>Bathik</title>
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Welcome to bathik</title>
   </head>
   <body>
-    <!-- Navigation  -->
+    <!-- Header started -->
+
     <header class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="#">Logo</a>
@@ -38,70 +42,78 @@
       </ul>
       <ul class="nav">
         <li class="nav-item">
-          <a href="../app/views/user_registration.php"><i class="fas fa-user"></i></a>
+          <a href="app/views/user_registration.php"><i class="fas fa-user"></i></a>
         </li>
       </ul>
     </div>
   </div>
 </header>
-<!-- Navigation end -->
 
-<!-- Slider -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="./assets/images/slide3.jpg" class="d-block w-100" alt="Slide 1">
+<!-- Header End -->
+
+
+<!-- Hero section start-->
+
+<section class="hero" style="background-image: url('img/hero.png');">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <h1 class="hero-title">Create an account</h1>
+      </div>
     </div>
-    <!-- <div class="carousel-item">
-      <img src="img/slide2.jpg" class="d-block w-100" alt="Slide 2">
-    </div> -->
-    <!-- <div class="carousel-item">
-      <img src="img/slide3.jpg" class="d-block w-100" alt="Slide 3">
-    </div> -->
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </a>
+</section>
+
+<!-- Hero section end -->
+
+<!-- Register start -->
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card border-0">
+      <?php if (isset($error)) { ?>
+        <p class="error"><?php echo $error; ?></p>
+    <?php } ?>
+        <div class="card-body">
+          <h5 class="card-title text-center">Create an account</h5>
+          <form method="POST">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control" id="username" name="username">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email">
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input type="tel" class="form-control" id="phone" name="phone">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <div class="mb-3">
+      <label for="confirm-password" class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" id="confirm-password" name="confirm-password">
+    </div>
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-lg btn-dark">Register</button>
+    </div>
+  </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- Slider end -->
-    
+
+
+<!-- Register end -->
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
