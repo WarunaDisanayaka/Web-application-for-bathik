@@ -76,13 +76,13 @@
     height: 10rem;
   }
   
-
-  /* Footer */
-  footer{
-  bottom: 0;
-  width: 100%;
+/* Footer  */
+footer{
   background-color: #F6F4F9;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  }
+  padding: 50px 0;
+}
 
+footer li a{
+  text-decoration: none;
+  color: #9D9D9D;
+}
