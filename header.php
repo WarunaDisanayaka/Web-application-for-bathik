@@ -11,6 +11,9 @@
     <!-- Add Font Awesome CSS link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
+    <!-- Sweet alert CDN -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <link rel="stylesheet" href="css/main.css">
 
     <title>Welcome to bathik</title>
