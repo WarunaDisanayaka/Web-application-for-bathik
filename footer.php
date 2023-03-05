@@ -6,23 +6,20 @@
       <div class="col-md-3">
         <h6>VENDOR</h6>
         <ul class="list-unstyled">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#">Account</a></li>
+          <li><a href="#">Register/Login</a></li>
         </ul>
       </div>
       <div class="col-md-3">
         <h6>INFORMATION</h6>
         <ul class="list-unstyled">
           <li><a href="#">Home</a></li>
-          <li><a href="#">Services</a></li>
           <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#">Store Location</a></li>
         </ul>
       </div>
       <div class="col-md-3">
-        <h6>USEFULL LINKS</h6>
+        <h6>USEFUL LINKS</h6>
         <ul class="list-unstyled">
           <li><a href="#">Home</a></li>
           <li><a href="#">Services</a></li>

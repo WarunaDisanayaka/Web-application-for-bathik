@@ -82,7 +82,12 @@ footer{
   padding: 50px 0;
 }
 
+footer ul li{
+  padding: 5px 0;
+}
+
 footer li a{
   text-decoration: none;
   color: #9D9D9D;
+  padding: 10px 0;
 }
