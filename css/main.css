@@ -106,3 +106,44 @@ img.card-img-top {
   height: 400px;
 }
 
+
+/* Single product  */
+.carousel-item img {
+  height: 400px;
+  object-fit: cover;
+}
+
+.form-select {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .carousel-item img {
+    height: 200px;
+  }
+}
+
+.product-img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+}
+
+/* Custom CSS for product image carousel */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100%;
+}
+
+.product-preview-img {
+  max-width: 100%;
+}
+
+.product-preview-row {
+  max-width: 100%;
+}
