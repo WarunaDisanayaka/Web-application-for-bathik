@@ -7,7 +7,7 @@
         <h6>VENDOR</h6>
         <ul class="list-unstyled">
           <li><a href="#">Account</a></li>
-          <li><a href="#">Register/Login</a></li>
+          <li><a href="vendor_register.php">Register/Login</a></li>
         </ul>
       </div>
       <div class="col-md-3">
