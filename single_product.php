@@ -63,7 +63,6 @@ require_once  'header.php';
 <!-- Hero section end -->
 
 <!-- Single product  -->
-
 <div class="container my-5">
   <div class="row">
     <div class="col-md-6">
@@ -102,13 +101,17 @@ require_once  'header.php';
           <option value="large">Large</option>
         </select>
       </div>
-      <button class="btn btn-primary me-3">Add to Cart</button>
-      <button class="btn btn-outline-secondary"><i class="bi bi-heart"></i> Add to Favorites</button>
+      <div class="d-flex align-items-center">
+      <input type="number" class="form-control text-center" id="quantityInput" value="1" style="width: 70px; margin-right:0.5rem;">
+        <button class="btn btn-primary me-3">Add to Cart</button>
+        <button class="btn btn-outline-secondary"><i class="bi bi-heart"></i> Add to Favorites</button>
+      </div>
       <p class="mt-3"><small>Category: Category Name</small></p>
       <p><small>Product Code: 123456</small></p>
     </div>
   </div>
 </div>
+
 
 
 <!-- End Single product -->
