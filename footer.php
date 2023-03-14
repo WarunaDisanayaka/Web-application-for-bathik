@@ -6,7 +6,7 @@
       <div class="col-md-3">
         <h6>VENDOR</h6>
         <ul class="list-unstyled">
-          <li><a href="#">Account</a></li>
+          <li><a href="vendor_login.php">Account</a></li>
           <li><a href="vendor_register.php">Register/Login</a></li>
         </ul>
       </div>
