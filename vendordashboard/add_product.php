@@ -139,6 +139,9 @@
        <!-- Sweet alert CDN -->
       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+      <!-- CSS -->
+      <link rel="stylesheet" href="css/main.css">
+
    </head>
    <body id="page-top">
       <!-- Page Wrapper -->
@@ -226,8 +229,7 @@
                   <div class="row">
                   </div>
                   <!-- Content Row -->
-                  <div class="row">
-                     <?php
+                  <?php
                         // Form is invalid. Show the errors to the user.
                         if (!empty($errors)) {
                           echo '<div class="alert alert-danger" role="alert">';
@@ -237,6 +239,7 @@
                           echo '</div>';
                         }
                         ?>
+                  <div class="row">
                      <div class="col-lg-6 mb-4">
                         <form  method="POST" action="add_product.php" enctype="multipart/form-data">
                            <div class="form-group">
@@ -279,7 +282,8 @@
                            </div>
                            <div class="form-group">
                               <label for="product-images">Images</label>
-                              <input class="form-control-file" type="file" id="product-images" name="product-images">
+                              <input class="form-control-file" type="file" id="product-images" name="product-images" onchange="previewImage(this);">
+                              <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
                            </div>
                            <button type="submit" class="btn btn-primary">Add Product</button>
                         </form>
@@ -337,5 +341,17 @@
       <!-- Page level custom scripts -->
       <script src="js/demo/chart-area-demo.js"></script>
       <script src="js/demo/chart-pie-demo.js"></script>
+
+      <script>
+function previewImage(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('#preview').attr('src', e.target.result).show();
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
    </body>
 </html>
