@@ -49,9 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-    <?php
+        <!-- Side bar -->
+        <?php
             require_once  'sidebar.php';
         ?>
+        <!--End Side bar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
