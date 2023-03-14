@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Check if the email exists in the database
-    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $sql = "SELECT * FROM users WHERE email = '$email' and role='admin'";
     $result = $conn->query($sql);
     if ($result->num_rows == 1) {
         // Verify the password
