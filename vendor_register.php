@@ -80,8 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Save the data to the database
-        $sql = "INSERT INTO stores (storename, phonenumber, ownername, location, address, email, password, document) 
-        VALUES ('$store_name', '$phone_number', '$full_name', '$location', '$address', '$email', '$hashed_password', '$document')";
+        $sql = "INSERT INTO stores (storename, phonenumber, ownername, location, address, email, password, document,active) 
+        VALUES ('$store_name', '$phone_number', '$full_name', '$location', '$address', '$email', '$hashed_password', '$document',0)";
         if ($conn->query($sql) === TRUE) {
              // Form submitted successfully, show SweetAlert message
     echo "<script>

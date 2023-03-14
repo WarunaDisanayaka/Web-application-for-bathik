@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Save the data to the database
-        $sql = "INSERT INTO users (username, email, phone, password) VALUES ('$username', '$email', '$phone', '$hashed_password')";
+        $sql = "INSERT INTO users (username, email, phone, password, role) VALUES ('$username', '$email', '$phone', '$hashed_password','user')";
         if ($conn->query($sql) === TRUE) {
              // Form submitted successfully, show SweetAlert message
     echo "<script>
