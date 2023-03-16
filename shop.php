@@ -1,6 +1,21 @@
 <?php
    // Include the header file
    require_once  'header.php';
+// Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+
+
+   if (isset($_GET['id'])) {
+      $store_id = $_GET['id'];
+      // Select all shops products
+      $stmt = $pdo->query("SELECT * FROM `products` WHERE vendor_id='$store_id'");  
+      
+   }
    
    ?>
 <!-- Hero section start-->

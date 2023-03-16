@@ -1,5 +1,9 @@
 
 <?php
+
+   session_start();
+   
+
    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        // Collect the form data
        $product_title = $_POST['product-title'];
@@ -10,6 +14,7 @@
        $product_category = $_POST['product-category'];
        $product_code = $_POST['product-code'];
        $product_images = $_FILES['product-images'];
+       $vendor_id = $_POST['vendor_id'];
    
        // Validate title
    if (empty($product_title)) {
@@ -68,10 +73,10 @@
            }
    
           // Prepare the SQL statement
-   $stmt = $conn->prepare("INSERT INTO products (title, price, description, qty, size, category, product_code, image1) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+   $stmt = $conn->prepare("INSERT INTO products (title, price, product_description, qty, size, category, product_code, image1,vendor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
    
    // Bind the parameters
-   $stmt->bind_param("ssddssss", $product_title, $product_price, $product_description, $product_qty, $product_size, $product_category, $product_code, $image_data);
+   $stmt->bind_param("ssddsssss", $product_title, $product_price, $product_description, $product_qty, $product_size, $product_category, $product_code, $product_images, $vendor_id);
    
    
           // Read the image data
@@ -280,6 +285,7 @@
                               <label for="product-code">Product Code</label>
                               <input type="text" class="form-control" id="product-code" name="product-code" placeholder="Enter product code">
                            </div>
+                           <input type="hidden" name="vendor_id" value=<?php echo $_SESSION['store_id']; ?>>
                            <div class="form-group">
                               <label for="product-images">Images</label>
                               <input class="form-control-file" type="file" id="product-images" name="product-images" onchange="previewImage(this);">

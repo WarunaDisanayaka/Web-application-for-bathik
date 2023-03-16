@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -33,6 +36,7 @@
     <a class="nav-link" href="index.php">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
+        
 </li>
 
 
@@ -83,7 +87,7 @@
 
 
  <li class="nav-item">
-    <a class="nav-link" href="index.php">
+    <a class="nav-link" href="settings.php">
     <i class="fas fa-cog"></i>
 
         <span>Settings</span></a>

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
             // Login successful
-            $_SESSION['username'] = $row['username'];
+            $_SESSION['store_id'] = $row['store_id'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['phone'] = $row['phone'];
             header('Location: vendordashboard');

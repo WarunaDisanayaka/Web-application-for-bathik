@@ -5,6 +5,9 @@ require_once  'header.php';
 
 ?>
 <?php
+
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collect the form data
     $store_name = $_POST['store_name'];
@@ -79,9 +82,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die('Connection failed: ' . $conn->connect_error);
         }
 
+        // Move the uploaded document to the upload path
+        $uploadPath = 'uploads/'; // set your upload path here
+        $filename = uniqid() . '_' . $document['name'];
+        $destination = $uploadPath . $filename;
+        if (!move_uploaded_file($document['tmp_name'], $destination)) {
+            $errors[] = 'Failed to upload the document. Please try again.';
+        }
+
+
         // Save the data to the database
         $sql = "INSERT INTO stores (storename, phonenumber, ownername, location, address, email, password, document,active) 
-        VALUES ('$store_name', '$phone_number', '$full_name', '$location', '$address', '$email', '$hashed_password', '$document',0)";
+        VALUES ('$store_name', '$phone_number', '$full_name', '$location', '$address', '$email', '$hashed_password', '$filename',0)";
         if ($conn->query($sql) === TRUE) {
              // Form submitted successfully, show SweetAlert message
     echo "<script>
