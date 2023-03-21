@@ -178,9 +178,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <label for="location" class="form-label">Select Location</label>
     <select class="form-select" id="location" name="location">
       <option value="">Select Location</option>
-      <option value="location1" <?php echo isset($location) && $location == 'location1' ? 'selected' : ''; ?>>Location 1</option>
-      <option value="location2" <?php echo isset($location) && $location == 'location2' ? 'selected' : ''; ?>>Location 2</option>
-      <option value="location3" <?php echo isset($location) && $location == 'location3' ? 'selected' : ''; ?>>Location 3</option>
+      <option value="Colombo" <?php echo isset($location) && $location == 'Colombo' ? 'selected' : ''; ?>>Colombo</option>
+<option value="Kandy" <?php echo isset($location) && $location == 'Kandy' ? 'selected' : ''; ?>>Kandy</option>
+<option value="Galle" <?php echo isset($location) && $location == 'Galle' ? 'selected' : ''; ?>>Galle</option>
+<option value="Ampara" <?php echo isset($location) && $location == 'Ampara' ? 'selected' : ''; ?>>Ampara</option>
+<option value="Anuradhapura" <?php echo isset($location) && $location == 'Anuradhapura' ? 'selected' : ''; ?>>Anuradhapura</option>
+<option value="Badulla" <?php echo isset($location) && $location == 'Badulla' ? 'selected' : ''; ?>>Badulla</option>
+<option value="Batticaloa" <?php echo isset($location) && $location == 'Batticaloa' ? 'selected' : ''; ?>>Batticaloa</option>
+<option value="Gampaha" <?php echo isset($location) && $location == 'Gampaha' ? 'selected' : ''; ?>>Gampaha</option>
+<option value="Hambantota" <?php echo isset($location) && $location == 'Hambantota' ? 'selected' : ''; ?>>Hambantota</option>
+<option value="Jaffna" <?php echo isset($location) && $location == 'Jaffna' ? 'selected' : ''; ?>>Jaffna</option>
+<option value="Kalutara" <?php echo isset($location) && $location == 'Kalutara' ? 'selected' : ''; ?>>Kalutara</option>
+<option value="Kegalle" <?php echo isset($location) && $location == 'Kegalle' ? 'selected' : ''; ?>>Kegalle</option>
+<option value="Kilinochchi" <?php echo isset($location) && $location == 'Kilinochchi' ? 'selected' : ''; ?>>Kilinochchi</option>
+<option value="Kurunegala" <?php echo isset($location) && $location == 'Kurunegala' ? 'selected' : ''; ?>>Kurunegala</option>
+<option value="Mannar" <?php echo isset($location) && $location == 'Mannar' ? 'selected' : ''; ?>>Mannar</option>
+<option value="Matale" <?php echo isset($location) && $location == 'Matale' ? 'selected' : ''; ?>>Matale</option>
+<option value="Matara" <?php echo isset($location) && $location == 'Matara' ? 'selected' : ''; ?>>Matara</option>
+<option value="Monaragala" <?php echo isset($location) && $location == 'Monaragala' ? 'selected' : ''; ?>>Monaragala</option>
+<option value="Mullativu" <?php echo isset($location) && $location == 'Mullativu' ? 'selected' : ''; ?>>Mullativu</option>
+<option value="Nuwara Eliya" <?php echo isset($location) && $location == 'Nuwara Eliya' ? 'selected' : ''; ?>>Nuwara Eliya</option>
+<option value="Polonnaruwa" <?php echo isset($location) && $location == 'Polonnaruwa' ? 'selected' : ''; ?>>Polonnaruwa</option>
+<option value="Puttalam" <?php echo isset($location) && $location == 'Puttalam' ? 'selected' : ''; ?>>Puttalam</option>
+<option value="Ratnapura" <?php echo isset($location) && $location == 'Ratnapura' ? 'selected' : ''; ?>>Ratnapura</option>
+<option value="Trincomalee" <?php echo isset($location) && $location == 'Trincomalee' ? 'selected' : ''; ?>>Trincomalee</option>
+<option value="Vavuniya" <?php echo isset($location) && $location == 'Vavuniya' ? 'selected' : ''; ?>>Vavuniya</option>
     </select>
   </div>
   <div class="mb-3">
