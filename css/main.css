@@ -1,27 +1,23 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-
-
-
-
-
 
 /* Card styling */
 .card{
     margin-bottom: 3rem;
 }
 .card img{
-    width: 291px;
+    width: 300px;
     height: 268px;
-    padding: 1rem;
+    object-fit: contain;
 }
-  .card-img-top {
+  /* .card-img-top {
     height: 10rem;
     object-fit: cover;
   }
-  
+   */
   .card-title {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;

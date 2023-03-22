@@ -68,7 +68,7 @@ require_once  'header.php';
 
 
 <!-- Shops start  -->
-<div class="container mt-5">
+<div class="container mt-5 shop">
 <div class="row">
   <?php
   while ($row = $stmt->fetch()) {
