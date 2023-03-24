@@ -1,94 +1,93 @@
 <?php
    session_start();
-   
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       // Collect the form data
-       $product_title = $_POST['product-title'];
-       $product_description = $_POST['product-description'];
-       $product_price = $_POST['product-price'];
-       $product_category = $_POST['product-category'];
-       $product_code = $_POST['product-code'];
-       $product_images = $_FILES['product-images'];
-       $vendor_id = $_POST['vendor_id'];
-   
-       // Validate title
-   if (empty($product_title)) {
-       $errors[] = 'Please enter a product title.';
-   }
-   
-   // Validate price
-   if (empty($product_price) || !is_numeric($product_price)) {
-       $errors[] = 'Invalid price. Please enter a valid price.';
-   }
-   
-   // Validate description
-   if (empty($product_description)) {
-       $errors[] = 'Please enter a product description.';
-   }
-   
-   
-   // Validate category
-   if (empty($product_category) || $product_category == 'Choose category...') {
-       $errors[] = 'Please select a product category.';
-   }
-   
-   
-   // Validate code
-   if (empty($product_code)) {
-       $errors[] = 'Please enter a product code.';
-   }
-  
-   
-   
-   // Validate image
-   $allowed_extensions = array('jpg', 'jpeg', 'png');
-   $file_extension = pathinfo($product_images['name'], PATHINFO_EXTENSION);
-   if (empty($product_images['name']) || !in_array($file_extension, $allowed_extensions)) {
-       $errors[] = 'Invalid image. Please choose a valid image file (jpg, jpeg, or png) with a maximum size of 2MB.';
-   }   
-       // If there are no errors, save the data to the database and upload the image
-       if (empty($errors)) {
-           // Connect to the database
-           $host = 'localhost'; 
-           $user = 'root'; 
-           $pwd = ''; 
-           $dbname = 'bathik'; 
-           $conn = new mysqli($host, $user, $pwd, $dbname);
-           if ($conn->connect_error) {
-               die('Connection failed: ' . $conn->connect_error);
-           }
-   
-   $target_dir = "uploads/";
-   $target_file = $target_dir . basename($product_images['name']);
 
-          // Prepare the SQL statement
-   $stmt = $conn->prepare("INSERT INTO products (title, price, product_description, category, product_code, image1,vendor_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-   
-   // Bind the parameters
-   $stmt->bind_param("sdsssss", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file, $vendor_id);
-   
-   
-          // Read the image data
-   $image_data = file_get_contents($product_images['tmp_name']);
-   
-   
-           // Execute the statement
-           if ($stmt->execute() === TRUE) {
-               // Upload the image to the server
-   
-   move_uploaded_file($product_images['tmp_name'], $target_file);
-   
-   
-               // Form submitted successfully, show SweetAlert message
-               echo "<script>
-               swal({
-                   title: 'Product added successfully',
-                   text: 'Your product has been added to the database!',
-                   icon: 'success',
-                   button: 'OK'
-               });
-               </script>";
-           } else {
+   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Collect the form data
+    $product_id = $_POST['product-id'];
+    $product_title = $_POST['product-title'];
+    $product_description = $_POST['product-description'];
+    $product_price = $_POST['product-price'];
+    $product_category = $_POST['product-category'];
+    $product_code = $_POST['product-code'];
+    $product_images = $_FILES['product-images'];
+
+    // Validate title
+    if (empty($product_title)) {
+        $errors[] = 'Please enter a product title.';
+    }
+
+    // Validate price
+    if (empty($product_price) || !is_numeric($product_price)) {
+        $errors[] = 'Invalid price. Please enter a valid price.';
+    }
+
+    // Validate description
+    if (empty($product_description)) {
+        $errors[] = 'Please enter a product description.';
+    }
+
+    // Validate category
+    if (empty($product_category) || $product_category == 'Choose category...') {
+        $errors[] = 'Please select a product category.';
+    }
+
+    // Validate code
+    if (empty($product_code)) {
+        $errors[] = 'Please enter a product code.';
+    }
+
+    // Validate image
+    $allowed_extensions = array('jpg', 'jpeg', 'png');
+    $file_extension = pathinfo($product_images['name'], PATHINFO_EXTENSION);
+    if (!empty($product_images['name']) && !in_array($file_extension, $allowed_extensions)) {
+        $errors[] = 'Invalid image. Please choose a valid image file (jpg, jpeg, or png) with a maximum size of 2MB.';
+    }
+
+    // If there are no errors, update the data in the database and upload the image if provided
+    if (empty($errors)) {
+        // Connect to the database
+        $host = 'localhost';
+        $user = 'root';
+        $pwd = '';
+        $dbname = 'bathik';
+        $conn = new mysqli($host, $user, $pwd, $dbname);
+        if ($conn->connect_error) {
+            die('Connection failed: ' . $conn->connect_error);
+        }
+
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($product_images['name']);
+
+        // Prepare the SQL statement
+        $stmt = $conn->prepare("UPDATE products SET title=?, price=?, product_description=?, category=?, product_code=?, image1=? WHERE id=?");
+
+        // Bind the parameters
+        $stmt->bind_param("sdssssd", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file, $product_id);
+
+        // If a new image is provided, update the image in the database and upload the new image
+        if (!empty($product_images['name'])) {
+            $target_dir = "uploads/";
+            $target_file = $target_dir . basename($product_images['name']);
+
+            // Read the image data
+            $image_data = file_get_contents($product_images['tmp_name']);
+
+            // Update the image in the database
+            $stmt->send_long_data(5, $image_data);
+        }
+
+        // Execute the statement
+        if ($stmt->execute() === TRUE) {
+            // Upload the new image to the server if provided
+            if (!empty($product_images['name'])) {
+                move_uploaded_file($product_images['tmp_name'], $target_file);
+                echo "<script>
+                alert('Product Updated');
+                window.location.href = 'view_product.php';
+                </script>";
+
+            }
+            } else {
                // Form submission failed, show SweetAlert message
                echo 'Error: ' . $conn->error;
                echo "<script>
@@ -111,6 +110,25 @@
            // }
        }
    }
+
+   if (isset($_GET['id'])) {
+    // Connect to the database
+    $dsn = 'mysql:host=localhost;dbname=bathik';
+    $username = 'root';
+    $password = '';
+    $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+    $pdo = new PDO($dsn, $username, $password, $options);
+    
+    $id = $_GET['id'];
+    // Select the product with the given ID
+    $all_product_stmt = $pdo->prepare('SELECT * FROM products WHERE id = :id');
+    $all_product_stmt->bindParam(':id', $id);
+    $all_product_stmt->execute();
+
+    
+    
+   }
+
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -231,41 +249,49 @@
                      ?>
                   <div class="row">
                      <div class="col-lg-6 mb-4">
-                        <form method="POST" action="add_product.php" enctype="multipart/form-data">
+                        <?php
+                            while ($row = $all_product_stmt->fetch()) {
+                            
+                        ?>
+                        <form method="POST" action="product_edit.php" enctype="multipart/form-data">
                            <div class="form-group">
                               <label for="product-title">Product Title</label>
-                              <input type="text" class="form-control" id="product-title" name="product-title" placeholder="Enter product title">
+                              <input type="text" class="form-control" id="product-title" value="<?php  echo $row['title'];?>" name="product-title" placeholder="Enter product title">
                            </div>
                            <div class="form-group">
                               <label for="product-price">Price</label>
-                              <input type="number" class="form-control" id="product-price" name="product-price" placeholder="Enter price">
+                              <input type="number" class="form-control" id="product-price" value="<?php  echo $row['price'];?>"  name="product-price" placeholder="Enter price">
                            </div>
                            <div class="form-group">
                               <label for="product-description">Description</label>
-                              <textarea class="form-control" id="product-description" name="product-description" rows="3" placeholder="Enter description"></textarea>
+                              <textarea class="form-control" id="product-description"  name="product-description" rows="3" placeholder="Enter description"><?php echo $row['product_description']; ?></textarea>
                            </div>
                            <div class="form-group">
                               <label for="product-category">Category</label>
                               <select class="form-control" id="product-category" name="product-category">
                                  <option selected>Choose category...</option>
-                                 <option>Clothing</option>
-                                 <option>Shoes</option>
-                                 <option>Accessories</option>
+                                 <option <?php if ($row['category'] == 'Clothing') echo 'selected'; ?>>Clothing</option>
+        <option <?php if ($row['category'] == 'Shoes') echo 'selected'; ?>>Shoes</option>
+        <option <?php if ($row['category'] == 'Accessories') echo 'selected'; ?>>Accessories</option>
+    </select>
                               </select>
                            </div>
                            <div class="form-group">
                               <label for="product-code">Product Code</label>
-                              <input type="text" class="form-control" id="product-code" name="product-code" placeholder="Enter product code">
+                              <input type="text" class="form-control" id="product-code" value=<?php echo $row['product_code']; ?> name="product-code" placeholder="Enter product code">
                            </div>
                            <div class="form-group">
                               <label for="product-images">Images</label>
                               <input class="form-control-file" type="file" id="product-images" name="product-images" onchange="previewImage(this);">
-                              <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
+                              <img id="preview" class="preview-img" src="<?php echo $row['image1']; ?>" alt="Preview" style="height: 150px; width: 150px;">
                            </div>
-                           
-                           <input type="hidden" name="vendor_id" value=<?php echo $_SESSION['store_id']; ?>>
-                           <button type="submit" class="btn btn-primary">Add Product</button>
+                           <input type="hidden" name="product-id" value="<?php echo $row['id'] ?>">
+                          
+                           <button type="submit" class="btn btn-primary">Update Product</button>
                         </form>
+                        <?php
+                            }
+                        ?>
                      </div>
                   </div>
                </div>

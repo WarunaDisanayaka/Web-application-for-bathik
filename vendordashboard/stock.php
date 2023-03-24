@@ -2,115 +2,79 @@
    session_start();
    
    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       // Collect the form data
-       $product_title = $_POST['product-title'];
-       $product_description = $_POST['product-description'];
-       $product_price = $_POST['product-price'];
-       $product_category = $_POST['product-category'];
-       $product_code = $_POST['product-code'];
-       $product_images = $_FILES['product-images'];
-       $vendor_id = $_POST['vendor_id'];
-   
-       // Validate title
-   if (empty($product_title)) {
-       $errors[] = 'Please enter a product title.';
-   }
-   
-   // Validate price
-   if (empty($product_price) || !is_numeric($product_price)) {
-       $errors[] = 'Invalid price. Please enter a valid price.';
-   }
-   
-   // Validate description
-   if (empty($product_description)) {
-       $errors[] = 'Please enter a product description.';
-   }
-   
-   
-   // Validate category
-   if (empty($product_category) || $product_category == 'Choose category...') {
-       $errors[] = 'Please select a product category.';
-   }
-   
-   
-   // Validate code
-   if (empty($product_code)) {
-       $errors[] = 'Please enter a product code.';
-   }
-  
-   
-   
-   // Validate image
-   $allowed_extensions = array('jpg', 'jpeg', 'png');
-   $file_extension = pathinfo($product_images['name'], PATHINFO_EXTENSION);
-   if (empty($product_images['name']) || !in_array($file_extension, $allowed_extensions)) {
-       $errors[] = 'Invalid image. Please choose a valid image file (jpg, jpeg, or png) with a maximum size of 2MB.';
-   }   
-       // If there are no errors, save the data to the database and upload the image
-       if (empty($errors)) {
-           // Connect to the database
-           $host = 'localhost'; 
-           $user = 'root'; 
-           $pwd = ''; 
-           $dbname = 'bathik'; 
-           $conn = new mysqli($host, $user, $pwd, $dbname);
-           if ($conn->connect_error) {
-               die('Connection failed: ' . $conn->connect_error);
-           }
-   
-   $target_dir = "uploads/";
-   $target_file = $target_dir . basename($product_images['name']);
 
+      $pdo = new PDO("mysql:host=localhost;dbname=bathik", "root", "");
+
+$product_id = $_POST['product-category'];
+$size = $_POST['product-size'];
+
+// Prepare the SQL statement
+$stmt = $pdo->prepare("SELECT quantity FROM product_quantity WHERE product_id = ? AND size = ?");
+
+// Execute the statement
+$stmt->execute([$product_id, $size]);
+
+// Fetch the result
+$result = $stmt->fetch();
+
+// Check if a quantity has already been added for the product and size
+if ($result) {
+    $quantity_added = $result['quantity'];
+    echo "Quantity $quantity_added has already been added for product $product_id and size $size.";
+} else {
+    echo "No quantity has been added for product $product_id and size $size.";
+}
+      
+      // Validate the form inputs
+      $errors = [];
+      if (empty($_POST['product-category'])) {
+          $errors[] = "Please select a product";
+      }
+      if (empty($_POST['product-size'])) {
+          $errors[] = "Please select at least one size";
+      }
+      if (empty($_POST['product-qty'][0]) && empty($_POST['product-qty'][1]) && empty($_POST['product-qty'][2])) {
+          $errors[] = "Please enter at least one quantity";
+      }
+      
+      // Check if there are any validation errors
+      if (!empty($errors)) {
+         
+      } else {
+          // Connect to the database
+          $pdo = new PDO("mysql:host=localhost;dbname=bathik", "root", "");
+      
           // Prepare the SQL statement
-   $stmt = $conn->prepare("INSERT INTO products (title, price, product_description, category, product_code, image1,vendor_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-   
-   // Bind the parameters
-   $stmt->bind_param("sdsssss", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file, $vendor_id);
-   
-   
-          // Read the image data
-   $image_data = file_get_contents($product_images['tmp_name']);
-   
-   
-           // Execute the statement
-           if ($stmt->execute() === TRUE) {
-               // Upload the image to the server
-   
-   move_uploaded_file($product_images['tmp_name'], $target_file);
-   
-   
-               // Form submitted successfully, show SweetAlert message
-               echo "<script>
-               swal({
-                   title: 'Product added successfully',
-                   text: 'Your product has been added to the database!',
-                   icon: 'success',
-                   button: 'OK'
-               });
-               </script>";
-           } else {
-               // Form submission failed, show SweetAlert message
-               echo 'Error: ' . $conn->error;
-               echo "<script>
-               swal({
-                   title: 'Warning!',
-                   text: 'Something went wrong!',
-                   icon: 'warning',
-                   button: 'OK'
-               });
-               </script>";
-           }
-   
-           // Close the statement and the database connection
-           $stmt->close();
-           $conn->close();
-       } else {
-           // // Display the errors
-           // foreach ($errors as $error) {
-           //     echo $error . '<br>';
-           // }
-       }
+          $stmt = $pdo->prepare("INSERT INTO product_quantity (product_id, size, quantity) VALUES (?, ?, ?)");
+      
+          // Get the product ID
+          $product_id = $_POST['product-category'];
+      
+          // Loop through the selected sizes and quantities
+          $sizes = $_POST['product-size'];
+          $quantities = $_POST['product-qty'];
+          foreach ($sizes as $key => $size) {
+              $quantity = (int)$quantities[$key];
+              if ($quantity > 0) {
+                  // Insert the data into the database
+                  $stmt->execute([$product_id, $size, $quantity]);
+              }
+          }
+      
+          // Display a success message
+          echo "<p>Product quantities have been added successfully.</p>";
+      }
    }
+   // Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+$stmtproducts = $pdo->query('SELECT id, title FROM products');
+
+   
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -214,7 +178,7 @@
                <div class="container-fluid">
                   <!-- Page Heading -->
                   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                     <h1 class="h3 mb-0 text-gray-800">Add Product</h1>
+                     <h1 class="h3 mb-0 text-gray-800">Add Stock</h1>
                   </div>
                   <div class="row">
                   </div>
@@ -231,39 +195,47 @@
                      ?>
                   <div class="row">
                      <div class="col-lg-6 mb-4">
-                        <form method="POST" action="add_product.php" enctype="multipart/form-data">
+                        <form method="POST" action="stock.php">
+                                       
                            <div class="form-group">
-                              <label for="product-title">Product Title</label>
-                              <input type="text" class="form-control" id="product-title" name="product-title" placeholder="Enter product title">
-                           </div>
-                           <div class="form-group">
-                              <label for="product-price">Price</label>
-                              <input type="number" class="form-control" id="product-price" name="product-price" placeholder="Enter price">
-                           </div>
-                           <div class="form-group">
-                              <label for="product-description">Description</label>
-                              <textarea class="form-control" id="product-description" name="product-description" rows="3" placeholder="Enter description"></textarea>
-                           </div>
-                           <div class="form-group">
-                              <label for="product-category">Category</label>
+                              <label for="product-category">Product</label>
                               <select class="form-control" id="product-category" name="product-category">
-                                 <option selected>Choose category...</option>
-                                 <option>Clothing</option>
-                                 <option>Shoes</option>
-                                 <option>Accessories</option>
+                                 <option selected>Choose product...</option>
+                                 <?php
+                           while ($row = $stmtproducts->fetch()) {
+                        ?>   
+                                 <option value="<?php echo $row["id"]?>"><?php echo $row["id"]." ".$row["title"]?></option>
+                                 <?php
+                           }
+                           ?>
                               </select>
                            </div>
-                           <div class="form-group">
-                              <label for="product-code">Product Code</label>
-                              <input type="text" class="form-control" id="product-code" name="product-code" placeholder="Enter product code">
-                           </div>
-                           <div class="form-group">
-                              <label for="product-images">Images</label>
-                              <input class="form-control-file" type="file" id="product-images" name="product-images" onchange="previewImage(this);">
-                              <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
-                           </div>
+                          
                            
-                           <input type="hidden" name="vendor_id" value=<?php echo $_SESSION['store_id']; ?>>
+                           <div class="form-group">
+                              <label for="product-size">Size & Quantity</label>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="product-size-small" name="product-size[]" value="small">
+                                 <label class="form-check-label" for="product-size-small">
+                                 Small:
+                                 </label>
+                                 <input type="number" class="form-control" id="product-qty-small" name="product-qty[]" placeholder="Enter quantity">
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="product-size-medium" name="product-size[]" value="medium">
+                                 <label class="form-check-label" for="product-size-medium">
+                                 Medium:
+                                 </label>
+                                 <input type="number" class="form-control" id="product-qty-medium" name="product-qty[]" placeholder="Enter quantity">
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="product-size-large" name="product-size[]" value="large">
+                                 <label class="form-check-label" for="product-size-large">
+                                 Large:
+                                 </label>
+                                 <input type="number" class="form-control" id="product-qty-large" name="product-qty[]" placeholder="Enter quantity">
+                              </div>
+                           </div>
                            <button type="submit" class="btn btn-primary">Add Product</button>
                         </form>
                      </div>

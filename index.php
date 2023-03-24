@@ -6,8 +6,8 @@ $password = '';
 $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
-// Select all shops with images
-$stmt = $pdo->query('SELECT store_id,storename FROM stores');
+  // Select all shops with images
+  $stmt = $pdo->query('SELECT store_id,storename FROM stores');
 
 
 ?>

@@ -55,7 +55,8 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="add_product.php">Add Product</a>
-            <a class="collapse-item" href="">View Product</a>
+            <a class="collapse-item" href="view_product.php">View Product</a>
+            <a class="collapse-item" href="stock.php">Add Stock</a>
         </div>
     </div>
 </li>
