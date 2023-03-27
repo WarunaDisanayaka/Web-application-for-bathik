@@ -10,6 +10,8 @@
     $product_category = $_POST['product-category'];
     $product_code = $_POST['product-code'];
     $product_images = $_FILES['product-images'];
+    $product_images2 = $_FILES['product-images2'];
+    $product_images3 = $_FILES['product-images3'];
 
     // Validate title
     if (empty($product_title)) {
@@ -58,11 +60,17 @@
         $target_dir = "uploads/";
         $target_file = $target_dir . basename($product_images['name']);
 
+        $target_dir = "uploads/";
+        $target_file2 = $target_dir . basename($product_images2['name']);
+
+        $target_dir = "uploads/";
+        $target_file3 = $target_dir . basename($product_images3['name']);
+
         // Prepare the SQL statement
-        $stmt = $conn->prepare("UPDATE products SET title=?, price=?, product_description=?, category=?, product_code=?, image1=? WHERE id=?");
+        $stmt = $conn->prepare("UPDATE products SET title=?, price=?, product_description=?, category=?, product_code=?, image1=?,image2=?,image3=? WHERE id=?");
 
         // Bind the parameters
-        $stmt->bind_param("sdssssd", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file, $product_id);
+        $stmt->bind_param("sdssssssd", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file,$target_file2,$target_file3, $product_id);
 
         // If a new image is provided, update the image in the database and upload the new image
         if (!empty($product_images['name'])) {
@@ -81,6 +89,8 @@
             // Upload the new image to the server if provided
             if (!empty($product_images['name'])) {
                 move_uploaded_file($product_images['tmp_name'], $target_file);
+                move_uploaded_file($product_images['tmp_name'], $target_file2);
+                move_uploaded_file($product_images['tmp_name'], $target_file3);
                 echo "<script>
                 alert('Product Updated');
                 window.location.href = 'view_product.php';
@@ -282,8 +292,18 @@
                            </div>
                            <div class="form-group">
                               <label for="product-images">Images</label>
-                              <input class="form-control-file" type="file" id="product-images" name="product-images" onchange="previewImage(this);">
+                              <input class="form-control-file" type="file"  id="product-images" name="product-images" onchange="previewImage(this);">
                               <img id="preview" class="preview-img" src="<?php echo $row['image1']; ?>" alt="Preview" style="height: 150px; width: 150px;">
+                           </div>
+                           <div class="form-group">
+                              <label for="product-images">Images</label>
+                              <input class="form-control-file" type="file" id="product-images" name="product-images2" onchange="previewImage2(this);">
+                              <img id="preview2" class="preview-img" src="<?php echo $row['image2']; ?>" alt="Preview" style="height: 150px; width: 150px;">
+                           </div>
+                           <div class="form-group">
+                              <label for="product-images">Images</label>
+                              <input class="form-control-file" type="file" id="product-images" name="product-images3" onchange="previewImage3(this);">
+                              <img id="preview3" class="preview-img" src="<?php echo $row['image3']; ?>" alt="Preview" style="height: 150px; width: 150px;">
                            </div>
                            <input type="hidden" name="product-id" value="<?php echo $row['id'] ?>">
                           
@@ -352,6 +372,26 @@
              var reader = new FileReader();
              reader.onload = function (e) {
                $('#preview').attr('src', e.target.result).show();
+             };
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+
+         function previewImage2(input) {
+           if (input.files && input.files[0]) {
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#preview2').attr('src', e.target.result).show();
+             };
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+
+         function previewImage3(input) {
+           if (input.files && input.files[0]) {
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#preview3').attr('src', e.target.result).show();
              };
              reader.readAsDataURL(input.files[0]);
            }

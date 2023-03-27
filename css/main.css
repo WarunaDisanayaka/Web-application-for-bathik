@@ -95,11 +95,13 @@ footer li a{
 
 /* Product image */
 .shop-content .products{
-  padding-right: 2rem;
+  padding-right: 0rem;
 }
 
-img.card-img-top {
-  height: 400px;
+.products img.card-img-top {
+width: 250px;
+height: 400px;
+object-fit: cover;
 }
 
 

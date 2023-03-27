@@ -38,7 +38,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $conn->close();
+
+
+   
 }
+
+//  Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+ // Get product details
+ if (isset($_GET['id'])) {
+  $product_id = $_GET['id'];
+  // $store_id = $_GET['id'];
+
+  // Select product details
+  $stmt = $pdo->query("SELECT * FROM products WHERE id='$product_id'");  
+  $product_detials = $stmt->fetch();
+
+  // 
+
+  }
+
+
+
 ?>
 
 <?php
@@ -54,7 +80,7 @@ require_once  'header.php';
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6">
-        <h1 class="hero-title">Buddhi Batiks</h1>
+        <h1 class="hero-title"></h1>
       </div>
     </div>
   </div>
@@ -89,16 +115,22 @@ require_once  'header.php';
       </div>
     </div>
     <div class="col-md-6">
-      <h2 class="fw-bold">Product Title</h2>
-      <p class="lead">$99.99</p>
+      <h2 class="fw-bold"> <?php echo $product_detials['title'];?></h2>
+      <p class="lead">Rs <?php echo $product_detials['price'];?></p>
       <p>Description of the product goes here.</p>
       <div class="mb-3">
         <label for="sizeSelect" class="form-label">Size</label>
         <select class="form-select" id="sizeSelect">
+       
           <option selected>Select size</option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
+          <?php 
+            while ($product_detials = $stmt->fetch()) { 
+        ?>
+          <option value="small"><?php echo $product_detials['category'] ?></option>
+          <?php
+          }
+          ?>
+        
         </select>
       </div>
       <div class="d-flex align-items-center">

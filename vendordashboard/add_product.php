@@ -9,6 +9,8 @@
        $product_category = $_POST['product-category'];
        $product_code = $_POST['product-code'];
        $product_images = $_FILES['product-images'];
+       $product_images2 = $_FILES['product-images2'];
+       $product_images3 = $_FILES['product-images3'];
        $vendor_id = $_POST['vendor_id'];
    
        // Validate title
@@ -45,7 +47,8 @@
    $file_extension = pathinfo($product_images['name'], PATHINFO_EXTENSION);
    if (empty($product_images['name']) || !in_array($file_extension, $allowed_extensions)) {
        $errors[] = 'Invalid image. Please choose a valid image file (jpg, jpeg, or png) with a maximum size of 2MB.';
-   }   
+   } 
+   
        // If there are no errors, save the data to the database and upload the image
        if (empty($errors)) {
            // Connect to the database
@@ -61,11 +64,17 @@
    $target_dir = "uploads/";
    $target_file = $target_dir . basename($product_images['name']);
 
+   $target_dir = "uploads/";
+   $target_file2 = $target_dir . basename($product_images2['name']);
+
+   $target_dir = "uploads/";
+   $target_file3 = $target_dir . basename($product_images3['name']);
+
           // Prepare the SQL statement
-   $stmt = $conn->prepare("INSERT INTO products (title, price, product_description, category, product_code, image1,vendor_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+   $stmt = $conn->prepare("INSERT INTO products (title, price, product_description, category, product_code, image1,image2,image3,vendor_id) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
    
    // Bind the parameters
-   $stmt->bind_param("sdsssss", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file, $vendor_id);
+   $stmt->bind_param("sdsssssss", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file,$target_file2,$target_file3,$vendor_id);
    
    
           // Read the image data
@@ -77,6 +86,8 @@
                // Upload the image to the server
    
    move_uploaded_file($product_images['tmp_name'], $target_file);
+   move_uploaded_file($product_images['tmp_name'], $target_file2);
+   move_uploaded_file($product_images['tmp_name'], $target_file3);
    
    
                // Form submitted successfully, show SweetAlert message
@@ -258,8 +269,18 @@
                               <input type="text" class="form-control" id="product-code" name="product-code" placeholder="Enter product code">
                            </div>
                            <div class="form-group">
-                              <label for="product-images">Images</label>
+                              <label for="product-images">Image 1</label>
                               <input class="form-control-file" type="file" id="product-images" name="product-images" onchange="previewImage(this);">
+                              <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
+                           </div>
+                           <div class="form-group">
+                              <label for="product-images">Image 2</label>
+                              <input class="form-control-file" type="file" id="product-images2" name="product-images2" onchange="previewImage(this);">
+                              <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
+                           </div>
+                           <div class="form-group">
+                              <label for="product-images">Image 3</label>
+                              <input class="form-control-file" type="file" id="product-images3" name="product-images3" onchange="previewImage(this);">
                               <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
                            </div>
                            

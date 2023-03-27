@@ -14,7 +14,9 @@ $pdo = new PDO($dsn, $username, $password, $options);
       $store_id = $_GET['id'];
       // Select all shops products
       $stmt = $pdo->query("SELECT * FROM `products` WHERE vendor_id='$store_id'");  
-      
+      // Select store
+      $store = $pdo->query("SELECT storename FROM stores WHERE store_id='$store_id'");
+      $storeName=$store->fetch();
    }
    
    ?>
@@ -23,7 +25,7 @@ $pdo = new PDO($dsn, $username, $password, $options);
    <div class="container">
       <div class="row align-items-center">
          <div class="col-lg-6">
-            <h1 class="hero-title">Buddhi batik</h1>
+            <h1 class="hero-title"><?php echo $storeName['storename'];?></h1>
          </div>
       </div>
    </div>
@@ -85,41 +87,20 @@ $pdo = new PDO($dsn, $username, $password, $options);
       <!-- Product List -->
       <div class="col-lg-9 products">
          <div class="row">
+            <?php
+         while ($row = $stmt->fetch()) {
+            ?>
             <div class="col-lg-3 mb-4">
                <div class="card border-0">
-                  <img src="https://via.placeholder.com/400x400" alt="Product Image" class="card-img-top">
+                  <img src="vendordashboard/<?php echo $row['image1']?>" alt="Product Image" class="card-img-top">
                   <div class="card-body">
-                     <h6 class="card-title">Product Name</h6>
+                     <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id']?>"><?php echo $row['title']?></a></h6>
                   </div>
                </div>
             </div>
-            <div class="col-lg-3 mb-4">
-               <div class="card border-0">
-                  <img src="https://via.placeholder.com/400x400" alt="Product Image" class="card-img-top">
-                  <div class="card-body">
-                    <h6 class="card-title">Product Name</h6>
-                     
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-               <div class="card border-0">
-                  <img src="https://via.placeholder.com/400x400" alt="Product Image" class="card-img-top">
-                  <div class="card-body">
-                    <h6 class="card-title">Product Name</h6>
-                    
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-               <div class="card border-0">
-                  <img src="https://via.placeholder.com/400x400" alt="Product Image" class="card-img-top">
-                  <div class="card-body">
-                    <h6 class="card-title">Product Name</h6>
-                     
-                  </div>
-               </div>
-            </div>
+            <?php
+                 }
+            ?>
          </div>
       </div>
    </div>
