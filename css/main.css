@@ -146,4 +146,12 @@ object-fit: cover;
   max-width: 100%;
 }
 
+/* Cart QTY */
+.custom-input {
+  max-width: 50px; /* set the maximum width of the input field */
+}
 
+/* Added products */
+.added-products{
+  padding: 1rem;
+}
