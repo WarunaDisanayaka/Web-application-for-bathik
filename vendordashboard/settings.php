@@ -23,7 +23,7 @@
            if ($conn->connect_error) {
                die('Connection failed: ' . $conn->connect_error);
            }
-
+   
            // Move the uploaded document to the upload path
    $uploadPath = 'uploads/'; // set your upload path here
    $filename = uniqid() . '_' . $banner_img['name'];
@@ -36,7 +36,7 @@
           // Prepare the SQL statement
           
    $stmt = $conn->prepare("UPDATE stores SET banner_img = ? WHERE store_id = ?");
-//    "UPDATE stores SET banner_img = ? WHERE store_id = ?";
+   //    "UPDATE stores SET banner_img = ? WHERE store_id = ?";
    // Bind the parameters
    $stmt->bind_param("sd", $destination, $vendor_id);
    
@@ -48,10 +48,10 @@
            // Execute the statement
            if ($stmt->execute() === TRUE) {
                // Upload the image to the server
-//    $target_dir = "/Applications/XAMPP/xamppfiles/htdocs/Web-application-for-bathik/uploads";
-//    $target_file = $target_dir . basename($banner_img['name']);
-//    move_uploaded_file($banner_img['tmp_name'], $target_file);
-
+   //    $target_dir = "/Applications/XAMPP/xamppfiles/htdocs/Web-application-for-bathik/uploads";
+   //    $target_file = $target_dir . basename($banner_img['name']);
+   //    move_uploaded_file($banner_img['tmp_name'], $target_file);
+   
    
    
    
@@ -87,6 +87,8 @@
            // }
        }
    }
+
+  
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -195,45 +197,45 @@
                   <div class="row">
                   </div>
                   <?php
-                        // Form is invalid. Show the errors to the user.
-                        if (!empty($errors)) {
-                          echo '<div class="alert alert-danger" role="alert">';
-                          foreach ($errors as $error) {
-                            echo '<p>' . $error . '</p>';
-                          }
-                          echo '</div>';
-                        }
-                        ?>
+                     // Form is invalid. Show the errors to the user.
+                     if (!empty($errors)) {
+                       echo '<div class="alert alert-danger" role="alert">';
+                       foreach ($errors as $error) {
+                         echo '<p>' . $error . '</p>';
+                       }
+                       echo '</div>';
+                     }
+                     ?>
                   <!-- Content Row -->
                   <div class="row">
                      <div class="col-lg-6 mb-4">
                         <!-- Display form with error/success message -->
                         <form method="POST" action="settings.php" enctype="multipart/form-data">
-                           <!-- <div class="form-group">
-                              <label for="title">Shop Name</label>
-                              <input type="text" class="form-control" id="title" name="title" placeholder="Enter shop name" >
-                           </div> -->
                            <div class="form-group">
                               <label for="image">Banner Image</label>
                               <div class="custom-file">
                                  <!-- <input type="file" class="form-control-file" id="image" name="image" > -->
-                                 <input class="form-control-file" type="file" id="image" name="image" onchange="previewImage(this);">
+                                 <input class="form-control-file" type="file" id="image" name="image">
                                  <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none; margin-left:5rem;">
                                  <!-- <label class="custom-file-label" for="image">Choose file</label> -->
                                  <input type="hidden" name="vendor_id" value=<?php echo $_SESSION['store_id']; ?>>
                               </div>
                            </div>
+                           <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                        <!-- Second Img -->
+                        <form method="POST" action="add_thumbimg.php" enctype="multipart/form-data">
                            <div class="form-group">
                               <label for="image">Thumbnail Image</label>
                               <div class="custom-file">
                                  <!-- <input type="file" class="form-control-file" id="image" name="image" > -->
-                                 <input class="form-control-file" type="file" id="image" name="imagethumb" onchange="previewImageThumb(this);">
+                                 <input class="form-control-file" type="file" id="image" name="imagethumb">
                                  <img id="previewthumb" class="preview-img" src="#" alt="Preview" style="display:none; margin-left:5rem;">
                                  <!-- <label class="custom-file-label" for="image">Choose file</label> -->
                                  <input type="hidden" name="vendor_id" value=<?php echo $_SESSION['store_id']; ?>>
                               </div>
                            </div>
-                           <button type="submit" class="btn btn-primary">Update</button>
+                           <button type="submit" name="thumbnail" class="btn btn-primary">Update</button>
                         </form>
                      </div>
                   </div>
@@ -289,27 +291,26 @@
       <!-- Page level custom scripts -->
       <script src="js/demo/chart-area-demo.js"></script>
       <script src="js/demo/chart-pie-demo.js"></script>
-
       <script>
-function previewImage(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $('#preview').attr('src', e.target.result).show();
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-function previewImageThumb(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $('#previewthumb').attr('src', e.target.result).show();
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-</script>
+         function previewImage(input) {
+           if (input.files && input.files[0]) {
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#preview').attr('src', e.target.result).show();
+             };
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+         
+         function previewImageThumb(input) {
+           if (input.files && input.files[0]) {
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#previewthumb').attr('src', e.target.result).show();
+             };
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+      </script>
    </body>
 </html>

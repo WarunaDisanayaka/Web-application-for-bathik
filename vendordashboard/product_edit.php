@@ -67,10 +67,10 @@
         $target_file3 = $target_dir . basename($product_images3['name']);
 
         // Prepare the SQL statement
-        $stmt = $conn->prepare("UPDATE products SET title=?, price=?, product_description=?, category=?, product_code=?, image1=?,image2=?,image3=? WHERE id=?");
+        $stmt = $conn->prepare("UPDATE products SET title=?, price=?, product_description=?, category=?, product_code=?, image1=?, image2=?, image3=? WHERE id=?");
 
         // Bind the parameters
-        $stmt->bind_param("sdssssssd", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file,$target_file2,$target_file3, $product_id);
+        $stmt->bind_param("sdssssssd", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file, $target_file2, $target_file3, $product_id);
 
         // If a new image is provided, update the image in the database and upload the new image
         if (!empty($product_images['name'])) {
