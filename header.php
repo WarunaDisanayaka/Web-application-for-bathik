@@ -33,7 +33,8 @@
                      <a class="nav-link" href="#">Shops</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="#">Personalization</a>
+                  <a class="nav-link" href="http://127.0.0.1:8000/" target="_blank">Personalization</a>
+
                   </li>
                   <li class="nav-item">
                      <a href="cart.php" class="nav-link">
