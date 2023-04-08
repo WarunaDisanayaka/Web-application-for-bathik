@@ -91,13 +91,13 @@
          <div class="carousel slide" data-bs-ride="carousel" id="productCarousel">
             <div class="carousel-inner">
                <div class="carousel-item active">
-                  <img src="img/productImg.png" class="product-img" alt="Product Image" class="d-block w-100">
+                  <img src="vendordashboard/<?php echo $product_detials['image1'];?>" class="product-img" alt="Product Image" class="d-block w-100">
                </div>
                <div class="carousel-item">
-                  <img src="img/productImg.png" class="product-img" alt="Product Image" class="d-block w-100">
+                  <img src="vendordashboard/<?php echo $product_detials['image2'];?>" class="product-img" alt="Product Image" class="d-block w-100">
                </div>
                <div class="carousel-item">
-                  <img src="img/productImg.png" class="product-img" alt="Product Image" class="d-block w-100">
+                  <img src="vendordashboard/<?php echo $product_detials['image3'];?>" class="product-img" alt="Product Image" class="d-block w-100">
                </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
