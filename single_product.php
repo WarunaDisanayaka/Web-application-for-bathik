@@ -131,14 +131,13 @@
          </div>
          <div class="d-flex align-items-center">
             <input type="number" class="form-control text-center" id="quantityInput" value="1" style="width: 70px; margin-right:0.5rem;">
-            <form action="" method="post">
-               <input type="hidden" name="pname" value="<?php $product_detials['title'] ?>">
-               <input type="hidden" name="pprice" value="<?php $product_detials['price'] ?>">
-               <input type="hidden" name="psize" value="<?php $product_detials['title'] ?>">
-               <input type="hidden" name="selected_size" id="selectedSizeInput">
-               <input type="hidden" name="pname" value="<?php $product_detials['title'] ?>">
-               <input type="hidden" name="pname" value="<?php $product_detials['title'] ?>">
-               <button class="btn btn-primary me-3">Add to Cart</button>
+            <form action="" class="add-cart">
+               <input type="hidden" name="pid" class="pid" value="<?php echo $product_detials['id'] ?>">
+               <input type="hidden" name="pname" class="pname" value="<?php echo $product_detials['title'] ?>">
+               <input type="hidden" name="pprice" class="pprice" value="<?php echo $product_detials['price'] ?>">
+               <input type="hidden" name="selected_size" class="selected_size" id="selectedSizeInput">
+               <input type="hidden" id="qtyHidden" name="quantity" class="quantity">
+               <button class="btn btn-primary me-3 addCart">Add to Cart</button>
             </form>
             <button class="btn btn-outline-secondary"><i class="bi bi-heart"></i> Add to Favorites</button>
          </div>
@@ -154,18 +153,53 @@
    
    ?>
 <script>
+   // Product image clicking changing
    function change_image(image){
       var container = document.getElementById("main-image");
       container.src = image.src;
-}
-document.addEventListener("DOMContentLoaded", function(event) {
-});
-
-$(document).ready(function() {
+   }
+   document.addEventListener("DOMContentLoaded", function(event) {
+   });
+   
+   // Size select value setter
+   $(document).ready(function() {
     $('#sizeSelect').change(function() {
         var selectedSize = $(this).val();
         $('#selectedSizeInput').val(selectedSize);
     });
-});
+   });
+   
+   // Product quantity
+   $('#quantityInput').on('change', function() {
+   // Get the value entered by the user
+   const qty = $(this).val();
+   
+   // Assign the value to the hidden input element
+   $('#qtyHidden').val(qty);
+   });
+   
+   
+   // Add to cart
+   $(document).ready(function(){
+   $('.addCart').click(function(e){
+      e.preventDefault();
+      var $form = $(this).closest(".add-cart");
+      var pid = $form.find(".pid").val();
+      var pname = $form.find(".pname").val();
+      var pprice = $form.find(".pprice").val();
+      var size = $form.find(".selected_size").val();
+      var qty = $form.find(".quantity").val();
 
+      $.ajax({
+         url:'add_to_cart.php',
+         method:'post',
+         data:{
+            pid:pid,pname:pname,pprice:pprice,size:size,qty:qty},
+         success:function(response){
+            $("#message").html(response);
+         }
+      });
+   });
+   });
+   
 </script>
