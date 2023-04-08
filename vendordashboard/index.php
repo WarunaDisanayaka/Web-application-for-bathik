@@ -1,3 +1,13 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION['email'])) {
+        // Redirect to the login page
+        header("Location: ../vendor_login.php");
+        exit();
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

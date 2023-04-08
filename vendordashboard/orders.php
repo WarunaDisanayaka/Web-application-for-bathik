@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['email'])) {
+   // Redirect to the login page
+   header("Location: ../vendor_login.php");
+   exit();
+}
+
    // Connect to the database
    $dsn = 'mysql:host=localhost;dbname=bathik';
    $username = 'root';

@@ -1,6 +1,14 @@
 <?php
    session_start();
 
+
+   if (!isset($_SESSION['email'])) {
+      // Redirect to the login page
+      header("Location: ../vendor_login.php");
+      exit();
+  }
+  
+
    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collect the form data
     $product_id = $_POST['product-id'];
