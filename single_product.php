@@ -131,7 +131,7 @@
             </select>
          </div>
          <div class="d-flex align-items-center">
-            <input type="number" class="form-control text-center" id="quantityInput" value="1" style="width: 70px; margin-right:0.5rem;">
+            <input type="number"  id="quantityInput"  style="width: 70px; margin-right:0.5rem;">
             <form action="" class="add-cart">
                <input type="hidden" name="pid" class="pid" value="<?php echo $product_detials['id'] ?>">
                <input type="hidden" name="pname" class="pname" value="<?php echo $product_detials['title'] ?>">

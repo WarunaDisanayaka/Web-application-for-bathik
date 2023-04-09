@@ -98,7 +98,7 @@
                      <td><?php echo $cart['product_name']?></td>
                      <td><?php echo $cart['product_price']?></td>
                      <td>
-                        <input type="number" class="form-control custom-input" value="<?php echo $cart['qty']?>">
+                        <input type="number" class="form-control custom-input" min="1" value="<?php echo $cart['qty']?>">
                      </td>
                      <td><?php echo number_format(($cart['product_price'] * $cart['qty']), 2)?></td>
                      <td>

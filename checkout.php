@@ -32,39 +32,38 @@
 <div class="container mt-5 mb-5">
    <div class="row">
       <div class="col-sm-8">
-         <form class="row g-3">
+         <form action="" class="row g-3">
             <div class="col-md-6">
                <label for="inputEmail4" class="form-label">First name</label>
-               <input type="text" class="form-control" id="inputEmail4">
+               <input type="text" name="fname" class="form-control" id="inputEmail4">
             </div>
             <div class="col-md-6">
                <label for="inputPassword4" class="form-label">Last name</label>
-               <input type="text" class="form-control" id="inputPassword4">
+               <input type="text" name="lname" class="form-control" id="inputPassword4">
             </div>
             <div class="col-12">
                <label for="inputAddress" class="form-label">Email</label>
-               <input type="text" class="form-control" id="inputAddress" placeholder="">
+               <input type="text" name="email" class="form-control" id="inputAddress" placeholder="">
             </div>
             <div class="col-12">
                <label for="inputAddress" class="form-label">Phone</label>
-               <input type="text" class="form-control" id="inputAddress" placeholder="">
+               <input type="text" name="phone" class="form-control" id="inputAddress" placeholder="">
             </div>
             <div class="row g-3">
                <div class="col-sm-7">
-                  <input type="text" class="form-control" placeholder="City" aria-label="City">
+                  <input type="text" name="city" class="form-control" placeholder="City" aria-label="City">
                </div>
                <div class="col-sm">
-                  <input type="text" class="form-control" placeholder="State" aria-label="State">
+                  <input type="text" name="state" class="form-control" placeholder="State" aria-label="State">
                </div>
                <div class="col-sm">
-                  <input type="text" class="form-control" placeholder="Zip" aria-label="Zip">
+                  <input type="text" name="zip" class="form-control" placeholder="Zip" aria-label="Zip">
                </div>
             </div>
             <div class="form-group">
                <label for="exampleFormControlTextarea1">Address</label>
-               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+               <textarea class="form-control" name="address" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
-         </form>
       </div>
       <div class="col-md-4 border added-products">
          <!-- Product details section -->
@@ -91,6 +90,7 @@
             <button class="btn btn-primary">PLACE ORDER</button>
             </a>
          </div>
+         </form>
       </div>
    </div>
 </div>
