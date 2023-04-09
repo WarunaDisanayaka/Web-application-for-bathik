@@ -119,7 +119,7 @@
          <p>Description of the product goes here.</p>
          <div class="mb-3">
             <label for="sizeSelect" class="form-label">Size</label>
-            <select name="size" class="form-select" id="sizeSelect">
+            <select name="size" class="form-select" style="width: 150px;" id="sizeSelect">
                <option selected>Select size</option>
                <?php
                   while ( $size = $stmt2->fetch()) {
