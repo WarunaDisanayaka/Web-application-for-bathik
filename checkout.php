@@ -4,6 +4,8 @@
    
    ?>
 <?php
+   session_start();
+
    //  Connect to the database
    $dsn = 'mysql:host=localhost;dbname=bathik';
    $username = 'root';
@@ -87,8 +89,10 @@
        $state = $_POST['state'];
        $zip = $_POST['zip'];
        $payment = $_POST['payment_method'];
+       $shop = $_POST['shop'];
        
-       $sql = "INSERT INTO orders (first_name, last_name, email, phone, city, state, zip, address,payment_method) VALUES ('$fname', '$lname', '$email', '$phone', '$city', '$state', '$zip','$address','$payment')";
+       $sql = "INSERT INTO orders (first_name, last_name, email, phone, city, state, zip, address,payment_method,shop) VALUES ('$fname', '$lname', '$email', '$phone', '$city', '$state', '$zip','$address','$payment','$shop')";
+       
        
        if ($conn->query($sql) === TRUE) {
            echo 'Data inserted successfully';
@@ -188,6 +192,7 @@
             $total=$total+($cart['product_price'] * $cart['qty']);
          ?>
       <div class="row">
+      <input type="hidden" name="shop" value="<?php echo $cart['shop']?>">
       <p class="col-6"><?php echo $cart['product_name']?>-<?php echo $cart['qty']?></p>
       <div class="col-6 text-right"><?php echo number_format(($cart['product_price'] * $cart['qty']), 2)?></div>
       </div>
