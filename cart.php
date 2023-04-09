@@ -102,9 +102,11 @@
                      </td>
                      <td><?php echo number_format(($cart['product_price'] * $cart['qty']), 2)?></td>
                      <td>
+                        <a href="add_to_cart.php?remove=<?=$cart['id'] ?>" onclick="return confirm('Are you sure want to remove this item?')">
                         <button class="btn btn-danger btn-remove" type="button">
                         <i class="fas fa-trash-alt"></i> 
                         </button>
+                        </a>
                      </td>
                   </tr>
                   <?php
