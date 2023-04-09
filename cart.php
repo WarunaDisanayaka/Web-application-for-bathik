@@ -52,7 +52,7 @@
    
     // Select cart details
     $stmt = $pdo->query("SELECT * FROM cart");  
-
+   
      // To product details
      $stmt2 = $pdo->query("SELECT * FROM cart");  
       
@@ -101,7 +101,6 @@
                         <input type="number" class="form-control custom-input" value="<?php echo $cart['qty']?>">
                      </td>
                      <td><?php echo number_format(($cart['product_price'] * $cart['qty']), 2)?></td>
-
                      <td>
                         <button class="btn btn-danger btn-remove" type="button">
                         <i class="fas fa-trash-alt"></i> 
@@ -125,31 +124,31 @@
          </div>
       </div>
       <div class="col-md-4 border added-products">
-   <!-- Product details section -->
-   <h4>Product details</h4>
-   <?php
-                     $total=0;
-                       while ($cart = $stmt2->fetch()) {
-                        $total=$total+($cart['product_price'] * $cart['qty']);
-                     ?>
-   <div class="row">
-   <p class="col-6"><?php echo $cart['product_name']?>-<?php echo $cart['qty']?></p>
-      <div class="col-6 text-right"><?php echo number_format(($cart['product_price'] * $cart['qty']), 2)?></div>
-   </div>
-   <?php
-                       }
-   ?>
-   <hr class="border-bottom">
-   <div class="row">
-      <div class="col-6"><strong>Total amount</strong></div>
-      <div class="col-6 text-right"><?php echo number_format($total,2) ?></div>
-   </div>
-  
-   <div class="text-center mt-4">
-      <button class="btn btn-primary">PROCEED TO CHECKOUT</button>
-   </div>
-</div>
-
+         <!-- Product details section -->
+         <h4>Product details</h4>
+         <?php
+            $total=0;
+              while ($cart = $stmt2->fetch()) {
+               $total=$total+($cart['product_price'] * $cart['qty']);
+            ?>
+         <div class="row">
+            <p class="col-6"><?php echo $cart['product_name']?>-<?php echo $cart['qty']?></p>
+            <div class="col-6 text-right"><?php echo number_format(($cart['product_price'] * $cart['qty']), 2)?></div>
+         </div>
+         <?php
+            }
+            ?>
+         <hr class="border-bottom">
+         <div class="row">
+            <div class="col-6"><strong>Total amount</strong></div>
+            <div class="col-6 text-right"><?php echo number_format($total,2) ?></div>
+         </div>
+         <div class="text-center mt-4">
+            <a href="checkout.php">
+            <button class="btn btn-primary">PROCEED TO CHECKOUT</button>
+            </a>
+         </div>
+      </div>
    </div>
 </div>
 <!-- End Single product -->
