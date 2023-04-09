@@ -21,7 +21,24 @@
         if ($result->num_rows == 0) {
             $insert = "INSERT INTO cart(id,product_name,product_price,size,qty,total_price) VALUES('$pid','$pname','$pprice','$size','$qty','$qty')";
             $r = $conn->query($insert);
-        } 
+        }else{
+            echo "<script>
+            alert('Item already added!')
+            </script>";
+        }
+
+
+    }
+
+
+    //  Product count
+    if (isset($_GET['cartItem']) && isset($_GET['cartItem']) == 'cart_item') {
+    
+        $sql = "SELECT * FROM cart";
+        $result = $conn->query($sql);
+        $rows = $result->num_rows;
+        
+        echo $rows;
 
 
     }

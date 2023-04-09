@@ -70,6 +70,7 @@
    
    ?>
 <!-- Hero section start-->
+<div id="message"></div>
 <section class="hero" style="background-image: url('img/shopbanner.png');">
    <div class="container">
       <div class="row align-items-center">
@@ -197,6 +198,7 @@
             pid:pid,pname:pname,pprice:pprice,size:size,qty:qty},
          success:function(response){
             $("#message").html(response);
+            load_cart();
          }
       });
    });

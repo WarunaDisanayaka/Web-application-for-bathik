@@ -40,7 +40,7 @@
                   <li class="nav-item">
                      <a href="cart.php" class="nav-link">
                      <i class="fas fa-shopping-cart"></i>
-                     <span class="badge bg-danger">5</span>
+                     <span id="cart-item" class="badge bg-danger"></span>
                      </a>
                   </li>
                </ul>
@@ -53,3 +53,18 @@
          </div>
       </header>
       <!-- Header End -->
+
+      <script>
+         load_cart();
+
+         function load_cart(){
+            $.ajax({
+               url:'add_to_cart.php',
+               method: 'get',
+               data:{cartItem:"cart_item"},
+               success:function(response){
+                  $('#cart-item').html(response);
+               }
+            });
+         }
+      </script>
