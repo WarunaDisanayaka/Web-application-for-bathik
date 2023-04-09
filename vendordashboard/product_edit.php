@@ -47,7 +47,7 @@
     }
 
     // Validate image
-    $allowed_extensions = array('jpg', 'jpeg', 'png');
+    $allowed_extensions = array('jpg', 'jpeg', 'png','webp');
     $file_extension = pathinfo($product_images['name'], PATHINFO_EXTENSION);
     if (!empty($product_images['name']) && !in_array($file_extension, $allowed_extensions)) {
         $errors[] = 'Invalid image. Please choose a valid image file (jpg, jpeg, or png) with a maximum size of 2MB.';
@@ -97,8 +97,8 @@
             // Upload the new image to the server if provided
             if (!empty($product_images['name'])) {
                 move_uploaded_file($product_images['tmp_name'], $target_file);
-                move_uploaded_file($product_images['tmp_name'], $target_file2);
-                move_uploaded_file($product_images['tmp_name'], $target_file3);
+                move_uploaded_file($product_images2['tmp_name'], $target_file2);
+                move_uploaded_file($product_images3['tmp_name'], $target_file3);
                 echo "<script>
                 alert('Product Updated');
                 window.location.href = 'view_product.php';

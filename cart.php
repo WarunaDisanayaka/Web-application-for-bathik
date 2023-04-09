@@ -56,6 +56,7 @@
      // To product details
      $stmt2 = $pdo->query("SELECT * FROM cart");  
       
+     echo $_SESSION['shop'];
    ?>
 <?php
    // Include the header file

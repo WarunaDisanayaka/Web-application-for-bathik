@@ -1,4 +1,5 @@
 <?php
+   session_start();
    // Include the header file
    require_once  'header.php';
 // Connect to the database
@@ -12,6 +13,7 @@ $pdo = new PDO($dsn, $username, $password, $options);
 
    if (isset($_GET['id'])) {
       $store_id = $_GET['id'];
+      $_SESSION['shop']=$_GET['id'];
       // Select all shops products
       $stmt = $pdo->query("SELECT * FROM `products` WHERE vendor_id='$store_id'");  
       // Select store
