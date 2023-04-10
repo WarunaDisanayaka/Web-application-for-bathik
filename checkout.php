@@ -96,8 +96,9 @@
        $zip = $_POST['zip'];
        $payment = $_POST['payment_method'];
        $shop = $_POST['shop'];
+       $user_id = $_SESSION['userid'];
        
-       $sql = "INSERT INTO orders (first_name, last_name, email, phone, city, state, zip, address,payment_method,shop) VALUES ('$fname', '$lname', '$email', '$phone', '$city', '$state', '$zip','$address','$payment','$shop')";
+       $sql = "INSERT INTO orders (first_name, last_name, email, phone, city, state, zip, address,payment_method,shop,user_id) VALUES ('$fname', '$lname', '$email', '$phone', '$city', '$state', '$zip','$address','$payment','$shop','$user_id')";
        
        $cartOrder="INSERT INTO cart_order (id, product_name, product_price, size, qty, total_price, shop,user_id)
 SELECT id, product_name, product_price, size, qty, total_price, shop,user_id
