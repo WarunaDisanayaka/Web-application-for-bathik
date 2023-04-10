@@ -1,6 +1,15 @@
 <?php
    session_start();
 
+   if (!isset($_SESSION['email'])) {
+      // Redirect to the login page
+     
+      // echo("Please login");
+      exit();
+  
+  }
+  
+
    // Connect to the database
    $host = 'localhost'; 
    $user = 'root'; 
@@ -15,13 +24,14 @@
       $pprice = $_POST['pprice'];
       $size = $_POST['size'];
       $shop = $_SESSION['shop'];
+      $user_id = $_SESSION['userid'];
       $qty = 1;
    
       $sql = "SELECT id FROM cart WHERE id='$pid'";
       $result = $conn->query($sql);
    
       if ($result->num_rows == 0) {
-          $insert = "INSERT INTO cart(id,product_name,product_price,size,qty,total_price,shop) VALUES('$pid','$pname','$pprice','$size','$qty','$qty','$shop')";
+          $insert = "INSERT INTO cart(id,product_name,product_price,size,qty,total_price,shop,user_id) VALUES('$pid','$pname','$pprice','$size','$qty','$qty','$shop','$user_id')";
           $r = $conn->query($insert);
       }else{
           echo "<script>

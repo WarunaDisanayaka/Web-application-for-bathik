@@ -6,6 +6,12 @@
 <?php
    session_start();
 
+   if (!isset($_SESSION['email'])) {
+      // Redirect to the login page
+      header("Location: login.php");
+      exit();
+  }
+
    //  Connect to the database
    $dsn = 'mysql:host=localhost;dbname=bathik';
    $username = 'root';
@@ -93,6 +99,11 @@
        
        $sql = "INSERT INTO orders (first_name, last_name, email, phone, city, state, zip, address,payment_method,shop) VALUES ('$fname', '$lname', '$email', '$phone', '$city', '$state', '$zip','$address','$payment','$shop')";
        
+       $cartOrder="INSERT INTO cart_order (id, product_name, product_price, size, qty, total_price, shop,user_id)
+SELECT id, product_name, product_price, size, qty, total_price, shop,user_id
+FROM cart;";
+
+      $conn->query($cartOrder);
        
        if ($conn->query($sql) === TRUE) {
            echo 'Data inserted successfully';

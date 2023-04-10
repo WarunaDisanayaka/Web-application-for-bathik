@@ -1,44 +1,22 @@
 <?php
-   session_start();
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       // Collect the form data
-       $email = $_POST['email'];
-       $password = $_POST['password'];
+session_start();
+
+if (!isset($_SESSION['email'])) {
+   // Redirect to the login page
+   header("Location: login.php");
+   exit();
+}
+
+ // Include the dbconnection file
+ require_once  'db_connection.php';
+
+
+   echo $userId=$_SESSION['userid'];
+
+   $myAccount="SELECT * FROM users WHERE id='$userId'";
+   $result=$conn->query($myAccount);
+   $row = $result->fetch_assoc();
    
-       // Connect to the database
-       $host = 'localhost'; 
-       $user = 'root'; 
-       $pwd = ''; 
-       $dbname = 'bathik'; 
-       $conn = new mysqli($host, $user, $pwd, $dbname);
-       if ($conn->connect_error) {
-           die('Connection failed: ' . $conn->connect_error);
-       }
-   
-       // Check if the email exists in the database
-       $sql = "SELECT * FROM stores WHERE email = '$email'";
-       $result = $conn->query($sql);
-       if ($result->num_rows == 1) {
-           // Verify the password
-           $row = $result->fetch_assoc();
-           if (password_verify($password, $row['password'])) {
-               // Login successful
-               $_SESSION['store_id'] = $row['store_id'];
-               $_SESSION['email'] = $row['email'];
-               $_SESSION['phone'] = $row['phone'];
-               header('Location: vendordashboard');
-               exit;
-           } else {
-               // Incorrect password
-               $password_error = 'Incorrect password';
-           }
-       } else {
-           // Email not found
-           $email_error = 'Email not found';
-       }
-   
-       $conn->close();
-   }
    ?>
 <?php
    // Include the header file
@@ -57,8 +35,8 @@
 </section>
 <!-- Hero section end -->
 <!-- Login form start -->
-<div class="container mt-5">
-   <ul class="nav nav-tabs">
+<div class="container mt-5 mb-5">
+   <ul class="nav nav-tabs mb-5">
       <li class="nav-item">
          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Dashboard</button>
       </li>
@@ -69,16 +47,16 @@
          <button class="nav-link" id="menu2-tab" data-bs-toggle="tab" data-bs-target="#menu2" type="button" role="tab" aria-controls="menu2" aria-selected="false">Account details</button>
       </li>
       <li class="nav-item">
-         <button class="nav-link" id="menu2-tab" data-bs-toggle="tab" data-bs-target="#menu2" type="button" role="tab" aria-controls="menu2" aria-selected="false">Logout</button>
+         <a href="logout.php"><button class="nav-link" id="menu2-tab" data-bs-toggle="tab" data-bs-target="#menu2" type="button" role="tab" aria-controls="menu2" aria-selected="false">Logout</button></a>
       </li>
    </ul>
    <div class="tab-content">
       <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
-         <h3>Home</h3>
-         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut blandit nisi. Donec auctor bibendum felis a lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+         <h3>Dashboard</h3>
+         <p>Hi welcome <?php echo $row['username']?> </p>
       </div>
       <div id="menu1" class="tab-pane fade" role="tabpanel" aria-labelledby="menu1-tab">
-         <h3>Menu 1</h3>
+         <h3>Orders</h3>
          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut blandit nisi. Donec auctor bibendum felis a lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
       </div>
       <div id="menu2" class="tab-pane fade" role="tabpanel" aria-labelledby="menu2-tab">

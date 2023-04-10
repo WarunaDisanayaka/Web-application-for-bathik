@@ -1,5 +1,14 @@
 <?php
 session_start();
+
+if (isset($_SESSION['email'])) {
+  // Redirect to the login page
+  header("Location: my_account.php");
+  exit();
+}else{
+  
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collect the form data
     $email = $_POST['email'];
@@ -16,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Check if the email exists in the database
-    $sql = "SELECT * FROM users WHERE email = '$email' and role='admin'";
+    $sql = "SELECT * FROM users WHERE email = '$email' and role='user'";
     $result = $conn->query($sql);
     if ($result->num_rows == 1) {
         // Verify the password
@@ -26,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['username'] = $row['username'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['phone'] = $row['phone'];
-            header('Location: dashboard');
+            $_SESSION['userid'] = $row['id'];
+            header('Location: my_account.php');
             exit;
         } else {
             // Incorrect password
@@ -39,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $conn->close();
 }
+
 ?>
 
 <?php
