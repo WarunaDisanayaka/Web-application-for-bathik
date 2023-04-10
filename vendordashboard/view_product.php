@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Connect to the database
 $dsn = 'mysql:host=localhost;dbname=bathik';
 $username = 'root';
@@ -6,8 +7,10 @@ $password = '';
 $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
+$shop=$_SESSION['store_id'];
+
 // Select all shops with images
-$stmt = $pdo->query('SELECT * FROM products');
+$stmt = $pdo->query("SELECT * FROM products WHERE vendor_id='$shop'");
 
 
 ?>

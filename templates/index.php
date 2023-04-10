@@ -1,3 +1,6 @@
+<?php
+$name = "John";
+echo "Hello, $name!";   ?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -12,24 +15,24 @@
       <![endif]-->
       <!--[if IE]><script type="text/javascript" src="js/excanvas.js"></script><![endif]-->
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>	
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+      </script>
       <script type="text/javascript" src="js/fabric.js"></script>
       <script type="text/javascript" src="js/tshirtEditor.js"></script>
       <script type="text/javascript" src="js/jquery.miniColors.min.js"></script>
       <!-- Le styles -->
       <!-- <link type="text/css" rel="stylesheet" href="css/jquery.miniColors.css" />
-      <link href="css/bootstrap.min.css" rel="stylesheet">
-      <link href="css/bootstrap-responsive.min.css" rel="stylesheet"> -->
-
-	  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>	
-<script type="text/javascript" src="{{ url_for('static', filename='js/fabric.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/tshirtEditor.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.miniColors.min.js') }}"></script>
-<!-- Le styles -->
-<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='js/jquery.miniColors.css') }}" />
-<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='css/bootstrap-responsive.min.css') }}" rel="stylesheet">
-<script type="text/javascript"></script>
-
+         <link href="css/bootstrap.min.css" rel="stylesheet">
+         <link href="css/bootstrap-responsive.min.css" rel="stylesheet"> -->
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>	
+      <script type="text/javascript" src="{{ url_for('static', filename='js/fabric.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/tshirtEditor.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.miniColors.min.js') }}"></script>
+      <!-- Le styles -->
+      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='js/jquery.miniColors.css') }}" />
+      <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+      <link href="{{ url_for('static', filename='css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+      <script type="text/javascript"></script>
       <script type="text/javascript"></script>
       <style type="text/css">
          .footer {
@@ -40,7 +43,7 @@
          }			
          body {
          padding-top: 60px;	  
-		 overflow: hidden;
+         overflow: hidden;
          }
          #canvas{
          position: absolute;
@@ -121,17 +124,17 @@
                      </ul>
                      <div class="tab-content">
                         <div class="tab-pane active" id="tab1">
-                           <div class="well">
-                              <!--					      	<h3>Tee Styles</h3>-->
-                              <!--						      <p>-->
-                              <select id="">
-                                 <option value="1" selected="selected">Short Sleeve Shirts</option>
-                                 <option value="2">Long Sleeve Shirts</option>
-                                 <option value="3">Hoodies</option>
-                                 <option value="4">Tank tops</option>
-                              </select>
-                              <!--						      </p>-->								
-                           </div>
+                           <!-- <div class="well"> -->
+                           <!--					      	<h3>Tee Styles</h3>-->
+                           <!--						      <p>-->
+                           <!-- <select id="">
+                              <option value="1" selected="selected">Short Sleeve Shirts</option>
+                              <option value="2">Long Sleeve Shirts</option>
+                              <option value="3">Hoodies</option>
+                              <option value="4">Tank tops</option>
+                              </select> -->
+                           <!--						      </p>-->								
+                           <!-- </div> -->
                            <div class="well">
                               <ul class="nav">
                                  <li class="color-preview" title="White" style="background-color:#ffffff;"></li>
@@ -226,12 +229,14 @@
                         </div>
                      </div>
                   </div>
-                  <canvas id="canvas"></canvas>
-                  <!--	EDITOR      -->					
-                  <div id="shirtDiv" class="page" style="width: 530px; height: 630px; position: relative; background-color: rgb(255, 255, 255);">
-                     <img src="{{ url_for('static', filename='img/crew_front.png') }}">
-                     <div id="drawingArea" style="position: absolute;top: -2px;left: 5px;z-index: 10;width: 200px;height: 589px;">
-                        <canvas id="tcanvas" width=600 height="689" class="hover" style="-webkit-user-select: none;"></canvas>
+                  <div class="design" id="design">
+                     <canvas id="canvas"></canvas>
+                     <!--	EDITOR      -->					
+                     <div id="shirtDiv" class="page" style="width: 530px; height: 630px; position: relative; background-color: rgb(255, 255, 255);">
+                        <img src="{{ url_for('static', filename='img/crew_front.png') }}">
+                        <div id="drawingArea" style="position: absolute;top: -2px;left: 5px;z-index: 10;width: 200px;height: 589px;">
+                           <canvas id="tcanvas" width=600 height="689" class="hover" style="-webkit-user-select: none;"></canvas>
+                        </div>
                      </div>
                   </div>
                   <!--					<div id="shirtBack" class="page" style="width: 530px; height: 630px; position: relative; background-color: rgb(255, 255, 255); display:none;">-->
@@ -269,8 +274,12 @@
                         <input type="submit" class="btn" value="Predict Price">
                      </form>
                      <h4>Rs {{ pred }}</h4>
+                     <h1>{{data}}</h1>
                   </div>
+                  <a href="{{ url_for('myfunction') }}" class="btn btn-primary">Click me</a>
+
                </div>
+         
             </div>
          </section>
       </div>
@@ -284,8 +293,7 @@
       <!-- Le javascript
          ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->    
-	  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-
+      <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
       <script src="js/bootstrap.min.js"></script>    
       <script type="text/javascript">
          var _gaq = _gaq || [];
@@ -371,6 +379,8 @@
            }
            event.preventDefault();
          }
+         
+         //
          
       </script>
    </body>

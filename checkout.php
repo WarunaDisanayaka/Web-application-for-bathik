@@ -100,14 +100,25 @@
        
        $sql = "INSERT INTO orders (first_name, last_name, email, phone, city, state, zip, address,payment_method,shop,user_id) VALUES ('$fname', '$lname', '$email', '$phone', '$city', '$state', '$zip','$address','$payment','$shop','$user_id')";
        
-       $cartOrder="INSERT INTO cart_order (id, product_name, product_price, size, qty, total_price, shop,user_id)
-SELECT id, product_name, product_price, size, qty, total_price, shop,user_id
+       $cartOrder="INSERT INTO cart_order (id, product_name, product_price, size, qty, total_price, shop,user_id,status)
+SELECT id, product_name, product_price, size, qty, total_price, shop,user_id,status
 FROM cart;";
 
+      $removeCart = "TRUNCATE TABLE cart";
+     
       $conn->query($cartOrder);
+      $conn->query($removeCart);
+     
        
        if ($conn->query($sql) === TRUE) {
-           echo 'Data inserted successfully';
+         echo "<script>
+         swal({
+             title: 'Shopping completed',
+             text: 'Thank you for shopping!',
+             icon: 'success',
+             button: 'OK'
+         });
+     </script>";
        } else {
            echo 'Error inserting data: ' . $conn->error;
        }

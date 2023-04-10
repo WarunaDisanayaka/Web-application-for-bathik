@@ -76,6 +76,7 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="orders.php">Orders</a>
+            <a class="collapse-item" href="design_orders.php">Design Orders</a>
         </div>
     </div>
 </li>

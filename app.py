@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import pickle
 import numpy as np
 
 app = Flask(__name__)
+
+global_pred = 0
+
 
 # Prediction
 
@@ -17,7 +20,10 @@ def prediction(lst):
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+
     pred = 0
+    global global_pred
+
     if request.method == 'POST':
         size = request.form['size']
         fabric = request.form['fabric']
@@ -64,9 +70,22 @@ def index():
 
         pred = prediction(feature_list)
         pred = np.round(pred[0])
+        global_pred = pred
+
         print(pred)
 
-    return render_template("index.html", pred=pred)
+    return render_template("index.php", pred=pred)
+
+
+@app.route('/myfunction')
+def myfunction():
+    global global_pred
+
+    # Add the predicted value to the query string
+    query_string = f'?pred={global_pred}'
+
+    # redirect to the page with the query string
+    return redirect(f'http://localhost/web-application-for-bathik/design_order.php{query_string}')
 
 
 if __name__ == '__main__':

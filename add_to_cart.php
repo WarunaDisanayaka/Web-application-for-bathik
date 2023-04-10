@@ -31,7 +31,7 @@
       $result = $conn->query($sql);
    
       if ($result->num_rows == 0) {
-          $insert = "INSERT INTO cart(id,product_name,product_price,size,qty,total_price,shop,user_id) VALUES('$pid','$pname','$pprice','$size','$qty','$qty','$shop','$user_id')";
+          $insert = "INSERT INTO cart(id,product_name,product_price,size,qty,total_price,shop,user_id,status) VALUES('$pid','$pname','$pprice','$size','$qty','$qty','$shop','$user_id','Pending')";
           $r = $conn->query($insert);
       }else{
           echo "<script>

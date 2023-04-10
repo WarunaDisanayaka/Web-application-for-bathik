@@ -17,23 +17,23 @@
       $shop = $_SESSION['store_id'];
       
       // Select all shops with images
-      $stmt = $pdo->query("SELECT * FROM cart_order WHERE shop='$shop'");
+      $stmt = $pdo->query("SELECT * FROM design_orders WHERE shop='$shop'");
 
       // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the selected action from the form data
    $action = $_POST['action'];
    $user_id = $_POST['userid'];
-   $pid = $_POST['pid'];
+   $shop = $_SESSION['store_id'];
 
    
 
    // Update the database with the new status
-   $updateStatus = $pdo->prepare('UPDATE `cart_order` SET `status` = :status WHERE `user_id` = :user_id AND `id` = :product_id');
+   $updateStatus = $pdo->prepare('UPDATE `design_orders` SET `status` = :status WHERE `user_id` = :user_id AND `shop` = :shop');
    $updateStatus->execute([
        'status' => $action,
        'user_id' => $user_id, // Replace with the actual user ID
-       'product_id' => $pid, // Replace with the actual product ID
+       'shop' => $shop, // Replace with the actual product ID
    ]);
 
    // Redirect the user back to the same page to prevent form resubmission
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['username']?></span>
                         <img class="img-profile rounded-circle"
                            src="img/undraw_profile.svg">
                         </a>
@@ -141,17 +141,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                <div class="container-fluid">
                   <!-- Page Heading -->
                   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                     <h1 class="h3 mb-0 text-gray-800">Orders</h1>
+                     <h1 class="h3 mb-0 text-gray-800">Design Orders</h1>
                   </div>
                   <!-- Content Row -->
                   <div class="row">
                      <table class="table">
                         <thead class="thead-dark">
                            <tr>
-                              <th scope="col">Product name</th>
+                              <th scope="col">Design</th>
                               <th scope="col">Product price</th>
-                              <th scope="col">Qty</th>
                               <th scope="col">Status</th>
+                        
                               <th scope="col">Action</th>
                               <th></th>
                            </tr>
@@ -163,19 +163,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               ?>
                            <tr>
                               
-                              <td><?php echo $row['product_name'];?></td>
-                              <td><?php echo $row['product_price'];?></td>
-                              <td><?php echo $row['qty'];?></td>
+                              <td><img src="<?php echo $row['design'];?>" style="width:250px; height:200px;" alt=""></td>
+                              <td><?php echo $row['price'];?></td>
                               <td><?php echo $row['status'];?></td>
-                              <form action="orders.php" method="POST">
+                              <form action="design_orders.php" method="POST">
                               <input type="hidden" name="userid" value="<?php echo $row['user_id'];?>">
-                              <input type="hidden" name="pid" value="<?php echo $row['id'];?>">
+                             
                               <td>
                                  <select name="action" class="form-select" aria-label="Default select example">
                                     <option selected>Open this select menu</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Processing">Processing</option>
-                                    <option value="Completed">Completed</option>
+                                    <option value="Drawing the design">Drawing the design</option>
+                                    <option value="Fabric preparation">Fabric preparation</option>
+                                    <option value="Waxing/Dyeing">Waxing/Dyeing</option>
+                                    <option value="Cutting and sewing">Cutting and sewing</option>
+                                    <option value="Quality control">Quality control</option>
+                                    <option value="Package and shipping">Package and shipping</option>
                                  </select>
                               </td>
                               <td>
