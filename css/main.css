@@ -55,7 +55,7 @@
     display: inline-block;
     width: 1.5rem;
     height: 1.5rem;
-    background-color: #ccc;
+    
     margin-right: 0.5rem;
     cursor: pointer;
   }
@@ -154,4 +154,10 @@ object-fit: cover;
 /* Added products */
 .added-products{
   padding: 1rem;
+}
+
+/* Star rating */
+
+.star.checked {
+  color: rgb(255, 230, 0);
 }

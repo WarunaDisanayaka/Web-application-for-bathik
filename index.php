@@ -80,13 +80,13 @@ require_once  'header.php';
       <div class="card-body d-flex flex-column justify-content-center">
         <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id']?>"><?php echo $row['storename']?></a></h5>
         <!-- <a href="shop.php">shop</a> -->
-        <!-- <div class="rating text-center">
+        <div class="rating text-center">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

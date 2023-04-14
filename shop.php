@@ -42,7 +42,7 @@ $pdo = new PDO($dsn, $username, $password, $options);
          <div class="card mb-3 border-0">
             <div class="card-body">
                <form>
-                  <div class="mb-3">
+                  <!-- <div class="mb-3">
                      <label for="color"><h4>Category</h4></label>
                      <div>
                         <input type="checkbox" id="red">
@@ -64,7 +64,7 @@ $pdo = new PDO($dsn, $username, $password, $options);
                         <input type="checkbox" id="white">
                         <label for="white" class="form-check-label">White</label>
                      </div>
-                  </div>
+                  </div> -->
                   <div class="mb-3">
                      <label for="color"><h4>Materials</h4></label>
                      <div>
@@ -76,10 +76,27 @@ $pdo = new PDO($dsn, $username, $password, $options);
                         <label for="blue" class="form-check-label">Silk</label>
                      </div>
                   </div>
-                  <div class="mb-3">
+                  <!-- <div class="mb-3">
                      <label for="price">Price</label>
                      <input type="range" class="form-range" id="price" min="0" max="1000" step="50" value="500">
-                  </div>
+                  </div> -->
+                  <div class="mb-3">
+    <label for="textArea"><h4>Text Area</h4></label>
+    <textarea class="form-control" id="textArea" rows="3"></textarea>
+</div>
+<div class="mb-3">
+    <label for="star-rating"><h4>Star Rating</h4></label>
+    <div class="rating">
+        <input type="hidden" name="star-rating" id="star-rating-value">
+        <i class="fa fa-star fa-1x star" data-index="0"></i>
+        <i class="fa fa-star fa-1x star" data-index="1"></i>
+        <i class="fa fa-star fa-1x star" data-index="2"></i>
+        <i class="fa fa-star fa-1x star" data-index="3"></i>
+        <i class="fa fa-star fa-1x star" data-index="4"></i>
+    </div>
+</div>
+
+
                   <button type="submit" class="btn btn-primary">Filter</button>
                </form>
             </div>
@@ -112,3 +129,39 @@ $pdo = new PDO($dsn, $username, $password, $options);
    require_once 'footer.php';
    
    ?>
+
+<script>
+    const stars = document.querySelectorAll(".star");
+const ratingValue = document.querySelector("#star-rating-value");
+
+for (let i = 0; i < stars.length; i++) {
+  stars[i].addEventListener("mouseover", function () {
+    for (let j = 0; j < stars.length; j++) {
+      if (j <= i) {
+        stars[j].classList.add("checked");
+      } else {
+        stars[j].classList.remove("checked");
+      }
+    }
+  });
+
+  stars[i].addEventListener("click", function () {
+    ratingValue.value = i + 1;
+    for (let j = 0; j < stars.length; j++) {
+      if (j <= i) {
+        stars[j].classList.add("checked");
+      } else {
+        stars[j].classList.remove("checked");
+      }
+    }
+  });
+
+  stars[i].addEventListener("mouseout", function () {
+    for (let j = 0; j < stars.length; j++) {
+      stars[j].classList.remove("checked");
+    }
+  });
+}
+
+
+</script>
