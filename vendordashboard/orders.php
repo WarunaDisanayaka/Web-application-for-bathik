@@ -18,16 +18,16 @@
       
       // Select all shops with images
       $stmt = $pdo->query("SELECT * FROM cart_order WHERE shop='$shop'");
-
+   
       // Check if the form has been submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the selected action from the form data
    $action = $_POST['action'];
    $user_id = $_POST['userid'];
    $pid = $_POST['pid'];
-
    
-
+   
+   
    // Update the database with the new status
    $updateStatus = $pdo->prepare('UPDATE `cart_order` SET `status` = :status WHERE `user_id` = :user_id AND `id` = :product_id');
    $updateStatus->execute([
@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        'user_id' => $user_id, // Replace with the actual user ID
        'product_id' => $pid, // Replace with the actual product ID
    ]);
-
+   
    // Redirect the user back to the same page to prevent form resubmission
    header('Location: ' . $_SERVER['REQUEST_URI']);
    exit();
-}
+   }
       
       
       ?>
@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <title></title>
       <!-- Custom fonts for this template-->
       <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
       <link
          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
          rel="stylesheet">
@@ -142,18 +143,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <!-- Page Heading -->
                   <div class="d-sm-flex align-items-center justify-content-between mb-4">
                      <h1 class="h3 mb-0 text-gray-800">Orders</h1>
+                     <button class="btn btn-primary" id="dl-pdf">Download PDF</button>
                   </div>
                   <!-- Content Row -->
                   <div class="row">
-                     <table class="table">
+                     <table class="table" id="orderTable" >
                         <thead class="thead-dark">
                            <tr>
                               <th scope="col">Product name</th>
                               <th scope="col">Product price</th>
                               <th scope="col">Qty</th>
                               <th scope="col">Status</th>
+                              <th scope="col">Selection</th>
                               <th scope="col">Action</th>
-                              <th></th>
                            </tr>
                         </thead>
                         <tbody>
@@ -162,25 +164,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                   
                               ?>
                            <tr>
-                              
                               <td><?php echo $row['product_name'];?></td>
                               <td><?php echo $row['product_price'];?></td>
                               <td><?php echo $row['qty'];?></td>
                               <td><?php echo $row['status'];?></td>
                               <form action="orders.php" method="POST">
-                              <input type="hidden" name="userid" value="<?php echo $row['user_id'];?>">
-                              <input type="hidden" name="pid" value="<?php echo $row['id'];?>">
-                              <td>
-                                 <select name="action" class="form-select" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Processing">Processing</option>
-                                    <option value="Completed">Completed</option>
-                                 </select>
-                              </td>
-                              <td>
-                              <button type="submit" class="btn btn-primary">Submit</button>
-                              </td>
+                                 <input type="hidden" name="userid" value="<?php echo $row['user_id'];?>">
+                                 <input type="hidden" name="pid" value="<?php echo $row['id'];?>">
+                                 <td>
+                                    <select name="action" class="form-select" aria-label="Default select example">
+                                       <option selected>Open this select menu</option>
+                                       <option value="Pending">Pending</option>
+                                       <option value="Processing">Processing</option>
+                                       <option value="Completed">Completed</option>
+                                    </select>
+                                 </td>
+                                 <td>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                 </td>
                               </form>
                            </tr>
                            <?php
@@ -249,5 +250,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <!-- Page level custom scripts -->
       <script src="js/demo/chart-area-demo.js"></script>
       <script src="js/demo/chart-pie-demo.js"></script>
+      <script src="js/html2pdf.bundle.min.js"></script>
+      <script type="text/javascript">
+         document.getElementById('dl-pdf').onclick = function() {
+         var table = document.getElementById('orderTable');
+         var tbody = table.getElementsByTagName('tbody')[0];
+         
+         // Remove the select option and action column from each row
+         var rows = tbody.getElementsByTagName('tr');
+         for (var i = 0; i < rows.length; i++) {
+         var tdSelect = rows[i].getElementsByTagName('td')[4];
+         tdSelect.innerHTML = '';
+         var tdAction = rows[i].getElementsByTagName('td')[5];
+         tdAction.innerHTML = '';
+         }
+         
+         var opt = {
+         margin:1,
+         filename:'orders.pdf',
+         image:{type:'jpeg',quality:0.98},
+         html2canvas:{scale:2},
+         jsPDF:{unit:'in',format:'letter',orientation:'portrait'}
+         };
+         html2pdf(table, opt);
+         };
+         
+      </script>
    </body>
 </html>
