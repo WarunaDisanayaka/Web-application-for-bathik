@@ -158,6 +158,6 @@ object-fit: cover;
 
 /* Star rating */
 
-.star.checked {
+.star-btn {
   color: rgb(255, 230, 0);
 }
