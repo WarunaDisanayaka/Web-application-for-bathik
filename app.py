@@ -34,7 +34,7 @@ def index():
         # print(color1, color2, color3, color4)
 
         # List making to get features
-        feature_list = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0]
+        feature_list = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
         # For size
         if size == 's':
