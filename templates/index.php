@@ -256,7 +256,7 @@
                         <input type="hidden" name="color3" id="color-input3">
                         <input type="hidden" name="color4" id="color-input4">
                         <label for="">Size</label>
-                        <select name="size" id="size">
+                        <select name="size" id="size" required>
                            <option value="" selected hidden>Select</option>
                            <option value="s">Small</option>
                            <option value="m" >Medium</option>
@@ -264,7 +264,7 @@
                            <option value="xl">Extra large</option>
                         </select>
                         <label for="">Fabric Type</label>
-                        <select name="fabric" id="fabric">
+                        <select name="fabric" id="fabric" required>
                            <option value="" selected hidden>Select</option>
                            <option value="linen">Linen</option>
                            <option value="rayon" >Rayon</option>
