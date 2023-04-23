@@ -1,11 +1,11 @@
 <?php
-$name = "John";
-echo "Hello, $name!";   ?>
+   $name = "John";
+   echo "Hello, $name!";   ?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
       <meta charset="utf-8">
-      <title>Title</title>
+      <title>Personalization</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="description" content="">
       <meta name="author" content="">
@@ -250,7 +250,7 @@ echo "Hello, $name!";   ?>
                <div class="span3">
                   <div class="well">
                      <h3>Total Prices</h3>
-                     <form action="/" method="POST">
+                     <form id="price-predictor" action="/" method="POST">
                         <input type="hidden" name="color1" id="color-input">
                         <input type="hidden" name="color2" id="color-input2">
                         <input type="hidden" name="color3" id="color-input3">
@@ -273,13 +273,10 @@ echo "Hello, $name!";   ?>
                         </select>
                         <input type="submit" class="btn" value="Predict Price">
                      </form>
-                     <h4>Rs {{ pred }}</h4>
-                     <h1>{{data}}</h1>
+                     <h4>Rs <span id="result"></span></h4>
                   </div>
                   <a href="{{ url_for('myfunction') }}" class="btn btn-primary">Click me</a>
-
                </div>
-         
             </div>
          </section>
       </div>
@@ -381,6 +378,25 @@ echo "Hello, $name!";   ?>
          }
          
          //
+         
+         $(document).ready(function() {
+         $('form').submit(function(event) {
+         event.preventDefault();
+         var formData = $(this).serialize();
+         $.ajax({
+         url: '/',
+         type: 'POST',
+         data: formData,
+         dataType: 'json',
+         success: function(response) {
+         $('#result').text(response.pred);
+         },
+         error: function(xhr, status, error) {
+         console.log(xhr.responseText);
+         }
+         });
+         });
+         });
          
       </script>
    </body>

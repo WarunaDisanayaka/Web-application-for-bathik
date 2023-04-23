@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import pickle
 import numpy as np
 
@@ -73,8 +73,9 @@ def index():
         global_pred = pred
 
         print(pred)
+        return jsonify({'pred': pred})
 
-    return render_template("index.php", pred=pred)
+    return render_template("index.php")
 
 
 @app.route('/myfunction')
