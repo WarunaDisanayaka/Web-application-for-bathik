@@ -119,8 +119,8 @@
                   <div class="tabbable">
                      <!-- Only required for left/right tabs -->
                      <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1" data-toggle="tab">T-Shirt Options</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Gravatar</a></li>
+                        <li class="active"><a href="#tab1" data-toggle="tab">Dress Options</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Designs</a></li>
                      </ul>
                      <div class="tab-content">
                         <div class="tab-pane active" id="tab1">
@@ -276,6 +276,13 @@
                      <h4>Rs <span id="result"></span></h4>
                   </div>
                   <a href="{{ url_for('myfunction') }}" class="btn btn-primary">Click me</a>
+                  <button id="download" class="btn btn-primary">Download</button>
+                  <div class="src-preview">
+                     <div class="screenshot">
+                        <i id="close-btn" class="fa-solid fa-xmark"></i>
+                        
+                     </div>
+                  </div>
                </div>
             </div>
          </section>
@@ -397,7 +404,51 @@
          });
          });
          });
-         
+         // Screenshot
+         const screenshotBtn = document.querySelector("#download");
+
+screenshotBtn.addEventListener("click", async () => {
+  try {
+    // Get the user's screen or a specific tab
+    const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+
+    // Create a video element to capture the screen
+    const video = document.createElement("video");
+    video.srcObject = stream;
+
+    // Wait for the video to load the metadata and dimensions
+    video.addEventListener("loadedmetadata", () => {
+      // Create a canvas to draw the screenshot
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Set the canvas dimensions to the video dimensions
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      // Draw the video frame on the canvas
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Create a download link for the screenshot
+      const downloadLink = document.createElement("a");
+      downloadLink.download = "screenshot.png";
+      downloadLink.href = canvas.toDataURL("image/png");
+      document.body.appendChild(downloadLink);
+      
+      // Click the download link to download the screenshot
+      downloadLink.click();
+
+      // Stop the video stream
+      stream.getVideoTracks()[0].stop();
+    });
+
+    // Start playing the video to load the metadata
+    video.play();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
       </script>
    </body>
 </html>
