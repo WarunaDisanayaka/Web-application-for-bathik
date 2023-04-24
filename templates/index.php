@@ -1,9 +1,6 @@
 <?php
    $name = "John";
    echo "Hello, $name!";  
-
-   
-  
    ?>
    
 <!DOCTYPE html>
@@ -53,9 +50,9 @@
          #canvas{
          position: absolute;
          z-index: 500;
-         margin-left: 10rem;
          -webkit-clip-path:  polygon(20.18% 3.39%, 75% 3.39%, 67.88% 37.05%, 65.14% 50%, 75% 96.5%, 25% 96.5%, 35.75% 50%, 31.42% 37.05%);
          clip-path: polygon(88.000px 18.000px, 1.000px 233.000px, 124.000px 267.000px, 72.000px 610.000px, 129.000px 610.000px, 135.000px 632.000px, 231.000px 627.000px, 340.000px 632.000px, 377.000px 617.000px, 460.000px 610.000px, 412.000px 267.000px, 532.000px 233.000px, 419.000px 1.000px, 102.000px 7.000px, 88.000px 18.000px);
+         /* background-color: #a5a3a3 */
          }
          .tools .color-field{
          height: 40px;
@@ -322,7 +319,7 @@
          //  Drawing tool
          const DrawingCanvas = document.getElementById("canvas");
          DrawingCanvas.width = window.innerWidth - 60;
-         DrawingCanvas.height = 400;
+         DrawingCanvas.height = 600;
          
          let context = DrawingCanvas.getContext("2d");
          context.fillStyle = "rgba(255, 255, 255, 0)";
