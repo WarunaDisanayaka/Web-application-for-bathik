@@ -77,7 +77,6 @@ def index():
 
     return render_template("index.php")
 
-
 @app.route('/myfunction')
 def myfunction():
     global global_pred

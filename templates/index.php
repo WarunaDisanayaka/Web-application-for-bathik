@@ -1,6 +1,11 @@
 <?php
    $name = "John";
-   echo "Hello, $name!";   ?>
+   echo "Hello, $name!";  
+
+   
+  
+   ?>
+   
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -175,18 +180,20 @@
                            </div>
                         </div>
                         <div class="tab-pane" id="tab2">
-                           <div class="well">
-                              <div class="input-append">
-                                 <input class="span2" id="text-string" type="text" placeholder="add text here..."><button id="add-text" class="btn" title="Add text"><i class="icon-share-alt"></i></button>
-                                 <hr>
-                              </div>
-                              <div id="avatarlist">
-                                 <!-- <img style="cursor:pointer;" class="img-polaroid" src="{{ url_for('static', filename='img/image.jpg') }}"> -->
-                                 <img style="cursor:pointer;" class="img-polaroid" src="{{ url_for('static', filename='img/shirt.png') }}">
-                                 <img  style="cursor:pointer;" class="img-polaroid" src="{{ url_for('static', filename='img/flower.png') }}">
-                              </div>
-                           </div>
-                        </div>
+   <div class="well">
+      <div class="input-append">
+         <input class="span2" id="text-string" type="text" placeholder="add text here...">
+         <button id="add-text" class="btn" title="Add text"><i class="icon-share-alt"></i></button>
+         <hr>
+      </div>
+      <div id="avatarlist">
+         <input type="file" accept="image/png" id="avatar-upload">
+         <img style="cursor:pointer;" class="img-polaroid" src="{{ url_for('static', filename='img/shirt.png') }}">
+         <img style="cursor:pointer;" class="img-polaroid" src="{{ url_for('static', filename='img/flower.png') }}">
+      </div>
+   </div>
+</div>
+
                      </div>
                   </div>
                </div>
@@ -449,6 +456,20 @@ screenshotBtn.addEventListener("click", async () => {
   }
 });
 
+ const avatarUpload = document.getElementById("avatar-upload");
+  avatarUpload.addEventListener("change", () => {
+    const file = avatarUpload.files[0];
+    const formData = new FormData();
+    formData.append("avatar", file);
+    fetch("/upload-avatar", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.url); // this will be the URL of the saved PNG file
+    });
+  });
       </script>
    </body>
 </html>
