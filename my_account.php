@@ -126,7 +126,7 @@ if (!isset($_SESSION['email'])) {
                               while ($orderDesign=$query2->fetch_assoc()) {    
                            ?>
                            <tr>
-                              <td><img src="vendordashboard/<?php echo $orderDesign['design'];?>" style="width:250px;height:200px;" alt="" srcset=""></td>
+                              <td><img src="<?php echo $orderDesign['design'];?>" style="width:250px;height:200px;" alt="" srcset=""></td>
                               <td><?php echo $orderDesign['price'];?></td>
                               <td><?php echo $orderDesign['status'];?></td>
                            </tr>

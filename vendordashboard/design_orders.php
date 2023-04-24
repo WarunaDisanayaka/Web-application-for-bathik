@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               ?>
                            <tr>
                               
-                              <td><img src="<?php echo $row['design'];?>" style="width:250px; height:200px;" alt=""></td>
+                              <td><img src="<?php echo str_replace('vendordashboard/', '', $row['design']); ?>" style="width:250px; height:200px;" alt=""></td>
                               <td><?php echo $row['price'];?></td>
                               <td><?php echo $row['status'];?></td>
                               <form action="design_orders.php" method="POST">
