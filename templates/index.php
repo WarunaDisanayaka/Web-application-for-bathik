@@ -279,7 +279,7 @@
                      </form>
                      <h4>Rs <span id="result"></span></h4>
                   </div>
-                  <a href="{{ url_for('myfunction') }}" class="btn btn-primary">Click me</a>
+                  <a href="{{ url_for('myfunction') }}" class="btn btn-primary">Checkout</a>
                   <button id="download" class="btn btn-primary">Download</button>
                   <div class="src-preview">
                      <div class="screenshot">
