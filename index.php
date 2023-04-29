@@ -9,7 +9,11 @@ $pdo = new PDO($dsn, $username, $password, $options);
 // Select all shops with images
 $stmt = $pdo->query('SELECT store_id,storename FROM stores');
 
-
+if (isset($_GET['location'])) {
+  $location = $_GET['location'];
+  $stmt = $pdo->prepare('SELECT store_id, storename FROM stores WHERE location = ?');
+  $stmt->execute([$location]);
+}
 
 ?>
 <?php
@@ -75,8 +79,8 @@ require_once 'header.php';
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search your shop here..." aria-label="Search">
+      <form class="d-flex" action="index.php" method="get">
+        <input class="form-control me-2" type="search" name="location" placeholder="Search your shop here..." aria-label="Search">
         <button class="btn btn-dark" type="submit">Search</button>
       </form>
     </div>
