@@ -35,9 +35,7 @@ require_once 'header.php';
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
 
-    // Update the search form with the current location
-    var searchInput = document.querySelector('input[type="search"]');
-    searchInput.value = lat + ',' + lng;
+   
   }
 
 </script>
@@ -97,23 +95,23 @@ require_once 'header.php';
     while ($row = $stmt->fetch()) {
 
       ?>
-      <div class="col-md-3">
-        <div class="card border-0">
-          <img src="img/shop1.jpeg" class="card-img-top" alt="...">
-          <div class="card-body d-flex flex-column justify-content-center">
-            <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id'] ?>"><?php echo $row['storename'] ?></a></h5>
-            <!-- <a href="shop.php">shop</a> -->
-            <div class="rating text-center">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
+        <div class="col-md-3">
+          <div class="card border-0">
+            <img src="img/shop1.jpeg" class="card-img-top" alt="...">
+            <div class="card-body d-flex flex-column justify-content-center">
+              <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id'] ?>"><?php echo $row['storename'] ?></a></h5>
+              <!-- <a href="shop.php">shop</a> -->
+              <div class="rating text-center">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <?php
+        <?php
     }
     ?>
 
