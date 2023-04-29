@@ -392,7 +392,7 @@ echo "Hello, $name!";
                   </div>
                </div>
                <!--					<div id="shirtBack" class="page" style="width: 530px; height: 630px; position: relative; background-color: rgb(255, 255, 255); display:none;">-->
-               <!--						<img src="{{ url_for('static', filename='img/crew_back.png') }}"></img>-->
+               <!--						<img src="{{ url_for('static', filename='img/crew_front.png') }}"></img>-->
                <!--						<div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					-->
                <!--							<canvas id="backCanvas" width=200 height="400" class="hover" style="-webkit-user-select: none;"></canvas>-->
                <!--						</div>-->
@@ -748,7 +748,7 @@ echo "Hello, $name!";
       var flipbackBtn = document.getElementById("flipback");
       var shirtImg = document.querySelector("#shirtDiv img");
       var frontImgSrc = "{{ url_for('static', filename='img/crew_front.png') }}";
-      var backImgSrc = "{{ url_for('static', filename='img/crew_back.png') }}";
+      var backImgSrc = "{{ url_for('static', filename='img/crew_front.png') }}";
       var isFront = true;
 
       flipbackBtn.addEventListener("click", function () {
