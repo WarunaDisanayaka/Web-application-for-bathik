@@ -37,23 +37,23 @@ def index():
 
         # For size
         if size == 's':
-            feature_list[17] = 1
-        if size == 'm':
             feature_list[16] = 1
-        if size == 'l':
+        if size == 'm':
             feature_list[15] = 1
+        if size == 'l':
+            feature_list[14] = 1
         if size == 'xl':
-            feature_list[18] = 1
+            feature_list[17] = 1
 
         # For fabric
         if fabric == 'linen':
-            feature_list[8] = 1
-        if fabric == 'rayon':
-            feature_list[9] = 1
-        if fabric == 'cotton':
             feature_list[7] = 1
+        if fabric == 'rayon':
+            feature_list[8] = 1
+        if fabric == 'cotton':
+            feature_list[6] = 1
         if fabric == 'silk':
-            feature_list[10] = 1
+            feature_list[9] = 1
 
         # For color
         if color1 == '1':
