@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 global_pred = 0
 
-
 # Prediction
 
 
@@ -76,6 +75,7 @@ def index():
         return jsonify({'pred': pred})
 
     return render_template("index.php")
+
 
 @app.route('/myfunction')
 def myfunction():

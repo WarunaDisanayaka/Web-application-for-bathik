@@ -6,18 +6,37 @@ $password = '';
 $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
-  // Select all shops with images
-  $stmt = $pdo->query('SELECT store_id,storename FROM stores');
+// Select all shops with images
+$stmt = $pdo->query('SELECT store_id,storename FROM stores');
+
 
 
 ?>
 <?php
 
 // Include the header file
-require_once  'header.php';
+require_once 'header.php';
 
 ?>
 
+<script>
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    // Geolocation is not supported by this browser
+  }
+
+  function showPosition(position) {
+    // Get the latitude and longitude values
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+
+    // Update the search form with the current location
+    var searchInput = document.querySelector('input[type="search"]');
+    searchInput.value = lat + ',' + lng;
+  }
+
+</script>
 
 <!-- Slider started -->
 
@@ -58,7 +77,7 @@ require_once  'header.php';
     <div class="col-md-8">
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search your shop here..." aria-label="Search">
-         <button class="btn btn-dark" type="submit">Search</button>
+        <button class="btn btn-dark" type="submit">Search</button>
       </form>
     </div>
   </div>
@@ -69,32 +88,32 @@ require_once  'header.php';
 
 <!-- Shops start  -->
 <div class="container mt-5 shop">
-<div class="row">
-  <?php
-  while ($row = $stmt->fetch()) {
-    
-  ?>
-  <div class="col-md-3">
-    <div class="card border-0">
-      <img src="img/shop1.jpeg" class="card-img-top" alt="...">
-      <div class="card-body d-flex flex-column justify-content-center">
-        <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id']?>"><?php echo $row['storename']?></a></h5>
-        <!-- <a href="shop.php">shop</a> -->
-        <div class="rating text-center">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+  <div class="row">
+    <?php
+    while ($row = $stmt->fetch()) {
+
+      ?>
+      <div class="col-md-3">
+        <div class="card border-0">
+          <img src="img/shop1.jpeg" class="card-img-top" alt="...">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id'] ?>"><?php echo $row['storename'] ?></a></h5>
+            <!-- <a href="shop.php">shop</a> -->
+            <div class="rating text-center">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <?php
-  }
-  ?>
-  
-  <!-- <div class="col-md-3">
+      <?php
+    }
+    ?>
+
+    <!-- <div class="col-md-3">
     <div class="card border-0">
       <img src="img/shop3.png" class="card-img-top" alt="...">
       <div class="card-body d-flex flex-column justify-content-center">
@@ -207,7 +226,7 @@ require_once  'header.php';
       </div>
     </div>
   </div> -->
-</div>
+  </div>
 
 </div>
 
@@ -220,4 +239,3 @@ require_once  'header.php';
 require_once 'footer.php';
 
 ?>
-
