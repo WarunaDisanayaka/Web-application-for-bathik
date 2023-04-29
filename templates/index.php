@@ -33,6 +33,7 @@ echo "Hello, $name!";
    <!-- Le styles -->
    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='js/jquery.miniColors.css') }}" />
    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+   <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
    <link href="{{ url_for('static', filename='css/bootstrap-responsive.min.css') }}" rel="stylesheet">
    <script type="text/javascript"></script>
    <script type="text/javascript"></script>
@@ -213,20 +214,61 @@ echo "Hello, $name!";
                               <li class="color-preview" title="Cherry Red" style="background-color:#c50404;"></li>
                            </ul>
                         </div>
-                        <div class="well">
-                           <div class="field">
-                              <div class="tools">
-                                 <button type="button">Undo</button>
-                                 <button type="button">Clear</button>
-                                 <div onclick="change_color(this)" class="color-field" style="background:red;"></div>
-                                 <div onclick="change_color(this)" class="color-field" style="background:blue;"></div>
-                                 <div onclick="change_color(this)" class="color-field" style="background:green;"></div>
-                                 <div onclick="change_color(this)" class="color-field" style="background:yellow;"></div>
-                                 <input type="range" min="1" max="100" class="pen-range"
-                                    onInput="draw_width=this.value">
-                              </div>
-                           </div>
-                        </div>
+                        <section class="tools-board">
+      <div class="row">
+        <label class="title">Shapes</label>
+        <ul class="options">
+          <li class="option tool" id="rectangle">
+            <img src="icons/rectangle.svg" alt="">
+            <span>Rectangle</span>
+          </li>
+          <li class="option tool" id="circle">
+            <img src="icons/circle.svg" alt="">
+            <span>Circle</span>
+          </li>
+          <li class="option tool" id="triangle">
+            <img src="icons/triangle.svg" alt="">
+            <span>Triangle</span>
+          </li>
+          <li class="option">
+            <input type="checkbox" id="fill-color">
+            <label for="fill-color">Fill color</label>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <label class="title">Options</label>
+        <ul class="options">
+          <li class="option active tool" id="brush">
+            <img src="icons/brush.svg" alt="">
+            <span>Brush</span>
+          </li>
+          <li class="option tool" id="eraser">
+            <img src="icons/eraser.svg" alt="">
+            <span>Eraser</span>
+          </li>
+          <li class="option">
+            <input type="range" id="size-slider" min="1" max="30" value="5">
+          </li>
+        </ul>
+      </div>
+      <div class="row colors">
+        <label class="title">Colors</label>
+        <ul class="options">
+          <li class="option"></li>
+          <li class="option selected"></li>
+          <li class="option"></li>
+          <li class="option"></li>
+          <li class="option">
+            <input type="color" id="color-picker" value="#4A98F7">
+          </li>
+        </ul>
+      </div>
+      <div class="row buttons">
+        <button class="clear-canvas">Clear Canvas</button>
+        <!-- <button class="save-img">Save As Image</button> -->
+      </div>
+    </section>
                      </div>
                      <div class="container">
                         <section class="drawing-board">
@@ -411,76 +453,75 @@ echo "Hello, $name!";
    </script>
    <script>
       //  Drawing tool
-      const DrawingCanvas = document.getElementById("canvas");
-      DrawingCanvas.width = window.innerWidth - 60;
-      DrawingCanvas.height = 600;
+      // const DrawingCanvas = document.getElementById("canvas");
+    
 
-      let context = DrawingCanvas.getContext("2d");
-      context.fillStyle = "rgba(255, 255, 255, 0)";
-      context.fillRect(0, 0, DrawingCanvas.width, DrawingCanvas.height);
+      // let context = DrawingCanvas.getContext("2d");
+      // context.fillStyle = "rgba(255, 255, 255, 0)";
+      // context.fillRect(0, 0, DrawingCanvas.width, DrawingCanvas.height);
 
-      let draw_color = "black";
-      let draw_width = "2";
-      let is_drawing = false;
+      // let draw_color = "black";
+      // let draw_width = "2";
+      // let is_drawing = false;
 
-      function change_color(element) {
-         draw_color = element.style.background;
-         if (draw_color === "red") {
-            document.getElementById("color-input").value = "1";
-         } else if (draw_color === "blue") {
-            document.getElementById("color-input2").value = "1";
-         }
-         else if (draw_color === "green") {
-            document.getElementById("color-input3").value = "1";
-         } else if (draw_color === "yellow") {
-            document.getElementById("color-input4").value = "1";
-         }
-      }
+      // function change_color(element) {
+      //    draw_color = element.style.background;
+      //    if (draw_color === "red") {
+      //       document.getElementById("color-input").value = "1";
+      //    } else if (draw_color === "blue") {
+      //       document.getElementById("color-input2").value = "1";
+      //    }
+      //    else if (draw_color === "green") {
+      //       document.getElementById("color-input3").value = "1";
+      //    } else if (draw_color === "yellow") {
+      //       document.getElementById("color-input4").value = "1";
+      //    }
+      // }
 
-      DrawingCanvas.addEventListener("touchstart", start, false);
-      DrawingCanvas.addEventListener("touchmove", draw, false);
-      DrawingCanvas.addEventListener("mousedown", start, false);
-      DrawingCanvas.addEventListener("mousemove", draw, false);
+      // DrawingCanvas.addEventListener("touchstart", start, false);
+      // DrawingCanvas.addEventListener("touchmove", draw, false);
+      // DrawingCanvas.addEventListener("mousedown", start, false);
+      // DrawingCanvas.addEventListener("mousemove", draw, false);
 
-      DrawingCanvas.addEventListener("touchend", stop, false);
-      DrawingCanvas.addEventListener("mouseup", stop, false);
-      DrawingCanvas.addEventListener("mouseout", stop, false);
+      // DrawingCanvas.addEventListener("touchend", stop, false);
+      // DrawingCanvas.addEventListener("mouseup", stop, false);
+      // DrawingCanvas.addEventListener("mouseout", stop, false);
 
 
-      function start(event) {
-         is_drawing = true;
-         context.beginPath();
-         context.moveTo(
-            event.clientX - DrawingCanvas.offsetLeft,
-            event.clientY - DrawingCanvas.offsetTop
-         );
-         event.preventDefault();
-      }
+      // function start(event) {
+      //    is_drawing = true;
+      //    context.beginPath();
+      //    context.moveTo(
+      //       event.clientX - DrawingCanvas.offsetLeft,
+      //       event.clientY - DrawingCanvas.offsetTop
+      //    );
+      //    event.preventDefault();
+      // }
 
-      function draw(event) {
-         if (is_drawing) {
-            context.lineTo(
-               event.clientX - DrawingCanvas.offsetLeft,
-               event.clientY - DrawingCanvas.offsetTop
-            );
+      // function draw(event) {
+      //    if (is_drawing) {
+      //       context.lineTo(
+      //          event.clientX - DrawingCanvas.offsetLeft,
+      //          event.clientY - DrawingCanvas.offsetTop
+      //       );
 
-            context.strokeStyle = draw_color;
-            context.lineWidth = draw_width;
-            context.lineCap = "round";
-            context.lineJoin = "round";
-            context.stroke();
-         }
-         event.preventDefault();
-      }
+      //       context.strokeStyle = draw_color;
+      //       context.lineWidth = draw_width;
+      //       context.lineCap = "round";
+      //       context.lineJoin = "round";
+      //       context.stroke();
+      //    }
+      //    event.preventDefault();
+      // }
 
-      function stop(event) {
-         if (is_drawing) {
-            context.stroke();
-            context.closePath();
-            is_drawing = false;
-         }
-         event.preventDefault();
-      }
+      // function stop(event) {
+      //    if (is_drawing) {
+      //       context.stroke();
+      //       context.closePath();
+      //       is_drawing = false;
+      //    }
+      //    event.preventDefault();
+      // }
 
       //
 
@@ -547,23 +588,23 @@ echo "Hello, $name!";
          }
       });
 
-      const avatarUpload = document.getElementById("avatar-upload");
-      avatarUpload.addEventListener("change", () => {
-         const file = avatarUpload.files[0];
-         const formData = new FormData();
-         formData.append("avatar", file);
-         fetch("/upload-avatar", {
-            method: "POST",
-            body: formData
-         })
-            .then(response => response.json())
-            .then(data => {
-               console.log(data.url); // this will be the URL of the saved PNG file
-            });
-      });
+      // const avatarUpload = document.getElementById("avatar-upload");
+      // avatarUpload.addEventListener("change", () => {
+      //    const file = avatarUpload.files[0];
+      //    const formData = new FormData();
+      //    formData.append("avatar", file);
+      //    fetch("/upload-avatar", {
+      //       method: "POST",
+      //       body: formData
+      //    })
+      //       .then(response => response.json())
+      //       .then(data => {
+      //          console.log(data.url); // this will be the URL of the saved PNG file
+      //       });
+      // });
 
       // Add shapes
-      // const DrawingCanvas = document.getElementById("canvas"),
+      const DrawingCanvas = document.getElementById("canvas"),
       toolBtns = document.querySelectorAll(".tool"),
          fillColor = document.querySelector("#fill-color"),
          sizeSlider = document.querySelector("#size-slider"),
@@ -579,6 +620,9 @@ echo "Hello, $name!";
          selectedTool = "brush",
          brushWidth = 5,
          selectedColor = "#000";
+
+           DrawingCanvas.width = window.innerWidth - 60;
+      DrawingCanvas.height = 600;
 
       const setCanvasBackground = () => {
          // setting whole canvas background to white, so the downloaded img background will be white
@@ -683,12 +727,7 @@ echo "Hello, $name!";
          setCanvasBackground();
       });
 
-      saveImg.addEventListener("click", () => {
-         const link = document.createElement("a"); // creating <a> element
-         link.download = `${Date.now()}.jpg`; // passing current date as link download value
-         link.href = canvas.toDataURL(); // passing canvasData as link href value
-         link.click(); // clicking link to download image
-      });
+      
 
       DrawingCanvas.addEventListener("mousedown", startDraw);
       DrawingCanvas.addEventListener("mousemove", drawing);
