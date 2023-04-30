@@ -1,12 +1,12 @@
 <?php
-    session_start();
+session_start();
 
-    if (!isset($_SESSION['email'])) {
-        // Redirect to the login page
-        header("Location: ../vendor_login.php");
-        exit();
-    }
-    
+if (!isset($_SESSION['email'])) {
+    // Redirect to the login page
+    header("Location: ../vendor_login.php");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +25,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -38,7 +38,7 @@
 
         <!-- Sidebar -->
         <?php
-            require_once  'sidebar.php';
+        require_once 'sidebar.php';
         ?>
         <!-- End Sidebar -->
 
@@ -226,7 +226,8 @@
 
                         <div class="col-lg-6 mb-4">
 
-                          
+                        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
                 
         
 
@@ -296,6 +297,29 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script>
+var xValues = ["Fabric", "Linen", "Rayon", "Cotton", "Silk"];
+var yValues = [55, 49, 44, 24, 15];
+var barColors = ["red", "green","blue","orange","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Fabrics"
+    }
+  }
+});
+</script>
 
 </body>
 
