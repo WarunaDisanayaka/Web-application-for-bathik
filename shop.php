@@ -155,10 +155,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="blue" class="form-check-label">Silk</label>
                      </div>
                   </div>
-                  <!-- <div class="mb-3">
+                  <div class="mb-3">
                      <label for="price">Price</label>
                      <input type="range" class="form-range" id="price" min="0" max="1000" step="50" value="500">
-                     </div> -->
+                     </div>
                   <button type="submit" class="btn btn-primary">Filter</button>
                </form>
                <div class="mb-3">
