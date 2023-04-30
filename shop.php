@@ -1,91 +1,94 @@
 <?php
-   session_start();
-   // Include the header file
-   require_once  'header.php';
-   // Connect to the database
-   $dsn = 'mysql:host=localhost;dbname=bathik';
-   $username = 'root';
-   $password = '';
-   $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-   $pdo = new PDO($dsn, $username, $password, $options);
-   
-   
-   
-   if (isset($_GET['id'])) {
-      $store_id = $_GET['id'];
-      $_SESSION['shop']=$_GET['id'];
-      // Select all shops products
-      $stmt = $pdo->query("SELECT * FROM `products` WHERE vendor_id='$store_id'");  
-      // Select store
-      $store = $pdo->query("SELECT storename FROM stores WHERE store_id='$store_id'");
-      $storeName=$store->fetch();
-   }
-   
-   // Check if the form was submitted
-   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+session_start();
+// Include the header file
+require_once 'header.php';
+// Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+
+
+if (isset($_GET['id'])) {
+   $store_id = $_GET['id'];
+   $_SESSION['shop'] = $_GET['id'];
+   // Select all shops products
+   $stmt = $pdo->query("SELECT * FROM `products` WHERE vendor_id='$store_id'");
+   // Select store
+   $store = $pdo->query("SELECT storename FROM stores WHERE store_id='$store_id'");
+   $storeName = $store->fetch();
+   // Ratings
+   $ratings = $pdo->query("SELECT * FROM ratings WHERE shop='$store_id'");
+   // $rate = $ratings->fetch();
+}
+
+// Check if the form was submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the form data
    $shop = $_POST['shop'];
    $review = $_POST['review'];
    $rating = $_POST['rating'];
-   
+
    // Validate the form data
    // Validate review
    if (empty($review) || !preg_match('/^[a-zA-Z0-9_ ]{4,}$/', $review)) {
       echo '<script>
-         alert("Enter your review")
-         window.location.href = "shop.php?id='. $_SESSION['shop'] .'";
-      </script>';
-   
+            alert("Enter your review")
+            window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
+         </script>';
+
    }
-   
+
    // Validate star rating
    if (empty($rating) || !preg_match('/^\d{1}$/', $rating)) {
-   echo '<script>
-   alert("Please add your rating")
-   window.location.href = "shop.php?id='. $_SESSION['shop'] .'";
-   </script>';
+      echo '<script>
+      alert("Please add your rating")
+      window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
+      </script>';
    }
-   
+
    // Save the form data to the database
-    // If there are no errors, save the data to the database
-    if (empty($errors)) {
+   // If there are no errors, save the data to the database
+   if (empty($errors)) {
       // Connect to the database
-      $host = 'localhost'; 
-      $user = 'root'; 
-      $pwd = ''; 
-      $dbname = 'bathik'; 
+      $host = 'localhost';
+      $user = 'root';
+      $pwd = '';
+      $dbname = 'bathik';
       $conn = new mysqli($host, $user, $pwd, $dbname);
       if ($conn->connect_error) {
-          die('Connection failed: ' . $conn->connect_error);
+         die('Connection failed: ' . $conn->connect_error);
       }
-   
+
       // Save the data to the database
       $sql = "INSERT INTO ratings (shop, rating, review) VALUES ('$shop', '$rating', '$review')";
       if ($conn->query($sql) === TRUE) {
-           // Form submitted successfully, show SweetAlert message
-   echo "<script>
-   swal({
-      title: 'Review added successful',
-      text: 'Thank you for your review!',
-      icon: 'success',
-      button: 'OK',
-   }).then(function() {
-      window.location.href = 'shop.php?id=". $_SESSION["shop"] ."';
-   });
-   </script>";
+         // Form submitted successfully, show SweetAlert message
+         echo "<script>
+      swal({
+         title: 'Review added successful',
+         text: 'Thank you for your review!',
+         icon: 'success',
+         button: 'OK',
+      }).then(function() {
+         window.location.href = 'shop.php?id=" . $_SESSION["shop"] . "';
+      });
+      </script>";
       } else {
-          //echo 'Error: ' . $sql . '<br>' . $conn->error;
-          // Form submitted successfully, show SweetAlert message
-   echo "<script>
-   swal({
-      title: 'Warning!',
-      text: 'Something went wrong!',
-      icon: 'warning',
-      button: 'OK'
-   });
-   </script>";
+         //echo 'Error: ' . $sql . '<br>' . $conn->error;
+         // Form submitted successfully, show SweetAlert message
+         echo "<script>
+      swal({
+         title: 'Warning!',
+         text: 'Something went wrong!',
+         icon: 'warning',
+         button: 'OK'
+      });
+      </script>";
       }
-   
+
       $conn->close();
    } else {
       // // Display the errors
@@ -93,16 +96,16 @@
       //     echo $error . '<br>';
       // }
    }
-   
-   }
-   
-   ?>
+
+}
+
+?>
 <!-- Hero section start-->
 <section class="hero" style="background-image: url('img/hero.png');">
    <div class="container">
       <div class="row align-items-center">
          <div class="col-lg-6">
-            <h1 class="hero-title"><?php echo $storeName['storename'];?></h1>
+            <h1 class="hero-title"><?php echo $storeName['storename']; ?></h1>
          </div>
       </div>
    </div>
@@ -160,15 +163,15 @@
                </form>
                <div class="mb-3">
                   <?php
-                     // Form is invalid. Show the errors to the user.
-                     if (!empty($errors)) {
-                       echo '<div class="alert alert-danger" role="alert">';
-                       foreach ($errors as $error) {
-                         echo '<p>' . $error . '</p>';
-                       }
-                       echo '</div>';
+                  // Form is invalid. Show the errors to the user.
+                  if (!empty($errors)) {
+                     echo '<div class="alert alert-danger" role="alert">';
+                     foreach ($errors as $error) {
+                        echo '<p>' . $error . '</p>';
                      }
-                     ?>
+                     echo '</div>';
+                  }
+                  ?>
                   <form action="shop.php" method="POST">
                      <label for="textArea">
                         <h4>Your Comment</h4>
@@ -199,141 +202,58 @@
       <div class="col-lg-9 products">
          <div class="row">
             <?php
-               while ($row = $stmt->fetch()) {
-                  ?>
-            <div class="col-lg-3 mb-4">
-               <div class="card border-0">
-                  <img src="vendordashboard/<?php echo $row['image1']?>" alt="Product Image" class="card-img-top">
-                  <div class="card-body">
-                     <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id']?>"><?php echo $row['title']?></a></h6>
-                  </div>
-               </div>
-            </div>
-            <?php
-               }
+            while ($row = $stmt->fetch()) {
                ?>
+                              <div class="col-lg-3 mb-4">
+                                 <div class="card border-0">
+                                    <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
+                                    <div class="card-body">
+                                       <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
+                                    </div>
+                                 </div>
+                              </div>
+                              <?php
+            }
+            ?>
          </div>
       </div>
    </div>
 </div>
-<div id="review-slider" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="review-block">
-            <p class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum, nisl eget tincidunt porta, quam mauris iaculis massa, sit amet fringilla magna velit sit amet enim.</p>
-            <div class="review-rating">
-              <span class="star-rating">
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star-half-alt checked"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="review-block">
-            <p class="review-text">Nulla non orci eget mi lobortis semper quis at augue. Nulla facilisi. Phasellus quis interdum tellus, quis varius dolor.</p>
-            <div class="review-rating">
-              <span class="star-rating">
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star-half-alt checked"></i>
-                <i class="fa fa-star"></i>
-              </span>
-            </div>
-          </div>
-        </div>
+</div>
+<?php
+while ($rate = $ratings->fetch()) {
+   ?>
+      <div class="container review-block">
+         <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
+         <div class="review-rating">
+            <span class="star-rating">
+               <?php
+               $rating = $rate['rating'];
+               for ($i = 1; $i <= 5; $i++) {
+                  if ($i <= $rating) {
+                     echo '<i class="fa fa-star checked"></i>';
+                  } else {
+                     // echo '<i class="fa fa-star"></i>';
+                  }
+               }
+               ?>
+            </span>
+         </div>
       </div>
-    </div>
-    <div class="carousel-item">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="review-block">
-            <p class="review-text">Vestibulum luctus tortor elit, id congue ante consectetur ut. Aliquam erat volutpat. Suspendisse sit amet neque eget erat dictum hendrerit.</p>
-            <div class="review-rating">
-              <span class="star-rating">
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="review-block">
-            <p class="review-text">Fusce sagittis eros et libero fermentum consequat. Sed dignissim diam id quam interdum, non fringilla ex varius. Aliquam erat volutpat.</p>
-            <div class="review-rating">
-              <span class="star-rating">
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star checked"></i>
-                <i class="fa fa-star-half-alt checked"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="carousel-item">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="review-block">
-                <p class="review-text">Nam ullamcorper diam velit, ut gravida eros molestie eget. Vivamus tempus imperdiet magna quis vehicula. Integer quis sapien consequat, sagittis lectus ut, lacinia tellus.</p>
-                <div class="review-rating">
-                  <span class="star-rating">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                    3.5 / 5
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="review-block">
-                <p class="review-text">Sed semper tellus elit, eu aliquam tellus elementum sed. Sed luctus felis vel dolor tincidunt, vel maximus orci posuere. Etiam in sem sed enim tincidunt eleifend.</p>
-                <div class="review-rating">
-                  <span class="star-rating">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                    3 / 5
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#review-slider" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#review-slider" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-
+      <hr style="height: 2px;
+      background-color: #ccc;
+      width: 50%;
+      margin: 20px auto;
+      margin-left:2rem;"> <!-- add a horizontal rule divider after each review -->
+   <?php
+}
+?>
 
 <?php
-   // Include the footer file
-   require_once 'footer.php';
-   
-   ?>
+// Include the footer file
+require_once 'footer.php';
+
+?>
 <script>
    document.querySelectorAll('.star-btn').forEach(function(star) {
        star.addEventListener('click', function() {

@@ -161,3 +161,7 @@ object-fit: cover;
 .star-btn {
   color: rgb(255, 230, 0);
 }
+
+.review-block .star-rating .fa-star{
+  color: rgb(255, 230, 0);
+}
