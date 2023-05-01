@@ -148,7 +148,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      </label>
                      <div>
                         <input type="checkbox" id="red">
+                        <label for="red" class="form-check-label">Linen</label>
+                     </div>
+                     <div>
+                        <input type="checkbox" id="red">
                         <label for="red" class="form-check-label">Cotton</label>
+                     </div>
+                     <div>
+                        <input type="checkbox" id="red">
+                        <label for="red" class="form-check-label">Rayon</label>
                      </div>
                      <div>
                         <input type="checkbox" id="blue">
@@ -204,15 +212,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             while ($row = $stmt->fetch()) {
                ?>
-                              <div class="col-lg-3 mb-4">
-                                 <div class="card border-0">
-                                    <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
-                                    <div class="card-body">
-                                       <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
+                                 <div class="col-lg-3 mb-4">
+                                    <div class="card border-0">
+                                       <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
+                                       <div class="card-body">
+                                          <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
+                                       </div>
                                     </div>
                                  </div>
-                              </div>
-                              <?php
+                                 <?php
             }
             ?>
          </div>
@@ -223,29 +231,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 while ($rate = $ratings->fetch()) {
    ?>
-      <div class="container review-block">
-         <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
-         <div class="review-rating">
-            <span class="star-rating">
-               <?php
-               $rating = $rate['rating'];
-               for ($i = 1; $i <= 5; $i++) {
-                  if ($i <= $rating) {
-                     echo '<i class="fa fa-star checked"></i>';
-                  } else {
-                     // echo '<i class="fa fa-star"></i>';
+         <div class="container review-block">
+            <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
+            <div class="review-rating">
+               <span class="star-rating">
+                  <?php
+                  $rating = $rate['rating'];
+                  for ($i = 1; $i <= 5; $i++) {
+                     if ($i <= $rating) {
+                        echo '<i class="fa fa-star checked"></i>';
+                     } else {
+                        // echo '<i class="fa fa-star"></i>';
+                     }
                   }
-               }
-               ?>
-            </span>
+                  ?>
+               </span>
+            </div>
          </div>
-      </div>
-      <hr style="height: 2px;
+         <hr style="height: 2px;
       background-color: #ccc;
       width: 50%;
       margin: 20px auto;
       margin-left:6rem;"> <!-- add a horizontal rule divider after each review -->
-   <?php
+      <?php
 }
 ?>
 
