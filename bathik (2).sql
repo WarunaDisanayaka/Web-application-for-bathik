@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2023 at 06:45 PM
+-- Generation Time: May 01, 2023 at 01:45 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -116,8 +116,34 @@ CREATE TABLE `design_orders` (
 --
 
 INSERT INTO `design_orders` (`id`, `shop`, `note`, `design`, `email`, `price`, `user_id`, `status`) VALUES
-(1, 5, 'fdsaf', 'uploads/643434fd1234d_screenshot.png', 'warunahello@gmail.com', 18069.00, 2, 'Cutting and sewing'),
-(2, 5, 'testing', 'vendordashboard/uploads/643d84700d917_screencapture-127-0-0-1-8000-2023-04-17-22_43_47.png', 'warunahello@gmail.com', 18069.00, 2, 'Cutting and sewing');
+(2, 5, 'testing', 'vendordashboard/uploads/643d84700d917_screencapture-127-0-0-1-8000-2023-04-17-22_43_47.png', 'warunahello@gmail.com', 18069.00, 2, 'Cutting and sewing'),
+(3, 5, 'hklj', 'vendordashboard/uploads/6446c0a176c06_screenshot (17).png', 'waruna@gmail.com', 7587.00, 2, 'Proccessing');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `favourites`
+--
+
+CREATE TABLE `favourites` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_price` float(10,2) NOT NULL,
+  `product_img` varchar(255) NOT NULL,
+  `size` varchar(10) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `total_price` float(10,2) NOT NULL,
+  `shop` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `favourites`
+--
+
+INSERT INTO `favourites` (`id`, `product_name`, `product_price`, `product_img`, `size`, `qty`, `total_price`, `shop`, `user_id`, `status`) VALUES
+(11, 'Batik Floral Detail Silk Dress', 27500.00, 'uploads/DBN22D1348_BLU_3.webp', '', 1, 1.00, 6, 2, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -220,9 +246,10 @@ CREATE TABLE `ratings` (
 --
 
 INSERT INTO `ratings` (`id`, `shop`, `rating`, `review`) VALUES
-(1, 5, 3, 'Test'),
-(2, 5, 4, 'Test'),
-(3, 5, 4, 'jkljkh');
+(1, 5, 3, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
+(2, 5, 4, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
+(3, 5, 4, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
+(4, 5, 4, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.');
 
 -- --------------------------------------------------------
 
@@ -250,8 +277,8 @@ CREATE TABLE `stores` (
 --
 
 INSERT INTO `stores` (`store_id`, `storename`, `phonenumber`, `ownername`, `location`, `address`, `email`, `password`, `document`, `thumb_img`, `banner_img`, `active`) VALUES
-(5, 'Nimal store', '0777123456', 'Nimal perera', 'location1', 'mahagirilla\r\nmahagirilla', 'warunapradeep407@gmail.com', '$2y$10$LAL6T4tqyaqJ1Nxaecq7netHKDelbMQ5YoR5lMywJeODRVvSHr.7u', 0x363431623633333064323538375f323032335f36425549533031384320506f7274666f6c696f312047726f75702043572e706466, 'uploads/64267599b88c0_banner5.jpeg', 'uploads/64343b08f2f7d_shop3.png', 0),
-(6, 'Buddhi bathik', '0777123456', 'Buddhi', 'Matara', 'mahagirilla, mahagirilla', 'buddhi@gmail.com', '$2y$10$Q37pQwdOdBty3ILT2LDIm.8ADQPxwTjfSe5lSpkAA3MuS/0A3ZYwS', 0x363433326566626139333439365f7465737420646f632e646f6378, NULL, NULL, 0);
+(5, 'Nimal store', '0777123456', 'Nimal perera', 'location1', 'mahagirilla\r\nmahagirilla', 'warunapradeep407@gmail.com', '$2y$10$LAL6T4tqyaqJ1Nxaecq7netHKDelbMQ5YoR5lMywJeODRVvSHr.7u', 0x363431623633333064323538375f323032335f36425549533031384320506f7274666f6c696f312047726f75702043572e706466, 'uploads/64267599b88c0_banner5.jpeg', 'uploads/64343b08f2f7d_shop3.png', 1),
+(6, 'Buddhi bathik', '0777123456', 'Buddhi', 'Matara', 'mahagirilla, mahagirilla', 'buddhi@gmail.com', '$2y$10$Q37pQwdOdBty3ILT2LDIm.8ADQPxwTjfSe5lSpkAA3MuS/0A3ZYwS', 0x363433326566626139333439365f7465737420646f632e646f6378, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -334,6 +361,12 @@ ALTER TABLE `design_orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `favourites`
+--
+ALTER TABLE `favourites`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -384,7 +417,13 @@ ALTER TABLE `vendor`
 -- AUTO_INCREMENT for table `design_orders`
 --
 ALTER TABLE `design_orders`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `favourites`
+--
+ALTER TABLE `favourites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -402,7 +441,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stores`
