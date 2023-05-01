@@ -165,3 +165,14 @@ object-fit: cover;
 .review-block .star-rating .fa-star{
   color: rgb(255, 230, 0);
 }
+
+/* Media queries */
+@media(min-width:1600px){
+ .navbar-brand{
+  margin-left: -15rem;
+ }
+ #navbarNav{
+  margin-right: -15rem;
+  font-size: 20px;
+ }
+}
