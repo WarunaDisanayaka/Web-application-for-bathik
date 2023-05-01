@@ -41,6 +41,10 @@
 
                   </li>
                   <li class="nav-item">
+                  <a class="nav-link" href="favourites.php">Favorites</a>
+
+                  </li>
+                  <li class="nav-item">
                      <a href="cart.php" class="nav-link">
                      <i class="fas fa-shopping-cart"></i>
                      <span id="cart-item" class="badge bg-danger"></span>

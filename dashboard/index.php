@@ -1,12 +1,12 @@
 <?php
-    session_start();
+session_start();
 
-    if (!isset($_SESSION['username'])) {
-        // Redirect to the login page
-        header("Location: ../login.php");
-        exit();
-    }
-    
+if (!isset($_SESSION['username'])) {
+    // Redirect to the login page
+    header("Location: ../login.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +38,7 @@
     <div id="wrapper">
 
         <?php
-            require_once  'sidebar.php';
+        require_once 'sidebar.php';
         ?>
 
         <!-- Content Wrapper -->
