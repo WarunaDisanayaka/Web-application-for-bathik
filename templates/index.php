@@ -399,7 +399,7 @@ echo "Hello, $name!";
                <!--					</div>						-->
                <!--	/EDITOR		-->
             </div>
-            <div class="span3" >
+            <div class="span3" id="price">
                <div class="well" >
                   <h3>Total Prices</h3>
                   <form id="price-predictor" action="/" method="POST">
@@ -427,7 +427,7 @@ echo "Hello, $name!";
                   </form>
                   <h4>Rs <span id="result"></span></h4>
                </div>
-               <a href="{{ url_for('myfunction') }}" class="btn btn-primary">Checkout</a>
+               <a href="{{ url_for('myfunction') }}" id="checkout" class="btn btn-primary">Checkout</a>
                <button id="download" class="btn btn-primary">Download</button>
                <div class="src-preview">
                   <div class="screenshot">

@@ -30,3 +30,6 @@
     padding: 0;
 }
 
+.span3 #checkout{
+   visibility: hidden;
+}
