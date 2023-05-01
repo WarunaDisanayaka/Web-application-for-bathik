@@ -399,8 +399,8 @@ echo "Hello, $name!";
                <!--					</div>						-->
                <!--	/EDITOR		-->
             </div>
-            <div class="span3">
-               <div class="well">
+            <div class="span3" >
+               <div class="well" >
                   <h3>Total Prices</h3>
                   <form id="price-predictor" action="/" method="POST">
                      <input type="hidden" name="color1" id="color-input">
