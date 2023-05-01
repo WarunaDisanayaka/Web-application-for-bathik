@@ -185,8 +185,11 @@ section {
     height: 100%;
 }
 
-#price{
-    position: absolute;
-    margin-left: 70rem;
- }
  
+ /* Media queries */
+@media(min-width:1600px){
+    #price{
+        position: absolute;
+        margin-left: 70rem;
+     }
+   }
