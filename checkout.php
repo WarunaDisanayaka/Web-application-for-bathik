@@ -28,6 +28,7 @@ $stmt2 = $pdo->query("SELECT * FROM cart");
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+
    // Connect to MySQL database
    $servername = 'localhost';
    $username = 'root';
@@ -101,9 +102,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $sql = "INSERT INTO orders (first_name, last_name, email, phone, city, state, zip, address,payment_method,shop,user_id) VALUES ('$fname', '$lname', '$email', '$phone', '$city', '$state', '$zip','$address','$payment','$shop','$user_id')";
 
       $cartOrder = "INSERT INTO cart_order (id, product_name, product_price, size, qty, total_price, shop,user_id,status)
-SELECT id, product_name, product_price, size, qty, total_price, shop,user_id,status
-FROM cart;";
+      SELECT id, product_name, product_price, size, qty, total_price, shop,user_id,status
+      FROM cart;";
 
+      $total = 0;
+      while ($cart = $stmt2->fetch()) {
+         $total = $total + ($cart['product_price'] * $cart['qty']);
+      }
+
+      if ($payment == "paypal") {
+         $_SESSION['tot'] = $total;
+         $_SESSION['desc'] = "Test descirption";
+         header('location:paypaltask');
+      }
       $removeCart = "TRUNCATE TABLE cart";
 
       $conn->query($cartOrder);
@@ -214,12 +225,12 @@ FROM cart;";
       while ($cart = $stmt2->fetch()) {
          $total = $total + ($cart['product_price'] * $cart['qty']);
          ?>
-         <div class="row">
-         <input type="hidden" name="shop" value="<?php echo $cart['shop'] ?>">
-         <p class="col-6"><?php echo $cart['product_name'] ?>-<?php echo $cart['qty'] ?></p>
-         <div class="col-6 text-right"><?php echo number_format(($cart['product_price'] * $cart['qty']), 2) ?></div>
-         </div>
-         <?php
+                                       <div class="row">
+                                       <input type="hidden" name="shop" value="<?php echo $cart['shop'] ?>">
+                                       <p class="col-6"><?php echo $cart['product_name'] ?>-<?php echo $cart['qty'] ?></p>
+                                       <div class="col-6 text-right"><?php echo number_format(($cart['product_price'] * $cart['qty']), 2) ?></div>
+                                       </div>
+                                       <?php
       }
       ?>
       <hr class="border-bottom">
@@ -231,11 +242,16 @@ FROM cart;";
       <a href="checkout.php">
       <button class="btn btn-primary">PLACE ORDER</button>
       </a>
+      <div id="paypal-payment-button">
+
+                        </div>
+
       </div>
       </form>
       </div>
    </div>
 </div>
+
 <!-- Register end -->
 <?php
 // Include the footer file
