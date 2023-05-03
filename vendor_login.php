@@ -1,50 +1,51 @@
 <?php
 session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Collect the form data
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+  // Collect the form data
+  $email = $_POST['email'];
+  $password = $_POST['password'];
 
-    // Connect to the database
-    $host = 'localhost'; 
-    $user = 'root'; 
-    $pwd = ''; 
-    $dbname = 'bathik'; 
-    $conn = new mysqli($host, $user, $pwd, $dbname);
-    if ($conn->connect_error) {
-        die('Connection failed: ' . $conn->connect_error);
-    }
+  // Connect to the database
+  $host = 'localhost';
+  $user = 'root';
+  $pwd = '';
+  $dbname = 'bathik';
+  $conn = new mysqli($host, $user, $pwd, $dbname);
+  if ($conn->connect_error) {
+    die('Connection failed: ' . $conn->connect_error);
+  }
 
-    // Check if the email exists in the database
-    $sql = "SELECT * FROM stores WHERE email = '$email'";
-    $result = $conn->query($sql);
-    if ($result->num_rows == 1) {
-        // Verify the password
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            // Login successful
-            $_SESSION['store_id'] = $row['store_id'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['phone'] = $row['phone'];
-            header('Location: vendordashboard');
-            exit;
-        } else {
-            // Incorrect password
-            $password_error = 'Incorrect password';
-        }
+  // Check if the email exists in the database
+  $sql = "SELECT * FROM stores WHERE email = '$email'";
+  $result = $conn->query($sql);
+  if ($result->num_rows == 1) {
+    // Verify the password
+    $row = $result->fetch_assoc();
+    if (password_verify($password, $row['password'])) {
+      // Login successful
+      $_SESSION['store_id'] = $row['store_id'];
+      $_SESSION['email'] = $row['email'];
+      $_SESSION['phone'] = $row['phone'];
+      $_SESSION['ownername'] = $row['ownername'];
+      header('Location: vendordashboard');
+      exit;
     } else {
-        // Email not found
-        $email_error = 'Email not found';
+      // Incorrect password
+      $password_error = 'Incorrect password';
     }
+  } else {
+    // Email not found
+    $email_error = 'Email not found';
+  }
 
-    $conn->close();
+  $conn->close();
 }
 ?>
 
 <?php
 
 // Include the header file
-require_once  'header.php';
+require_once 'header.php';
 
 ?>
 
@@ -73,11 +74,13 @@ require_once  'header.php';
           <form form method="POST" action="vendor_login.php">
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"  <?php if (isset($email_error)) echo 'title="' . $email_error . '"'; ?>>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"  <?php if (isset($email_error))
+                echo 'title="' . $email_error . '"'; ?>>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password" <?php if (isset($password_error)) echo 'title="' . $password_error . '"'; ?>>
+              <input type="password" class="form-control" id="password" name="password" <?php if (isset($password_error))
+                echo 'title="' . $password_error . '"'; ?>>
             </div>
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-dark btn-lg">Login</button>

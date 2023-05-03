@@ -85,12 +85,20 @@
  <hr class="sidebar-divider">
 
 
+<li class="nav-item">
+    <a class="nav-link" href="messages.php">
+    <i class="far fa-envelope"></i> 
+        <span>Messages</span></a>
+</li>
+ <hr class="sidebar-divider">
+
  <li class="nav-item">
     <a class="nav-link" href="settings.php">
     <i class="fas fa-cog"></i>
 
         <span>Settings</span></a>
 </li>
+
 
 </ul>
 <!-- End of Sidebar -->

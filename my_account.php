@@ -55,7 +55,7 @@ if (!isset($_SESSION['email'])) {
          <button class="nav-link" id="menu1-tab" data-bs-toggle="tab" data-bs-target="#menu3" type="button" role="tab" aria-controls="menu3" aria-selected="false">Design Orders</button>
       </li>
       <li class="nav-item">
-         <button class="nav-link" id="menu2-tab" data-bs-toggle="tab" data-bs-target="#menu2" type="button" role="tab" aria-controls="menu2" aria-selected="false">Account details</button>
+         <button class="nav-link" id="menu2-tab" data-bs-toggle="tab" data-bs-target="#menu2" type="button" role="tab" aria-controls="menu2" aria-selected="false">Messages</button>
       </li>
       <li class="nav-item">
          <a href="logout.php"><button class="nav-link" id="menu2-tab" data-bs-toggle="tab" data-bs-target="#menu2" type="button" role="tab" aria-controls="menu2" aria-selected="false">Logout</button></a>
@@ -148,8 +148,52 @@ if (!isset($_SESSION['email'])) {
                </div>
       </div>
       <div id="menu2" class="tab-pane fade" role="tabpanel" aria-labelledby="menu2-tab">
-         <h3>Menu 2</h3>
-         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut blandit nisi. Donec auctor bibendum felis a lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas  </p>
+      <li class="d-flex justify-content-between mb-4">
+                                   <div class="card w-100">
+                                      <div class="card-header d-flex justify-content-between p-3">
+                                         <p class="fw-bold mb-0"></p>
+                                      </div>
+                                      <div class="card-body">
+                                         <p class="mb-0">
+                                            
+                                         </p>
+                                      </div>
+                                      <a class="ms-3 float-right" href="#!" data-toggle="modal" data-target="#send-message-modal">
+  <i class="fas fa-paper-plane"></i>
+</a>
+
+<!-- Modal -->
+<div class="modal fade" id="send-message-modal" tabindex="-1" aria-labelledby="send-message-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="send-message-modal-label">Send Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="message.php" method="POST">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name" value="John Doe">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text" rows="3"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+                                   </div>
+                                </li>
       </div>
       <div id="menu2" class="tab-pane fade" role="tabpanel" aria-labelledby="menu2-tab">
          <h3>Menu </h3>
