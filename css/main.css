@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+/* Navigation */
+/* ul.navbar-nav li a:active {
+  color: red !important;
+  background-color: blue;
+} */
+
+/* a.nav-link.active {
+  color: red !important;
+  background-color: blue !important;
+} */
+
 /* Card styling */
 .card {
   margin-bottom: 3rem;
@@ -170,12 +181,13 @@ footer li a {
 }
 
 /* Media queries */
-@media(min-width:1600px){
- .navbar-brand{
-  margin-left: -15rem;
- }
- #navbarNav{
-  margin-right: -15rem;
-  font-size: 20px;
- }
+@media(min-width:1600px) {
+  .navbar-brand {
+    margin-left: -15rem;
+  }
+
+  #navbarNav {
+    margin-right: -15rem;
+    font-size: 20px;
+  }
 }

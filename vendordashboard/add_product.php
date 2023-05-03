@@ -1,97 +1,102 @@
 <?php
-   session_start();
-   
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       // Collect the form data
-       $product_title = $_POST['product-title'];
-       $product_description = $_POST['product-description'];
-       $product_price = $_POST['product-price'];
-       $product_category = $_POST['product-category'];
-       $product_code = $_POST['product-code'];
-       $product_images = $_FILES['product-images'];
-       $product_images2 = $_FILES['product-images2'];
-       $product_images3 = $_FILES['product-images3'];
-       $vendor_id = $_POST['vendor_id'];
-   
-       // Validate title
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   // Collect the form data
+   $product_title = $_POST['product-title'];
+   $product_description = $_POST['product-description'];
+   $product_price = $_POST['product-price'];
+   $product_category = $_POST['product-category'];
+   $product_fabric = $_POST['product-fabric'];
+   $product_code = $_POST['product-code'];
+   $product_images = $_FILES['product-images'];
+   $product_images2 = $_FILES['product-images2'];
+   $product_images3 = $_FILES['product-images3'];
+   $vendor_id = $_POST['vendor_id'];
+
+   // Validate title
    if (empty($product_title)) {
-       $errors[] = 'Please enter a product title.';
+      $errors[] = 'Please enter a product title.';
    }
-   
+
    // Validate price
    if (empty($product_price) || !is_numeric($product_price)) {
-       $errors[] = 'Invalid price. Please enter a valid price.';
+      $errors[] = 'Invalid price. Please enter a valid price.';
    }
-   
+
    // Validate description
    if (empty($product_description)) {
-       $errors[] = 'Please enter a product description.';
+      $errors[] = 'Please enter a product description.';
    }
-   
-   
+
+
    // Validate category
    if (empty($product_category) || $product_category == 'Choose category...') {
-       $errors[] = 'Please select a product category.';
+      $errors[] = 'Please select a product category.';
    }
-   
-   
+
+   // Validate fabric
+   if (empty($product_fabric) || $product_fabric == 'Choose category...') {
+      $errors[] = 'Please select a product fabric.';
+   }
+
    // Validate code
    if (empty($product_code)) {
-       $errors[] = 'Please enter a product code.';
+      $errors[] = 'Please enter a product code.';
    }
-  
-   
-   
+
+
+
    // Validate image
-   $allowed_extensions = array('jpg', 'jpeg', 'png','webp');
+   $allowed_extensions = array('jpg', 'jpeg', 'png', 'webp');
    $file_extension = pathinfo($product_images['name'], PATHINFO_EXTENSION);
    if (empty($product_images['name']) || !in_array($file_extension, $allowed_extensions)) {
-       $errors[] = 'Invalid image. Please choose a valid image file (jpg, jpeg, or png) with a maximum size of 2MB.';
-   } 
-   
-       // If there are no errors, save the data to the database and upload the image
-       if (empty($errors)) {
-           // Connect to the database
-           $host = 'localhost'; 
-           $user = 'root'; 
-           $pwd = ''; 
-           $dbname = 'bathik'; 
-           $conn = new mysqli($host, $user, $pwd, $dbname);
-           if ($conn->connect_error) {
-               die('Connection failed: ' . $conn->connect_error);
-           }
-   
-   $target_dir = "uploads/";
-   $target_file = $target_dir . basename($product_images['name']);
+      $errors[] = 'Invalid image. Please choose a valid image file (jpg, jpeg, or png) with a maximum size of 2MB.';
+   }
 
-   $target_dir = "uploads/";
-   $target_file2 = $target_dir . basename($product_images2['name']);
+   // If there are no errors, save the data to the database and upload the image
+   if (empty($errors)) {
+      // Connect to the database
+      $host = 'localhost';
+      $user = 'root';
+      $pwd = '';
+      $dbname = 'bathik';
+      $conn = new mysqli($host, $user, $pwd, $dbname);
+      if ($conn->connect_error) {
+         die('Connection failed: ' . $conn->connect_error);
+      }
 
-   $target_dir = "uploads/";
-   $target_file3 = $target_dir . basename($product_images3['name']);
+      $target_dir = "uploads/";
+      $target_file = $target_dir . basename($product_images['name']);
 
-          // Prepare the SQL statement
-   $stmt = $conn->prepare("INSERT INTO products (title, price, product_description, category, product_code, image1,image2,image3,vendor_id) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
-   
-   // Bind the parameters
-   $stmt->bind_param("sdsssssss", $product_title, $product_price, $product_description, $product_category, $product_code, $target_file,$target_file2,$target_file3,$vendor_id);
-   
-   
-          // Read the image data
-   $image_data = file_get_contents($product_images['tmp_name']);
-   
-   
-           // Execute the statement
-           if ($stmt->execute() === TRUE) {
-               // Upload the image to the server
-   
-   move_uploaded_file($product_images['tmp_name'], $target_file);
-   move_uploaded_file($product_images2['tmp_name'], $target_file2);
-   move_uploaded_file($product_images3['tmp_name'], $target_file3);
-   
-   
-               // Form submitted successfully, show SweetAlert message
-               echo "<script>
+      $target_dir = "uploads/";
+      $target_file2 = $target_dir . basename($product_images2['name']);
+
+      $target_dir = "uploads/";
+      $target_file3 = $target_dir . basename($product_images3['name']);
+
+      // Prepare the SQL statement
+      $stmt = $conn->prepare("INSERT INTO products (title, price, product_description, category,fabric,product_code, image1,image2,image3,vendor_id) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)");
+
+      // Bind the parameters
+      $stmt->bind_param("sdssssssss", $product_title, $product_price, $product_description, $product_category, $product_fabric, $product_code, $target_file, $target_file2, $target_file3, $vendor_id);
+
+
+      // Read the image data
+      $image_data = file_get_contents($product_images['tmp_name']);
+
+
+      // Execute the statement
+      if ($stmt->execute() === TRUE) {
+         // Upload the image to the server
+
+         move_uploaded_file($product_images['tmp_name'], $target_file);
+         move_uploaded_file($product_images2['tmp_name'], $target_file2);
+         move_uploaded_file($product_images3['tmp_name'], $target_file3);
+
+
+         // Form submitted successfully, show SweetAlert message
+         echo "<script>
                swal({
                    title: 'Product added successfully',
                    text: 'Your product has been added to the database!',
@@ -99,10 +104,10 @@
                    button: 'OK'
                });
                </script>";
-           } else {
-               // Form submission failed, show SweetAlert message
-               echo 'Error: ' . $conn->error;
-               echo "<script>
+      } else {
+         // Form submission failed, show SweetAlert message
+         echo 'Error: ' . $conn->error;
+         echo "<script>
                swal({
                    title: 'Warning!',
                    text: 'Something went wrong!',
@@ -110,19 +115,19 @@
                    button: 'OK'
                });
                </script>";
-           }
-   
-           // Close the statement and the database connection
-           $stmt->close();
-           $conn->close();
-       } else {
-           // // Display the errors
-           // foreach ($errors as $error) {
-           //     echo $error . '<br>';
-           // }
-       }
+      }
+
+      // Close the statement and the database connection
+      $stmt->close();
+      $conn->close();
+   } else {
+      // // Display the errors
+      // foreach ($errors as $error) {
+      //     echo $error . '<br>';
+      // }
    }
-   ?>
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -149,8 +154,8 @@
       <div id="wrapper">
          <!-- Sidebar -->
          <?php
-            require_once  'sidebar.php';
-            ?>
+         require_once 'sidebar.php';
+         ?>
          <!-- End Sidebar -->
          <!-- Content Wrapper -->
          <div id="content-wrapper" class="d-flex flex-column">
@@ -192,7 +197,7 @@
                      <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                         <img class="img-profile rounded-circle"
                            src="img/undraw_profile.svg">
                         </a>
@@ -231,15 +236,15 @@
                   </div>
                   <!-- Content Row -->
                   <?php
-                     // Form is invalid. Show the errors to the user.
-                     if (!empty($errors)) {
-                       echo '<div class="alert alert-danger" role="alert">';
-                       foreach ($errors as $error) {
-                         echo '<p>' . $error . '</p>';
-                       }
-                       echo '</div>';
+                  // Form is invalid. Show the errors to the user.
+                  if (!empty($errors)) {
+                     echo '<div class="alert alert-danger" role="alert">';
+                     foreach ($errors as $error) {
+                        echo '<p>' . $error . '</p>';
                      }
-                     ?>
+                     echo '</div>';
+                  }
+                  ?>
                   <div class="row">
                      <div class="col-lg-6 mb-4">
                         <form method="POST" action="add_product.php" enctype="multipart/form-data">
@@ -262,6 +267,16 @@
                                  <option>Clothing</option>
                                  <option>Shoes</option>
                                  <option>Accessories</option>
+                              </select>
+                           </div>
+                           <div class="form-group">
+                              <label for="product-category">Fabric type</label>
+                              <select class="form-control" id="product-fabric" name="product-fabric">
+                                 <option selected>Choose category...</option>
+                                 <option value="silk">Silk</option>
+                                 <option value="linen">Linen</option>
+                                 <option value="rayon">Rayon</option>
+                                 <option value="cotton">Cotton</option>
                               </select>
                            </div>
                            <div class="form-group">

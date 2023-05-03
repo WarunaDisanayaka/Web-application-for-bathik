@@ -10,7 +10,6 @@ $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
 
-
 if (isset($_GET['id'])) {
    $store_id = $_GET['id'];
    $_SESSION['shop'] = $_GET['id'];
@@ -35,18 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Validate review
    if (empty($review) || !preg_match('/^[a-zA-Z0-9_ ]{4,}$/', $review)) {
       echo '<script>
-            alert("Enter your review")
-            window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
-         </script>';
+               alert("Enter your review")
+               window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
+            </script>';
 
    }
 
    // Validate star rating
    if (empty($rating) || !preg_match('/^\d{1}$/', $rating)) {
       echo '<script>
-      alert("Please add your rating")
-      window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
-      </script>';
+         alert("Please add your rating")
+         window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
+         </script>';
    }
 
    // Save the form data to the database
@@ -67,26 +66,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if ($conn->query($sql) === TRUE) {
          // Form submitted successfully, show SweetAlert message
          echo "<script>
-      swal({
-         title: 'Review added successful',
-         text: 'Thank you for your review!',
-         icon: 'success',
-         button: 'OK',
-      }).then(function() {
-         window.location.href = 'shop.php?id=" . $_SESSION["shop"] . "';
-      });
-      </script>";
+         swal({
+            title: 'Review added successful',
+            text: 'Thank you for your review!',
+            icon: 'success',
+            button: 'OK',
+         }).then(function() {
+            window.location.href = 'shop.php?id=" . $_SESSION["shop"] . "';
+         });
+         </script>";
       } else {
          //echo 'Error: ' . $sql . '<br>' . $conn->error;
          // Form submitted successfully, show SweetAlert message
          echo "<script>
-      swal({
-         title: 'Warning!',
-         text: 'Something went wrong!',
-         icon: 'warning',
-         button: 'OK'
-      });
-      </script>";
+         swal({
+            title: 'Warning!',
+            text: 'Something went wrong!',
+            icon: 'warning',
+            button: 'OK'
+         });
+         </script>";
       }
 
       $conn->close();
@@ -118,30 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="col-lg-3">
          <div class="card mb-3 border-0">
             <div class="card-body">
-               <form>
-                  <!-- <div class="mb-3">
-                     <label for="color"><h4>Category</h4></label>
-                     <div>
-                        <input type="checkbox" id="red">
-                        <label for="red" class="form-check-label">Sarees</label>
-                     </div>
-                     <div>
-                        <input type="checkbox" id="blue">
-                        <label for="blue" class="form-check-label">Shirts</label>
-                     </div>
-                     <div>
-                        <input type="checkbox" id="green">
-                        <label for="green" class="form-check-label">Dresses</label>
-                     </div>
-                     <div>
-                        <input type="checkbox" id="black">
-                        <label for="black" class="form-check-label">Black</label>
-                     </div>
-                     <div>
-                        <input type="checkbox" id="white">
-                        <label for="white" class="form-check-label">White</label>
-                     </div>
-                     </div> -->
+               <form >
                   <div class="mb-3">
                      <label for="color">
                         <h4>Materials</h4>
@@ -163,11 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="blue" class="form-check-label">Silk</label>
                      </div>
                   </div>
-                  <div class="mb-3">
-                     <label for="price">Price</label>
-                     <input type="range" class="form-range" id="price" min="0" max="1000" step="50" value="500">
-                     </div>
-                  <button type="submit" class="btn btn-primary">Filter</button>
+                  <div>
+                     <label for="price">Price Range</label>
+                     <input type="range" class="form-range" id="min_price" name="min_price" min="0" max="1000" step="50" value="0">
+                     <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="1000" step="50" value="1000">
+                  </div>
+                  <button name="filter" class="btn btn-primary">Filter</button>
                </form>
                <div class="mb-3">
                   <?php
@@ -180,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      echo '</div>';
                   }
                   ?>
-                  <form action="shop.php" method="POST">
+               <form action="shop.php" method="POST">
                      <label for="textArea">
                         <h4>Your Comment</h4>
                      </label>
@@ -212,15 +189,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             while ($row = $stmt->fetch()) {
                ?>
-                                 <div class="col-lg-3 mb-4">
-                                    <div class="card border-0">
-                                       <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
-                                       <div class="card-body">
-                                          <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
-                                       </div>
-                                    </div>
+                           <div class="col-lg-3 mb-4">
+                              <div class="card border-0">
+                                 <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
+                                 <div class="card-body">
+                                    <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
                                  </div>
-                                 <?php
+                              </div>
+                           </div>
+                           <?php
             }
             ?>
          </div>
@@ -231,32 +208,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 while ($rate = $ratings->fetch()) {
    ?>
-         <div class="container review-block">
-            <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
-            <div class="review-rating">
-               <span class="star-rating">
-                  <?php
-                  $rating = $rate['rating'];
-                  for ($i = 1; $i <= 5; $i++) {
-                     if ($i <= $rating) {
-                        echo '<i class="fa fa-star checked"></i>';
-                     } else {
-                        // echo '<i class="fa fa-star"></i>';
+               <div class="container review-block">
+                  <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
+                  <div class="review-rating">
+                     <span class="star-rating">
+                     <?php
+                     $rating = $rate['rating'];
+                     for ($i = 1; $i <= 5; $i++) {
+                        if ($i <= $rating) {
+                           echo '<i class="fa fa-star checked"></i>';
+                        } else {
+                           // echo '<i class="fa fa-star"></i>';
+                        }
                      }
-                  }
-                  ?>
-               </span>
-            </div>
-         </div>
-         <hr style="height: 2px;
-      background-color: #ccc;
-      width: 50%;
-      margin: 20px auto;
-      margin-left:6rem;"> <!-- add a horizontal rule divider after each review -->
-      <?php
+                     ?>
+                     </span>
+                  </div>
+               </div>
+               <hr style="height: 2px;
+   background-color: #ccc;
+   width: 50%;
+   margin: 20px auto;
+   margin-left:6rem;">
+               <!-- add a horizontal rule divider after each review -->
+               <?php
 }
 ?>
-
 <?php
 // Include the footer file
 require_once 'footer.php';
