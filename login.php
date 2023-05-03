@@ -102,6 +102,10 @@ require_once 'header.php';
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-dark btn-lg">Login</button>
             </div>
+            <div class="text-center mt-3">
+              <p>Don't have an account? <a href="register.php">Register</a></p>
+              </button>
+            </div>
           </form>
         </div>
       </div>
