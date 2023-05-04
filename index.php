@@ -24,19 +24,48 @@ require_once 'header.php';
 ?>
 
 <script>
+  // if (navigator.geolocation) {
+  //   navigator.geolocation.getCurrentPosition(showPosition);
+  // } else {
+  //   // Geolocation is not supported by this browser
+  // }
+
+  // function showPosition(position) {
+  //   // Get the latitude and longitude values
+  //   var lat = position.coords.latitude;
+  //   var lng = position.coords.longitude;
+
+   
+  // }
+
+  function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-    // Geolocation is not supported by this browser
+    console.log("Geolocation is not supported by this browser.");
   }
+}
 
-  function showPosition(position) {
-    // Get the latitude and longitude values
-    var lat = position.coords.latitude;
-    var lng = position.coords.longitude;
+function showPosition(position) {
+  const lat = position.coords.latitude;
+  const lng = position.coords.longitude;
 
-   
-  }
+  const geocoder = new google.maps.Geocoder();
+
+  geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+    if (status === "OK") {
+      const addressComponents = results[0].address_components;
+      const district = addressComponents.find(
+        (component) => component.types[0] === "locality"
+      ).long_name;
+      console.log(`Your current district is ${district}.`);
+    } else {
+      console.log(`Geocoder failed due to: ${status}`);
+    }
+  });
+}
+
+
 
 </script>
 
@@ -95,23 +124,23 @@ require_once 'header.php';
     while ($row = $stmt->fetch()) {
 
       ?>
-              <div class="col-md-3">
-                <div class="card border-0">
-                  <img src="vendordashboard/<?php echo $row['banner_img'] ?>" class="card-img-top" alt="...">
-                  <div class="card-body d-flex flex-column justify-content-center">
-                    <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id'] ?>"><?php echo $row['storename'] ?></a></h5>
-                    <!-- <a href="shop.php">shop</a> -->
-                    <div class="rating text-center">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                  <div class="col-md-3">
+                    <div class="card border-0">
+                      <img src="vendordashboard/<?php echo $row['banner_img'] ?>" class="card-img-top" alt="...">
+                      <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id'] ?>"><?php echo $row['storename'] ?></a></h5>
+                        <!-- <a href="shop.php">shop</a> -->
+                        <div class="rating text-center">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <?php
+                  <?php
     }
     ?>
 
