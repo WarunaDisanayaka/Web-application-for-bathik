@@ -1,4 +1,10 @@
-.preview-img{
+.preview-img {
     width: 250px;
     height: auto;
+}
+
+i.fas.fa-paper-plane {
+    float: right;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }

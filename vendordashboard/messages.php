@@ -37,6 +37,8 @@ $stmt = $pdo->query("SELECT * FROM messages WHERE shop_id='$shop' AND incoming_i
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
       <!-- Custom styles for this template-->
       <link href="css/sb-admin-2.min.css" rel="stylesheet">
+      <link href="css/main.css" rel="stylesheet">
+      
    </head>
    <body id="page-top">
       <!-- Page Wrapper -->
