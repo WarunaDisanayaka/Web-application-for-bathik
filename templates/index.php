@@ -1,6 +1,20 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+   // Redirect to the login page
+
+   // echo("Please login");
+   echo "<script>
+          alert('Please login to buy items!')
+          </script>";
+   exit();
+
+}
 $name = "John";
 echo "Hello, $name!";
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

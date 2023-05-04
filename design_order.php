@@ -1,80 +1,85 @@
 <?php
-   // Include the header file
-   require_once  'header.php';
-   ?>
+// Include the header file
+require_once 'header.php';
+?>
 <?php
-   session_start();
-   $pred_value = $_GET['pred'];
-   echo "Predicted value: " . $pred_value;
-   
-   echo $_SESSION['email'];
-   
-   
-      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-         // Collect the form data
-         $shop = $_POST['shop'];
-         $note = $_POST['note'];
-         $document = $_FILES['document'];
-         $email = $_POST['email'];
-         $price = $_POST['price'];
-         $user_id = $_SESSION['userid'];
-         
-      
-          // Validate shop
-      if (empty($shop)) {
-         $errors[] = 'Please select a shop.';
-      }
-   
-         // Validate address
-      if (empty($note)) {
-         $errors[] = 'Please enter the note.';
-      }
-   
-      // Validate document upload
-      $allowedExtensions = array('jpg', 'jpeg', 'png');
-      $extension = pathinfo($document['name'], PATHINFO_EXTENSION);
-      if (empty($document) || !in_array($extension, $allowedExtensions)) {
-         $errors[] = 'Invalid document upload. Please upload a PDF, DOC, or DOCX file.';
-      }
-   
-      // Validate email
-      if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+session_start();
+setcookie('pred', $_GET['pred']);
+
+$pred_value = $_GET['pred'];
+setcookie('pred', $pred_value);
+echo "Predicted value: " . $pred_value;
+
+$_SESSION['pred'] = $pred_value;
+
+echo $_SESSION['email'];
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   // Collect the form data
+   $shop = $_POST['shop'];
+   $note = $_POST['note'];
+   $document = $_FILES['document'];
+   $email = $_POST['email'];
+   $price = $_POST['price'];
+   $user_id = $_SESSION['userid'];
+
+
+   // Validate shop
+   if (empty($shop)) {
+      $errors[] = 'Please select a shop.';
+   }
+
+   // Validate address
+   if (empty($note)) {
+      $errors[] = 'Please enter the note.';
+   }
+
+   // Validate document upload
+   $allowedExtensions = array('jpg', 'jpeg', 'png');
+   $extension = pathinfo($document['name'], PATHINFO_EXTENSION);
+   if (empty($document) || !in_array($extension, $allowedExtensions)) {
+      $errors[] = 'Invalid document upload. Please upload a PDF, DOC, or DOCX file.';
+   }
+
+   // Validate email
+   if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $errors[] = 'Invalid email. Please enter a valid email address.';
-      }
-   
-      // Validate price
-      if (empty($price)) {
+   }
+
+   // Validate price
+   if (empty($price)) {
       $errors[] = 'Please enter a price.';
+   }
+
+
+   // If there are no errors, save the data to the database
+   if (empty($errors)) {
+      // Connect to the database
+      $host = 'localhost';
+      $user = 'root';
+      $pwd = '';
+      $dbname = 'bathik';
+      $conn = new mysqli($host, $user, $pwd, $dbname);
+      if ($conn->connect_error) {
+         die('Connection failed: ' . $conn->connect_error);
       }
-      
-      
-          // If there are no errors, save the data to the database
-          if (empty($errors)) {
-              // Connect to the database
-              $host = 'localhost'; 
-              $user = 'root'; 
-              $pwd = ''; 
-              $dbname = 'bathik'; 
-              $conn = new mysqli($host, $user, $pwd, $dbname);
-              if ($conn->connect_error) {
-                  die('Connection failed: ' . $conn->connect_error);
-              }
-      
-              // Move the uploaded document to the upload path
-              $uploadPath = 'vendordashboard/uploads/'; // set your upload path here
-              $filename = uniqid() . '_' . $document['name'];
-              $destination = $uploadPath . $filename;
-              if (!move_uploaded_file($document['tmp_name'], $destination)) {
-                  $errors[] = 'Failed to upload the document. Please try again.';
-              }
-      
-      
-              // Save the data to the database
-              $sql = "INSERT INTO design_orders (shop, note, design, email, price,user_id,status) 
+
+      // Move the uploaded document to the upload path
+      $uploadPath = 'vendordashboard/uploads/'; // set your upload path here
+      $filename = uniqid() . '_' . $document['name'];
+      $destination = $uploadPath . $filename;
+      if (!move_uploaded_file($document['tmp_name'], $destination)) {
+         $errors[] = 'Failed to upload the document. Please try again.';
+      }
+
+
+      // Save the data to the database
+      $sql = "INSERT INTO design_orders (shop, note, design, email, price,user_id,status) 
               VALUES ('$shop', '$note', '$destination', '$email', '$price','$user_id','Proccessing')";
-              if ($conn->query($sql) === TRUE) {
-                   // Form submitted successfully, show SweetAlert message
-          echo "<script>
+      if ($conn->query($sql) === TRUE) {
+         // Form submitted successfully, show SweetAlert message
+         echo "<script>
           swal({
               title: 'Order submit successful',
               text: 'Thank you for submitting order!',
@@ -82,10 +87,10 @@
               button: 'OK'
           });
       </script>";
-              } else {
-                  //echo 'Error: ' . $sql . '<br>' . $conn->error;
-                  // Form submitted successfully, show SweetAlert message
-          echo "<script>
+      } else {
+         //echo 'Error: ' . $sql . '<br>' . $conn->error;
+         // Form submitted successfully, show SweetAlert message
+         echo "<script>
           swal({
               title: 'Warning!',
               text: 'Something went wrong!',
@@ -93,28 +98,28 @@
               button: 'OK'
           });
       </script>";
-              }
-      
-              $conn->close();
-          } else {
-              // // Display the errors
-              // foreach ($errors as $error) {
-              //     echo $error . '<br>';
-              // }
-          }
       }
-   
-      // Connect to the database
-      $dsn = 'mysql:host=localhost;dbname=bathik';
-      $username = 'root';
-      $password = '';
-      $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-      $pdo = new PDO($dsn, $username, $password, $options);
-   
-     // Select all shops
-     $stmt = $pdo->query('SELECT store_id,storename FROM stores');
-   
-      ?>
+
+      $conn->close();
+   } else {
+      // // Display the errors
+      // foreach ($errors as $error) {
+      //     echo $error . '<br>';
+      // }
+   }
+}
+
+// Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+// Select all shops
+$stmt = $pdo->query('SELECT store_id,storename FROM stores');
+
+?>
 <!-- Hero section start-->
 <section class="hero" style="background-image: url('img/hero.png');">
    <div class="container">
@@ -134,28 +139,28 @@
             <div class="card-body">
                <h5 class="card-title text-center">Submit your design</h5>
                <?php
-                  // Form is invalid. Show the errors to the user.
-                  if (!empty($errors)) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                    foreach ($errors as $error) {
-                      echo '<p>' . $error . '</p>';
-                    }
-                    echo '</div>';
+               // Form is invalid. Show the errors to the user.
+               if (!empty($errors)) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                  foreach ($errors as $error) {
+                     echo '<p>' . $error . '</p>';
                   }
-                  ?>
+                  echo '</div>';
+               }
+               ?>
                <form method="POST" action="design_order.php" enctype="multipart/form-data">
                   <div class="mb-3">
                      <label for="location" class="form-label">Select Shop</label>
                      <select class="form-select" id="location" name="shop">
                         <option value="">Select Location</option>
                         <?php
-                           $stmt = $pdo->query('SELECT store_id, storename FROM stores');
-                           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                             $storeId = $row['store_id'];
-                             $storename = $row['storename'];
-                             echo '<option value="' . $storeId . '">' . $storename . '</option>';
-                           }
-                           ?>
+                        $stmt = $pdo->query('SELECT store_id, storename FROM stores');
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                           $storeId = $row['store_id'];
+                           $storename = $row['storename'];
+                           echo '<option value="' . $storeId . '">' . $storename . '</option>';
+                        }
+                        ?>
                      </select>
                   </div>
                   <div class="mb-3">
@@ -172,7 +177,7 @@
                   </div>
                   <div class="mb-3">
                      <label for="email" class="form-label">Price</label>
-                     <input type="number" class="form-control" id="email" name="price" value="<?php echo $pred_value; ?>">
+                     <input type="number" class="form-control" id="email" name="price" value="<?php echo $_COOKIE['pred']; ?>">
                   </div>
                   <div class="d-grid gap-2">
                      <button type="submit" class="btn btn-lg btn-dark">Submit</button>
@@ -185,7 +190,7 @@
 </div>
 <!-- Register end -->
 <?php
-   // Include the footer file
-   require_once 'footer.php';
-   
-   ?>
+// Include the footer file
+require_once 'footer.php';
+
+?>
