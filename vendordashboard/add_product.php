@@ -264,9 +264,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               <label for="product-category">Category</label>
                               <select class="form-control" id="product-category" name="product-category">
                                  <option selected>Choose category...</option>
-                                 <option>Clothing</option>
-                                 <option>Shoes</option>
-                                 <option>Accessories</option>
+                                 <option>Dress</option>
+                                 <option>Sarees</option>
+                                 <option>Shirts</option>
                               </select>
                            </div>
                            <div class="form-group">
@@ -290,13 +290,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                            </div>
                            <div class="form-group">
                               <label for="product-images">Image 2</label>
-                              <input class="form-control-file" type="file" id="product-images2" name="product-images2" onchange="previewImage(this);">
-                              <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
+                              <input class="form-control-file" type="file" id="product-images2" name="product-images2"  onchange="previewImage2(this);">
+                              <img id="preview2" class="preview-img" src="#" alt="Preview2" style="display:none;">
                            </div>
                            <div class="form-group">
                               <label for="product-images">Image 3</label>
-                              <input class="form-control-file" type="file" id="product-images3" name="product-images3" onchange="previewImage(this);">
-                              <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
+                              <input class="form-control-file" type="file" id="product-images3" name="product-images3"  onchange="previewImage3(this);">
+                              <img id="preview3" class="preview-img" src="#" alt="Preview3" style="display:none;">
                            </div>
                            
                            <input type="hidden" name="vendor_id" value=<?php echo $_SESSION['store_id']; ?>>
@@ -362,6 +362,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              var reader = new FileReader();
              reader.onload = function (e) {
                $('#preview').attr('src', e.target.result).show();
+             };
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+
+
+         function previewImage2(input) {
+           if (input.files && input.files[0]) {
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#preview2').attr('src', e.target.result).show();
+             };
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+
+         function previewImage3(input) {
+           if (input.files && input.files[0]) {
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#preview3').attr('src', e.target.result).show();
              };
              reader.readAsDataURL(input.files[0]);
            }
