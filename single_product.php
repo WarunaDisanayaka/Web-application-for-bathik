@@ -1,88 +1,88 @@
 <?php
-session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-   // Collect the form data
-   $email = $_POST['email'];
-   $password = $_POST['password'];
-
-   // Connect to the database
-   $host = 'localhost';
-   $user = 'root';
-   $pwd = '';
-   $dbname = 'bathik';
-   $conn = new mysqli($host, $user, $pwd, $dbname);
-   if ($conn->connect_error) {
-      die('Connection failed: ' . $conn->connect_error);
-   }
-
-   // Check if the email exists in the database
-   $sql = "SELECT * FROM users WHERE email = '$email'";
-   $result = $conn->query($sql);
-   if ($result->num_rows == 1) {
-      // Verify the password
-      $row = $result->fetch_assoc();
-      if (password_verify($password, $row['password'])) {
-         // Login successful
-         $_SESSION['username'] = $row['username'];
-         $_SESSION['email'] = $row['email'];
-         $_SESSION['phone'] = $row['phone'];
-         header('Location: dashboard');
-         exit;
-      } else {
-         // Incorrect password
-         $password_error = 'Incorrect password';
+   session_start();
+   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      // Collect the form data
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+   
+      // Connect to the database
+      $host = 'localhost';
+      $user = 'root';
+      $pwd = '';
+      $dbname = 'bathik';
+      $conn = new mysqli($host, $user, $pwd, $dbname);
+      if ($conn->connect_error) {
+         die('Connection failed: ' . $conn->connect_error);
       }
-   } else {
-      // Email not found
-      $email_error = 'Email not found';
+   
+      // Check if the email exists in the database
+      $sql = "SELECT * FROM users WHERE email = '$email'";
+      $result = $conn->query($sql);
+      if ($result->num_rows == 1) {
+         // Verify the password
+         $row = $result->fetch_assoc();
+         if (password_verify($password, $row['password'])) {
+            // Login successful
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['phone'] = $row['phone'];
+            header('Location: dashboard');
+            exit;
+         } else {
+            // Incorrect password
+            $password_error = 'Incorrect password';
+         }
+      } else {
+         // Email not found
+         $email_error = 'Email not found';
+      }
+   
+      $conn->close();
+   
+   
+   
    }
-
-   $conn->close();
-
-
-
-}
-
-//  Connect to the database
-$dsn = 'mysql:host=localhost;dbname=bathik';
-$username = 'root';
-$password = '';
-$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-$pdo = new PDO($dsn, $username, $password, $options);
-
-// Get product details
-if (isset($_GET['id'])) {
-   $product_id = $_GET['id'];
-   // $store_id = $_GET['id'];
-
-   // Select product details
-   $stmt = $pdo->query("SELECT * FROM products WHERE id='$product_id'");
-   $product_detials = $stmt->fetch();
-
-   $stmt2 = $pdo->query("SELECT * FROM product_quantity WHERE product_id='$product_id'");
-
-}
-
-?>
+   
+   //  Connect to the database
+   $dsn = 'mysql:host=localhost;dbname=bathik';
+   $username = 'root';
+   $password = '';
+   $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+   $pdo = new PDO($dsn, $username, $password, $options);
+   
+   // Get product details
+   if (isset($_GET['id'])) {
+      $product_id = $_GET['id'];
+      // $store_id = $_GET['id'];
+   
+      // Select product details
+      $stmt = $pdo->query("SELECT * FROM products WHERE id='$product_id'");
+      $product_detials = $stmt->fetch();
+   
+      $stmt2 = $pdo->query("SELECT * FROM product_quantity WHERE product_id='$product_id'");
+   
+   }
+   
+   ?>
 <?php
-// Include the header file
-require_once 'header.php';
-
-?>
+   // Include the header file
+   require_once 'header.php';
+   
+   ?>
 <div class="modal fade" id="size-chart-modal" tabindex="-1" role="dialog" aria-labelledby="size-chart-modal-label" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="size-chart-modal-label">Size Chart</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="size-chart-modal-label">Size Chart</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <img src="./img/size chart.png" alt="Size Chart">
+         </div>
       </div>
-      <div class="modal-body">
-        <img src="./img/size chart.png" alt="Size Chart">
-      </div>
-    </div>
-  </div>
+   </div>
 </div>
 <!-- Hero section start-->
 <div id="message"></div>
@@ -137,32 +137,30 @@ require_once 'header.php';
             <select name="size" class="form-select" style="width: 150px;" id="sizeSelect">
                <option selected>Select size</option>
                <?php
-               while ($size = $stmt2->fetch()) {
+                  while ($size = $stmt2->fetch()) {
+                     ?>
+               <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
+               <?php
+                  }
                   ?>
-                                                               <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
-                                                               <?php
-               }
-               ?>
             </select>
          </div>
          <div class="mb-3">
-         
-         <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal">View Size Chart</a>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Size chart</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <img src="./img/size chart.png" alt="Size Chart" width="300px">
-      </div>
-      
-    </div>
-  </div>
-</div>     
+            <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal">View Size Chart</a>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Size chart</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                        <img src="./img/size chart.png" alt="Size Chart" width="300px">
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
          <div class="d-flex align-items-center">
             <input type="number"  id="quantityInput"  style="width: 70px; margin-right:0.5rem;">
@@ -176,7 +174,6 @@ require_once 'header.php';
                <button class="btn btn-primary me-3 addCart">Add to Cart</button>
                <button class="btn btn-secondary addFavourites"><i class="bi bi-heart"></i> Add to Favorites</button>
             </form>
-           
          </div>
          <p class="mt-3"><small>Category: <?php echo $product_detials['category']; ?></small></p>
          <p><small>Product Code: <?php echo $product_detials['product_code']; ?></small></p>
@@ -185,10 +182,10 @@ require_once 'header.php';
 </div>
 <!-- End Single product -->
 <?php
-// Include the footer file
-require_once 'footer.php';
-
-?>
+   // Include the footer file
+   require_once 'footer.php';
+   
+   ?>
 <script>
    // Product image clicking changing
    function change_image(image){
@@ -218,7 +215,7 @@ require_once 'footer.php';
    
    // Add to cart
    $(document).ready(function(){
-
+   
    $('.addCart').click(function(e){
       e.preventDefault();
       var $form = $(this).closest(".add-cart");
@@ -227,7 +224,7 @@ require_once 'footer.php';
       var pprice = $form.find(".pprice").val();
       var size = $form.find(".selected_size").val();
       var qty = $form.find(".quantity").val();
-
+   
       $.ajax({
          url:'add_to_cart.php',
          method:'post',
@@ -240,10 +237,10 @@ require_once 'footer.php';
       });
    });
    });
-
-
+   
+   
    $(document).ready(function(){
-$('.addFavourites').click(function(e){
+   $('.addFavourites').click(function(e){
    e.preventDefault();
    var $form = $(this).closest(".add-cart");
    var pid = $form.find(".pid").val();
@@ -252,7 +249,7 @@ $('.addFavourites').click(function(e){
    var pimage = $form.find(".pimage").val();   
    var size = $form.find(".selected_size").val();
    var qty = $form.find(".quantity").val();
-
+   
    $.ajax({
       url:'add_to_favourites.php',
       method:'post',
@@ -263,10 +260,10 @@ $('.addFavourites').click(function(e){
          // load_cart();
       }
    });
-});
-});
-
-
+   });
+   });
+   
+   
    
    
 </script>

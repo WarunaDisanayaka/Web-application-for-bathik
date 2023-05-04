@@ -7,30 +7,34 @@ if (!isset($_SESSION['email'])) {
    exit();
 }
 
- // Include the dbconnection file
- require_once  'db_connection.php';
+// Include the dbconnection file
+require_once 'db_connection.php';
 
 
- $userId=$_SESSION['userid'];
+$userId = $_SESSION['userid'];
 
-   $myAccount="SELECT * FROM users WHERE id='$userId'";
-   $result=$conn->query($myAccount);
-   $row = $result->fetch_assoc();
+$myAccount = "SELECT * FROM users WHERE id='$userId'";
+$result = $conn->query($myAccount);
+$row = $result->fetch_assoc();
 
-   // Order
-   $orders="SELECT * FROM cart_order WHERE user_id='$userId'";
-   $query=$conn->query($orders);
-  
-   // Design orders
-   $DesignOrders="SELECT * FROM design_orders WHERE user_id='$userId'";
-   $query2=$conn->query($DesignOrders);
-   
-   ?>
+// Order
+$orders = "SELECT * FROM cart_order WHERE user_id='$userId'";
+$query = $conn->query($orders);
+
+// Design orders
+$DesignOrders = "SELECT * FROM design_orders WHERE user_id='$userId'";
+$query2 = $conn->query($DesignOrders);
+
+// Select all messages from users
+$messages = "SELECT * FROM messages WHERE user_id='$userId' AND incoming_id='1'";
+$query3 = $conn->query($messages);
+
+?>
 <?php
-   // Include the header file
-   require_once  'header.php';
-   
-   ?>
+// Include the header file
+require_once 'header.php';
+
+?>
 <!-- Hero section start-->
 <section class="hero" style="background-image: url('img/hero.png');">
    <div class="container">
@@ -64,136 +68,140 @@ if (!isset($_SESSION['email'])) {
    <div class="tab-content">
       <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
          <h3>Dashboard</h3>
-         <p>Hi welcome <?php echo $row['username']?> </p>
+         <p>Hi welcome <?php echo $row['username'] ?> </p>
       </div>
       <div id="menu1" class="tab-pane fade" role="tabpanel" aria-labelledby="menu1-tab">
          <h3>Orders</h3>
          <div class="container-fluid">
-                  <!-- Content Row -->
-                  <div class="row">
-                     <table class="table">
-                        <thead class="thead-dark">
-                           <tr>
-                              <th scope="col">Product name</th>
-                              <th scope="col">Product price</th>
-                              <th scope="col">Qty</th>
-                              <th scope="col">Status</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                              while ($order=$query->fetch_assoc()) {
-                                  
-                           ?>
-                           <tr>
-                              <td><?php echo $order['product_name'];?></td>
-                              <td><?php echo $order['product_price'];?></td>
-                              <td><?php echo $order['qty'];?></td>
-                              <td><?php echo $order['status'];?></td>
-                           </tr>
-                           <?php
-                              }
-                           ?>
-                           
-                        </tbody>
-                     </table>
-                  </div>
-                  <!-- Content Row -->
-                  <div class="row">
-                  </div>
-                  <!-- Content Row -->
-                  <div class="row">
-                     <div class="col-lg-6 mb-4">
-                     </div>
-                  </div>
+            <!-- Content Row -->
+            <div class="row">
+               <table class="table">
+                  <thead class="thead-dark">
+                     <tr>
+                        <th scope="col">Product name</th>
+                        <th scope="col">Product price</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Status</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <?php
+                     while ($order = $query->fetch_assoc()) {
+
+                        ?>
+                                    <tr>
+                                       <td><?php echo $order['product_name']; ?></td>
+                                       <td><?php echo $order['product_price']; ?></td>
+                                       <td><?php echo $order['qty']; ?></td>
+                                       <td><?php echo $order['status']; ?></td>
+                                    </tr>
+                                    <?php
+                     }
+                     ?>
+                  </tbody>
+               </table>
+            </div>
+            <!-- Content Row -->
+            <div class="row">
+            </div>
+            <!-- Content Row -->
+            <div class="row">
+               <div class="col-lg-6 mb-4">
                </div>
+            </div>
+         </div>
       </div>
       <div id="menu3" class="tab-pane fade" role="tabpanel" aria-labelledby="menu1-tab">
          <h3>Design Orders</h3>
          <div class="container-fluid">
-                  <!-- Content Row -->
-                  <div class="row">
-                     <table class="table">
-                        <thead class="thead-dark">
-                           <tr>
-                              <th scope="col">Design</th>
-                              <th scope="col">Product price</th>
-                              <th scope="col">Status</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                              while ($orderDesign=$query2->fetch_assoc()) {    
-                           ?>
-                           <tr>
-                              <td><img src="<?php echo $orderDesign['design'];?>" style="width:250px;height:200px;" alt="" srcset=""></td>
-                              <td><?php echo $orderDesign['price'];?></td>
-                              <td><?php echo $orderDesign['status'];?></td>
-                           </tr>
-                           <?php
-                              }
-                           ?>
-                           
-                        </tbody>
-                     </table>
-                  </div>
-                  <!-- Content Row -->
-                  <div class="row">
-                  </div>
-                  <!-- Content Row -->
-                  <div class="row">
-                     <div class="col-lg-6 mb-4">
-                     </div>
-                  </div>
+            <!-- Content Row -->
+            <div class="row">
+               <table class="table">
+                  <thead class="thead-dark">
+                     <tr>
+                        <th scope="col">Design</th>
+                        <th scope="col">Product price</th>
+                        <th scope="col">Status</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <?php
+                     while ($orderDesign = $query2->fetch_assoc()) {
+                        ?>
+                                    <tr>
+                                       <td><img src="<?php echo $orderDesign['design']; ?>" style="width:250px;height:200px;" alt="" srcset=""></td>
+                                       <td><?php echo $orderDesign['price']; ?></td>
+                                       <td><?php echo $orderDesign['status']; ?></td>
+                                    </tr>
+                                    <?php
+                     }
+                     ?>
+                  </tbody>
+               </table>
+            </div>
+            <!-- Content Row -->
+            <div class="row">
+            </div>
+            <!-- Content Row -->
+            <div class="row">
+               <div class="col-lg-6 mb-4">
                </div>
+            </div>
+         </div>
       </div>
       <div id="menu2" class="tab-pane fade" role="tabpanel" aria-labelledby="menu2-tab">
-      <li class="d-flex justify-content-between mb-4">
-                                   <div class="card w-100">
-                                      <div class="card-header d-flex justify-content-between p-3">
-                                         <p class="fw-bold mb-0"></p>
-                                      </div>
-                                      <div class="card-body">
-                                         <p class="mb-0">
-                                            
-                                         </p>
-                                      </div>
-                                      <a class="ms-3 float-right" href="#!" data-toggle="modal" data-target="#send-message-modal">
-  <i class="fas fa-paper-plane"></i>
-</a>
+         <?php
+         while ($row = $query3->fetch_assoc()) {
 
-<!-- Modal -->
-<div class="modal fade" id="send-message-modal" tabindex="-1" aria-labelledby="send-message-modal-label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="send-message-modal-label">Send Message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="message.php" method="POST">
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name" value="John Doe">
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text" rows="3"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Send</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+            ?>
+                        <li class="d-flex justify-content-between mb-4">
+                           <div class="card w-100">
+                              <div class="card-header d-flex justify-content-between p-3">
+                                 <p class="fw-bold mb-0"><?php echo $row['username'] ?></p>
+                              </div>
+                              <div class="card-body">
+                                 <p class="mb-0">
+                                    <?php echo $row['message'] ?>
+                                    <?php  $row['shop_id'] ?>
+                                    <?php  $row['user_id'] ?>
+                                 </p>
+                              </div>
+                              <a class="ms-3 float-end" href="#send-message-modal" role="button" data-bs-toggle="modal">
+        <i class="fas fa-paper-plane"></i>
+      </a>
 
-                                   </div>
-                                </li>
+      <div class="modal fade" id="send-message-modal" tabindex="-1" aria-labelledby="send-message-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="send-message-modal-label">Send Message</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="sendmessage.php" method="POST">
+                <div class="mb-3">
+                  <label for="message-text" class="form-label">Message:</label>
+                  <textarea class="form-control" name="message" id="message-text" rows="3"></textarea>
+                </div>
+                <input type="hidden" name="shop" value="<?php echo $row['shop_id'] ?>">
+                <input type="hidden" name="userid" value="<?php echo $row['user_id'] ?>">
+                <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+                        
+                           </div>
+                        </li>
+                        <?php
+         }
+         ?>
       </div>
       <div id="menu2" class="tab-pane fade" role="tabpanel" aria-labelledby="menu2-tab">
          <h3>Menu </h3>
@@ -203,7 +211,7 @@ if (!isset($_SESSION['email'])) {
 </div>
 <!-- Login form end -->
 <?php
-   // Include the footer file
-   require_once 'footer.php';
-   
-   ?>
+// Include the footer file
+require_once 'footer.php';
+
+?>

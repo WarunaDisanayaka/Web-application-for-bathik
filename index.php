@@ -7,11 +7,11 @@ $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
 // Select all shops with images
-$stmt = $pdo->query('SELECT store_id,storename FROM stores');
+$stmt = $pdo->query('SELECT store_id,storename,banner_img FROM stores');
 
 if (isset($_GET['location'])) {
   $location = $_GET['location'];
-  $stmt = $pdo->prepare('SELECT store_id, storename FROM stores WHERE location = ?');
+  $stmt = $pdo->prepare('SELECT store_id, storename,banner_img FROM stores WHERE location = ?');
   $stmt->execute([$location]);
 }
 
@@ -95,23 +95,23 @@ require_once 'header.php';
     while ($row = $stmt->fetch()) {
 
       ?>
-        <div class="col-md-3">
-          <div class="card border-0">
-            <img src="img/shop1.jpeg" class="card-img-top" alt="...">
-            <div class="card-body d-flex flex-column justify-content-center">
-              <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id'] ?>"><?php echo $row['storename'] ?></a></h5>
-              <!-- <a href="shop.php">shop</a> -->
-              <div class="rating text-center">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div class="col-md-3">
+                <div class="card border-0">
+                  <img src="vendordashboard/<?php echo $row['banner_img'] ?>" class="card-img-top" alt="...">
+                  <div class="card-body d-flex flex-column justify-content-center">
+                    <h5 class="card-title text-center"><a href="shop.php?id=<?php echo $row['store_id'] ?>"><?php echo $row['storename'] ?></a></h5>
+                    <!-- <a href="shop.php">shop</a> -->
+                    <div class="rating text-center">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <?php
+              <?php
     }
     ?>
 

@@ -2,9 +2,9 @@
 session_start();
 
 if (!isset($_SESSION['email'])) {
-    // Redirect to the login page
-    header("Location: ../vendor_login.php");
-    exit();
+   // Redirect to the login page
+   header("Location: ../vendor_login.php");
+   exit();
 }
 
 // Connect to the database
@@ -16,7 +16,7 @@ $pdo = new PDO($dsn, $username, $password, $options);
 
 $shop = $_SESSION['store_id'];
 
-// Select all shops with images
+// Select all messages from users
 $stmt = $pdo->query("SELECT * FROM messages WHERE shop_id='$shop' AND incoming_id='0'");
 
 ?>
@@ -152,53 +152,53 @@ $stmt = $pdo->query("SELECT * FROM messages WHERE shop_id='$shop' AND incoming_i
                         <?php
                         while ($row = $stmt->fetch()) {
 
-                            ?>
-                                <li class="d-flex justify-content-between mb-4">
-                                   <div class="card w-100">
-                                      <div class="card-header d-flex justify-content-between p-3">
-                                         <p class="fw-bold mb-0"><?php echo $row['username'] ?></p>
-                                      </div>
-                                      <div class="card-body">
-                                         <p class="mb-0">
-                                            <?php echo $row['message'] ?>
-                                            <?php echo $row['shop_id'] ?>
-                                            <?php echo $row['user_id'] ?>
-                                         </p>
-                                      </div>
-                                      <a class="ms-3 float-right" href="#!" data-toggle="modal" data-target="#send-message-modal">
-                                      <i class="fas fa-paper-plane"></i>
-                                      </a>
-                                      <div class="modal fade" id="send-message-modal" tabindex="-1" role="dialog" aria-labelledby="send-message-modal-label" aria-hidden="true">
-                                         <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                               <div class="modal-header">
-                                                  <h5 class="modal-title" id="send-message-modal-label">Send Message</h5>
-                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                  <span aria-hidden="true">×</span>
-                                                  </button>
-                                               </div>
-                                               <div class="modal-body">
-                                                  <form action="sendmessage.php" method="POST">
-                                                     <div class="form-group">
-                                                        <label for="message-text" class="col-form-label">Message:</label>
+                           ?>
+                                   <li class="d-flex justify-content-between mb-4">
+                                      <div class="card w-100">
+                                         <div class="card-header d-flex justify-content-between p-3">
+                                            <p class="fw-bold mb-0"><?php echo $row['username'] ?></p>
+                                         </div>
+                                         <div class="card-body">
+                                            <p class="mb-0">
+                                               <?php echo $row['message'] ?>
+                                               <?php  $row['shop_id'] ?>
+                                               <?php  $row['user_id'] ?>
+                                            </p>
+                                         </div>
+                                         <a class="ms-3 float-right" href="#!" data-toggle="modal" data-target="#send-message-modal">
+                                         <i class="fas fa-paper-plane"></i>
+                                         </a>
+                                         <div class="modal fade" id="send-message-modal" tabindex="-1" role="dialog" aria-labelledby="send-message-modal-label" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                               <div class="modal-content">
+                                                  <div class="modal-header">
+                                                     <h5 class="modal-title" id="send-message-modal-label">Send Message</h5>
+                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                     <span aria-hidden="true">×</span>
+                                                     </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                     <form action="sendmessage.php" method="POST">
+                                                        <div class="form-group">
+                                                           <label for="message-text" class="col-form-label">Message:</label>
                                                     
-                                                        <textarea class="form-control" name="message" id="message-text" rows="3"></textarea>
-                                                     </div>
-                                                     <input type="hidden" name="shop" value="<?php echo $row['shop_id'] ?>">
-                                                     <input type="hidden" name="userid" value="<?php echo $row['user_id'] ?>">
-                                                     <input type="hidden" name="username" value="<?php echo $_SESSION['ownername']; ?>">
-                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Send</button>
-                                                     </div>
-                                                  </form>
+                                                           <textarea class="form-control" name="message" id="message-text" rows="3"></textarea>
+                                                        </div>
+                                                        <input type="hidden" name="shop" value="<?php echo $row['shop_id'] ?>">
+                                                        <input type="hidden" name="userid" value="<?php echo $row['user_id'] ?>">
+                                                        <input type="hidden" name="username" value="<?php echo $_SESSION['ownername']; ?>">
+                                                        <div class="modal-footer">
+                                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                           <button type="submit" class="btn btn-primary">Send</button>
+                                                        </div>
+                                                     </form>
+                                                  </div>
                                                </div>
                                             </div>
                                          </div>
                                       </div>
-                                   </div>
-                                </li>
-                                <?php
+                                   </li>
+                                   <?php
                         }
                         ?>
                      </div>
