@@ -117,34 +117,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="col-lg-3">
          <div class="card mb-3 border-0">
             <div class="card-body">
-               <form >
+               <form action="filter_products.php" method="post">
+                  <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
+                  <input type="hidden" name="shopname" value="<?php echo $storeName['storename']; ?>">
                   <div class="mb-3">
                      <label for="color">
                         <h4>Materials</h4>
                      </label>
                      <div>
-                        <input type="checkbox" id="red">
-                        <label for="red" class="form-check-label">Linen</label>
+                        <input type="checkbox" id="linen" name="materials[]" value="linen">
+                        <label for="linen" class="form-check-label">Linen</label>
                      </div>
                      <div>
-                        <input type="checkbox" id="red">
-                        <label for="red" class="form-check-label">Cotton</label>
+                        <input type="checkbox" id="cotton" name="materials[]" value="cotton">
+                        <label for="cotton" class="form-check-label">Cotton</label>
                      </div>
                      <div>
-                        <input type="checkbox" id="red">
-                        <label for="red" class="form-check-label">Rayon</label>
+                        <input type="checkbox" id="rayon" name="materials[]" value="rayon">
+                        <label for="rayon" class="form-check-label">Rayon</label>
                      </div>
                      <div>
-                        <input type="checkbox" id="blue">
-                        <label for="blue" class="form-check-label">Silk</label>
+                        <input type="checkbox" id="silk" name="materials[]" value="silk">
+                        <label for="silk" class="form-check-label">Silk</label>
                      </div>
                   </div>
                   <div>
                      <label for="price">Price Range</label>
                      <input type="range" class="form-range" id="min_price" name="min_price" min="0" max="1000" step="50" value="0">
-                     <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="1000" step="50" value="1000">
+                     <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="5000" step="50" value="1000">
                   </div>
-                  <button name="filter" class="btn btn-primary">Filter</button>
+                  <input type="submit" value="Filter" name="filter" class="btn btn-primary">
                </form>
                <div class="mb-3">
                   <?php
