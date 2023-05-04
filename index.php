@@ -52,12 +52,12 @@ require_once 'header.php';
     <div class="carousel-item active">
       <img src="img/slide3.jpg" class="d-block w-100" alt="Slide 1">
     </div>
-    <!-- <div class="carousel-item">
+    <div class="carousel-item">
       <img src="img/slide2.jpg" class="d-block w-100" alt="Slide 2">
-    </div> -->
-    <!-- <div class="carousel-item">
+    </div>
+    <div class="carousel-item">
       <img src="img/slide3.jpg" class="d-block w-100" alt="Slide 3">
-    </div> -->
+    </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
