@@ -9,6 +9,7 @@ $password = '';
 $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
+echo $_SESSION['userid'];
 
 if (isset($_GET['id'])) {
    $store_id = $_GET['id'];
@@ -34,18 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Validate review
    if (empty($review) || !preg_match('/^[a-zA-Z0-9_ ]{4,}$/', $review)) {
       echo '<script>
-               alert("Enter your review")
-               window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
-            </script>';
+                  alert("Enter your review")
+                  window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
+               </script>';
 
    }
 
    // Validate star rating
    if (empty($rating) || !preg_match('/^\d{1}$/', $rating)) {
       echo '<script>
-         alert("Please add your rating")
-         window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
-         </script>';
+            alert("Please add your rating")
+            window.location.href = "shop.php?id=' . $_SESSION['shop'] . '";
+            </script>';
    }
 
    // Save the form data to the database
@@ -66,26 +67,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if ($conn->query($sql) === TRUE) {
          // Form submitted successfully, show SweetAlert message
          echo "<script>
-         swal({
-            title: 'Review added successful',
-            text: 'Thank you for your review!',
-            icon: 'success',
-            button: 'OK',
-         }).then(function() {
-            window.location.href = 'shop.php?id=" . $_SESSION["shop"] . "';
-         });
-         </script>";
+            swal({
+               title: 'Review added successful',
+               text: 'Thank you for your review!',
+               icon: 'success',
+               button: 'OK',
+            }).then(function() {
+               window.location.href = 'shop.php?id=" . $_SESSION["shop"] . "';
+            });
+            </script>";
       } else {
          //echo 'Error: ' . $sql . '<br>' . $conn->error;
          // Form submitted successfully, show SweetAlert message
          echo "<script>
-         swal({
-            title: 'Warning!',
-            text: 'Something went wrong!',
-            icon: 'warning',
-            button: 'OK'
-         });
-         </script>";
+            swal({
+               title: 'Warning!',
+               text: 'Something went wrong!',
+               icon: 'warning',
+               button: 'OK'
+            });
+            </script>";
       }
 
       $conn->close();
@@ -159,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      echo '</div>';
                   }
                   ?>
-               <form action="shop.php" method="POST">
+                  <form action="shop.php" method="POST">
                      <label for="textArea">
                         <h4>Your Comment</h4>
                      </label>
@@ -180,6 +181,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                </div>
                <button type="submit" class="btn btn-primary">Submit</button>
                </form>
+               <!-- Message -->
+               <form action="message.php" method="POST" class="mt-4">
+               <label for="textArea">
+               <h4>Your message</h4>
+               </label>
+               <textarea class="form-control" name="message" id="textArea" rows="3"></textarea>
+               </div>
+               <div class="mb-3">
+               <input type="hidden" name="shop" value="<?php echo $store_id; ?>">
+               <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']; ?>">
+               <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
+               <button type="submit" class="btn btn-primary">Send</button>
+               </form>
                </div>
             </div>
          </div>
@@ -191,15 +205,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             while ($row = $stmt->fetch()) {
                ?>
-                           <div class="col-lg-3 mb-4">
-                              <div class="card border-0">
-                                 <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
-                                 <div class="card-body">
-                                    <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
+                              <div class="col-lg-3 mb-4">
+                                 <div class="card border-0">
+                                    <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
+                                    <div class="card-body">
+                                       <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
+                                    </div>
                                  </div>
                               </div>
-                           </div>
-                           <?php
+                              <?php
             }
             ?>
          </div>
@@ -210,30 +224,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 while ($rate = $ratings->fetch()) {
    ?>
-               <div class="container review-block">
-                  <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
-                  <div class="review-rating">
-                     <span class="star-rating">
-                     <?php
-                     $rating = $rate['rating'];
-                     for ($i = 1; $i <= 5; $i++) {
-                        if ($i <= $rating) {
-                           echo '<i class="fa fa-star checked"></i>';
-                        } else {
-                           // echo '<i class="fa fa-star"></i>';
+                  <div class="container review-block">
+                     <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
+                     <div class="review-rating">
+                        <span class="star-rating">
+                        <?php
+                        $rating = $rate['rating'];
+                        for ($i = 1; $i <= 5; $i++) {
+                           if ($i <= $rating) {
+                              echo '<i class="fa fa-star checked"></i>';
+                           } else {
+                              // echo '<i class="fa fa-star"></i>';
+                           }
                         }
-                     }
-                     ?>
-                     </span>
+                        ?>
+                        </span>
+                     </div>
                   </div>
-               </div>
-               <hr style="height: 2px;
+                  <hr style="height: 2px;
    background-color: #ccc;
    width: 50%;
    margin: 20px auto;
    margin-left:6rem;">
-               <!-- add a horizontal rule divider after each review -->
-               <?php
+                  <!-- add a horizontal rule divider after each review -->
+                  <?php
 }
 ?>
 <?php
