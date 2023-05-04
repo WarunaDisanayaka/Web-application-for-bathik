@@ -50,13 +50,13 @@ require_once 'header.php';
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="img/slide3.jpg" class="d-block w-100" alt="Slide 1">
+      <img src="img/1.png" class="d-block w-100 h-100" alt="Slide 1">
     </div>
     <div class="carousel-item">
-      <img src="img/slide2.jpg" class="d-block w-100" alt="Slide 2">
+      <img src="img/2.png" class="d-block w-100 h-100" alt="Slide 2">
     </div>
     <div class="carousel-item">
-      <img src="img/slide3.jpg" class="d-block w-100" alt="Slide 3">
+      <img src="img/3.png" class="d-block w-100 h-100" alt="Slide 3">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
