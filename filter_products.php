@@ -31,8 +31,8 @@ if (isset($_POST['filter'])) {
    // Get the selected price range
    $min_price = isset($_POST['min_price']) ? $_POST['min_price'] : 0;
    $max_price = isset($_POST['max_price']) ? $_POST['max_price'] : 5000;
-   $id = $_POST['id'];
-   $shopname = $_POST['shopname'];
+   $id = $_SESSION['shop'];
+   // $shopname = $_POST['shopname'];
 
 
 
@@ -52,8 +52,8 @@ if (isset($_POST['filter'])) {
       $count = 0;
       // Do something with the data, for example:
       foreach ($rows as $row) {
-         foreach($materials as $m){
-            if ($row['fabric'] == $m && $row['price']>=$min_price && $row['price']<= $max_price) {
+         foreach ($materials as $m) {
+            if ($row['fabric'] == $m && $row['price'] >= $min_price && $row['price'] <= $max_price) {
                $product = [
                   'id' => $row['id'],
                   'title' => $row['title'],
@@ -67,19 +67,19 @@ if (isset($_POST['filter'])) {
                   'image3' => $row['image3'],
                   'vendor_id' => $row['vendor_id'],
                   'created_at' => $row['created_at']
-              ];
+               ];
                $products[$count] = $product;
-               $count = $count+1;
+               $count = $count + 1;
             }
          }
-         
+
       }
    } else {
       echo "Error: " . $sql . "<br>" . $conn->error;
    }
 
-   
-   
+
+
 
 }
 
@@ -253,6 +253,8 @@ if (isset($_POST['filter'])) {
                      <input type="range" class="form-range" id="min_price" name="min_price" min="0" max="1000" step="50" value="0">
                      <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="5000" step="50" value="1000">
                   </div>
+                  <p id="price-output">Rs 0 - Rs 1000</p>
+
                   <input type="submit" value="Filter" name="filter" class="btn btn-primary">
                </form>
                <div class="mb-3">
@@ -296,17 +298,17 @@ if (isset($_POST['filter'])) {
       <div class="col-lg-9 products">
          <div class="row">
             <?php
-            foreach($products as $p) {
-            ?>
-               <div class="col-lg-3 mb-4">
-                  <div class="card border-0">
-                     <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
-                     <div class="card-body">
-                        <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
-                     </div>
-                  </div>
-               </div>
-            <?php
+            foreach ($products as $p) {
+               ?>
+                           <div class="col-lg-3 mb-4">
+                              <div class="card border-0">
+                                 <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
+                                 <div class="card-body">
+                                    <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
+                                 </div>
+                              </div>
+                           </div>
+                        <?php
             }
             ?>
          </div>
@@ -316,30 +318,30 @@ if (isset($_POST['filter'])) {
 </div>
 <?php
 while ($rate = $ratings->fetch()) {
-?>
-   <div class="container review-block">
-      <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
-      <div class="review-rating">
-         <span class="star-rating">
-            <?php
-            $rating = $rate['rating'];
-            for ($i = 1; $i <= 5; $i++) {
-               if ($i <= $rating) {
-                  echo '<i class="fa fa-star checked"></i>';
-               } else {
-                  // echo '<i class="fa fa-star"></i>';
-               }
-            }
-            ?>
-         </span>
-      </div>
-   </div>
-   <hr style="height: 2px;
+   ?>
+               <div class="container review-block">
+                  <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
+                  <div class="review-rating">
+                     <span class="star-rating">
+                        <?php
+                        $rating = $rate['rating'];
+                        for ($i = 1; $i <= 5; $i++) {
+                           if ($i <= $rating) {
+                              echo '<i class="fa fa-star checked"></i>';
+                           } else {
+                              // echo '<i class="fa fa-star"></i>';
+                           }
+                        }
+                        ?>
+                     </span>
+                  </div>
+               </div>
+               <hr style="height: 2px;
       background-color: #ccc;
       width: 50%;
       margin: 20px auto;
       margin-left:6rem;"> <!-- add a horizontal rule divider after each review -->
-<?php
+            <?php
 }
 ?>
 
@@ -363,4 +365,18 @@ require_once 'footer.php';
          document.querySelector('#rating-value').value = star.getAttribute('data-value');
       });
    });
+
+   var minPriceInput = document.getElementById("min_price");
+   var maxPriceInput = document.getElementById("max_price");
+   var priceOutput = document.getElementById("price-output");
+
+   minPriceInput.addEventListener("input", updatePrice);
+   maxPriceInput.addEventListener("input", updatePrice);
+
+function updatePrice() {
+  var minPrice = minPriceInput.value;
+  var maxPrice = maxPriceInput.value;
+
+  priceOutput.textContent = "Rs " + minPrice + " - Rs " + maxPrice;
+}
 </script>

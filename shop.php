@@ -147,6 +147,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      <input type="range" class="form-range" id="min_price" name="min_price" min="0" max="1000" step="50" value="0">
                      <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="5000" step="50" value="1000">
                   </div>
+                  <p id="price-output">Rs 0 - Rs 1000</p>
+
                   <input type="submit" value="Filter" name="filter" class="btn btn-primary">
                </form>
                <div class="mb-3">
@@ -205,15 +207,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             while ($row = $stmt->fetch()) {
                ?>
-                              <div class="col-lg-3 mb-4">
-                                 <div class="card border-0">
-                                    <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
-                                    <div class="card-body">
-                                       <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
-                                    </div>
-                                 </div>
-                              </div>
-                              <?php
+                                       <div class="col-lg-3 mb-4">
+                                          <div class="card border-0">
+                                             <img src="vendordashboard/<?php echo $row['image1'] ?>" alt="Product Image" class="card-img-top">
+                                             <div class="card-body">
+                                                <h6 class="card-title"><a href="single_product.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h6>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <?php
             }
             ?>
          </div>
@@ -224,30 +226,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 while ($rate = $ratings->fetch()) {
    ?>
-                  <div class="container review-block">
-                     <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
-                     <div class="review-rating">
-                        <span class="star-rating">
-                        <?php
-                        $rating = $rate['rating'];
-                        for ($i = 1; $i <= 5; $i++) {
-                           if ($i <= $rating) {
-                              echo '<i class="fa fa-star checked"></i>';
-                           } else {
-                              // echo '<i class="fa fa-star"></i>';
-                           }
-                        }
-                        ?>
-                        </span>
-                     </div>
-                  </div>
-                  <hr style="height: 2px;
+                           <div class="container review-block">
+                              <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
+                              <div class="review-rating">
+                                 <span class="star-rating">
+                                 <?php
+                                 $rating = $rate['rating'];
+                                 for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $rating) {
+                                       echo '<i class="fa fa-star checked"></i>';
+                                    } else {
+                                       // echo '<i class="fa fa-star"></i>';
+                                    }
+                                 }
+                                 ?>
+                                 </span>
+                              </div>
+                           </div>
+                           <hr style="height: 2px;
    background-color: #ccc;
    width: 50%;
    margin: 20px auto;
    margin-left:6rem;">
-                  <!-- add a horizontal rule divider after each review -->
-                  <?php
+                           <!-- add a horizontal rule divider after each review -->
+                           <?php
 }
 ?>
 <?php
@@ -270,4 +272,19 @@ require_once 'footer.php';
            document.querySelector('#rating-value').value = star.getAttribute('data-value');
        });
    });
+
+   var minPriceInput = document.getElementById("min_price");
+var maxPriceInput = document.getElementById("max_price");
+var priceOutput = document.getElementById("price-output");
+
+minPriceInput.addEventListener("input", updatePrice);
+maxPriceInput.addEventListener("input", updatePrice);
+
+function updatePrice() {
+  var minPrice = minPriceInput.value;
+  var maxPrice = maxPriceInput.value;
+
+  priceOutput.textContent = "Rs " + minPrice + " - Rs " + maxPrice;
+}
+
 </script>

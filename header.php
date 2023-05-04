@@ -35,7 +35,7 @@
                      <a class="nav-link" href="#">About Us</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="#">Shops</a>
+                     <a class="nav-link" href="allshop.php">Shops</a>
                   </li>
                   <li class="nav-item">
                   <a class="nav-link" href="http://127.0.0.1:8000/" target="_blank">Personalization</a>
