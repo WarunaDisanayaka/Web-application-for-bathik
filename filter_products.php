@@ -254,7 +254,7 @@ if (isset($_POST['filter'])) {
                      <input type="range" class="form-range" id="min_price" name="min_price" min="0" max="1000" step="50" value="0">
                      <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="100000" step="50" value="100000">
                   </div>
-                  <p id="price-output">Rs 0 - Rs 1000</p>
+                  <p id="price-output">Rs 0 - Rs 100000</p>
 
                   <input type="submit" value="Filter" name="filter" class="btn btn-primary">
                </form>
@@ -301,15 +301,15 @@ if (isset($_POST['filter'])) {
             <?php
             foreach ($products as $p) {
                ?>
-                                             <div class="col-lg-3 mb-4">
-                                                <div class="card border-0">
-                                                   <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
-                                                   <div class="card-body">
-                                                      <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
+                                                <div class="col-lg-3 mb-4">
+                                                   <div class="card border-0">
+                                                      <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
+                                                      <div class="card-body">
+                                                         <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
+                                                      </div>
                                                    </div>
                                                 </div>
-                                             </div>
-                                          <?php
+                                             <?php
             }
             ?>
          </div>
