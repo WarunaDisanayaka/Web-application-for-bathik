@@ -1,16 +1,6 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['email'])) {
-   // Redirect to the login page
-
-   // echo("Please login");
-   echo "<script>
-          alert('Please login to buy items!')
-          </script>";
-   exit();
-
-}
 $name = "John";
 echo "Hello, $name!";
 
@@ -291,6 +281,7 @@ echo "Hello, $name!";
       </div>
       <div class="row buttons">
         <button class="clear-canvas">Clear Canvas</button>
+        <button class="undo">Undo</button>
         <!-- <button class="save-img">Save As Image</button> -->
       </div>
     </section>
@@ -647,7 +638,10 @@ echo "Hello, $name!";
          selectedColor = "#000";
 
            DrawingCanvas.width = window.innerWidth - 60;
-      DrawingCanvas.height = 600;
+           DrawingCanvas.height = 600;
+
+           let canvasState = []; // declare and initialize the canvasState array
+
 
       const setCanvasBackground = () => {
          // setting whole canvas background to white, so the downloaded img background will be white
@@ -662,6 +656,11 @@ echo "Hello, $name!";
          DrawingCanvas.height = DrawingCanvas.offsetHeight;
          setCanvasBackground();
       });
+
+      const addCanvasState = () => {
+   canvasState.push(ctx.getImageData(0, 0, DrawingCanvas.width, DrawingCanvas.height));
+}
+
 
       const drawRect = (e) => {
          // if fillColor isn't checked draw a rect with border else draw rect with background
@@ -711,13 +710,19 @@ echo "Hello, $name!";
             ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
             ctx.lineTo(e.offsetX, e.offsetY); // creating line according to the mouse pointer
             ctx.stroke(); // drawing/filling line with color
+            addCanvasState();
          } else if (selectedTool === "rectangle") {
             drawRect(e);
+            addCanvasState();
          } else if (selectedTool === "circle") {
             drawCircle(e);
+            addCanvasState();
          } else {
             drawTriangle(e);
+            addCanvasState();
          }
+       
+
       }
 
       toolBtns.forEach(btn => {
@@ -758,6 +763,22 @@ echo "Hello, $name!";
       DrawingCanvas.addEventListener("mousemove", drawing);
       DrawingCanvas.addEventListener("mouseup", () => isDrawing = false);
 
+      // Undo canvas
+      const undo = () => {
+   if (canvasState.length > 0) {
+      ctx.putImageData(canvasState[canvasState.length - 1], 0, 0);
+      canvasState.pop();
+   }
+}
+
+const undoBtn = document.querySelector(".undo");
+
+undoBtn.addEventListener("click", () => {
+   undo();
+});
+
+      
+      
 
       var flipbackBtn = document.getElementById("flipback");
       var shirtImg = document.querySelector("#shirtDiv img");
