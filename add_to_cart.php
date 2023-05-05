@@ -3,16 +3,11 @@ error_reporting(E_ERROR | E_PARSE);
 
 session_start();
 
-// if (!isset($_SESSION['email'])) {
-//    // Redirect to the login page
+if (!isset($_SESSION['email'])) {
+  
+   exit();
 
-//    // echo("Please login");
-//    echo "<script>
-//           alert('Please login to buy items!')
-//           </script>";
-//    exit();
-
-// }
+}
 
 // Connect to the database
 $host = 'localhost';

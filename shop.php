@@ -249,7 +249,7 @@ while ($rate = $ratings->fetch()) {
    background-color: #ccc;
    width: 50%;
    margin: 20px auto;
-   margin-left:6rem;">
+   margin-left:18rem;">
                                           <!-- add a horizontal rule divider after each review -->
                                           <?php
 }

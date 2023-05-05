@@ -177,8 +177,8 @@ require_once 'header.php';
                <input type="hidden" name="selected_size" class="selected_size" id="selectedSizeInput">
                <input type="hidden" id="qtyHidden" name="quantity" class="quantity">
                <input type="hidden" name="user" id="user" value="<?php echo $_SESSION['email']; ?>">
-               <button class="btn btn-primary me-3 addCart" onclick="return checkLogin();">Add to Cart</button>
-               <button class="btn btn-secondary addFavourites" onclick="return checkLogin();"><i class="bi bi-heart"></i> Add to Favorites</button>
+               <button class="btn btn-primary me-3 addCart" onclick="return checkLogin1();">Add to Cart</button>
+               <button class="btn btn-secondary addFavourites" onclick="return checkLogin2();"><i class="bi bi-heart"></i> Add to Favorites</button>
             </form>
          </div>
          <p class="mt-3"><small>Category: <?php echo $product_detials['category']; ?></small></p>
@@ -269,7 +269,21 @@ require_once 'footer.php';
    });
    });
    
-   function checkLogin() {
+   function checkLogin1() {
+        var userId = document.getElementById('user').value;
+        if (!<?php echo isset($_SESSION['userid']) ? 'true' : 'false'; ?>) {
+         swal({
+              title: 'Warning!',
+              text: 'Please login to you account!',
+              icon: 'warning',
+              button: 'OK'
+          });
+            return false;
+        }
+       
+      }
+   
+      function checkLogin2() {
         var userId = document.getElementById('user').value;
         if (!<?php echo isset($_SESSION['userid']) ? 'true' : 'false'; ?>) {
          swal({
