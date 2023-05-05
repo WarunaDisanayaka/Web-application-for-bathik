@@ -144,8 +144,8 @@ require_once 'header.php';
                <?php
                while ($size = $stmt2->fetch()) {
                   ?>
-                           <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
-                           <?php
+                              <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
+                              <?php
                }
                ?>
             </select>
