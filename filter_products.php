@@ -301,15 +301,15 @@ if (isset($_POST['filter'])) {
             <?php
             foreach ($products as $p) {
                ?>
-                                          <div class="col-lg-3 mb-4">
-                                             <div class="card border-0">
-                                                <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
-                                                <div class="card-body">
-                                                   <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
+                                             <div class="col-lg-3 mb-4">
+                                                <div class="card border-0">
+                                                   <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
+                                                   <div class="card-body">
+                                                      <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
+                                                   </div>
                                                 </div>
                                              </div>
-                                          </div>
-                                       <?php
+                                          <?php
             }
             ?>
          </div>
@@ -317,34 +317,6 @@ if (isset($_POST['filter'])) {
    </div>
 </div>
 </div>
-<?php
-while ($rate = $ratings->fetch()) {
-   ?>
-                              <div class="container review-block">
-                                 <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
-                                 <div class="review-rating">
-                                    <span class="star-rating">
-                                       <?php
-                                       $rating = $rate['rating'];
-                                       for ($i = 1; $i <= 5; $i++) {
-                                          if ($i <= $rating) {
-                                             echo '<i class="fa fa-star checked"></i>';
-                                          } else {
-                                             // echo '<i class="fa fa-star"></i>';
-                                          }
-                                       }
-                                       ?>
-                                    </span>
-                                 </div>
-                              </div>
-                              <hr style="height: 2px;
-      background-color: #ccc;
-      width: 50%;
-      margin: 20px auto;
-      margin-left:6rem;"> <!-- add a horizontal rule divider after each review -->
-                           <?php
-}
-?>
 
 <?php
 // Include the footer file
