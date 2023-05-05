@@ -1,8 +1,5 @@
 <?php
-<<<<<<< Updated upstream
 error_reporting(E_ERROR | E_PARSE);
-=======
->>>>>>> Stashed changes
 
 // Include the header file
 require_once 'header.php';
