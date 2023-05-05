@@ -12,7 +12,7 @@ setcookie('pred', $pred_value);
 
 $_SESSION['pred'] = $pred_value;
 
-echo $_SESSION['email'];
+// echo $_SESSION['email'];
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
