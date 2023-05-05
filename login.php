@@ -91,13 +91,14 @@ require_once 'header.php';
           <form form method="POST" action="login.php">
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"  <?php if (isset($email_error))
-                echo 'title="' . $email_error . '"'; ?>>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"  value="<?php echo isset($email) ? $email : ''; ?>">
+               <p class="text" style="color:red;"> <?php echo $email_error ?></p>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control" id="password" name="password" <?php if (isset($password_error))
                 echo 'title="' . $password_error . '"'; ?>>
+                <p class="text" style="color:red;"> <?php echo $password_error ?></p>
             </div>
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-dark btn-lg">Login</button>
