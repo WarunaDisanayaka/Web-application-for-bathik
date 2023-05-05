@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
+
 session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Collect the form data
