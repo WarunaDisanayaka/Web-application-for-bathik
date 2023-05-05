@@ -144,8 +144,8 @@ require_once 'header.php';
                <?php
                while ($size = $stmt2->fetch()) {
                   ?>
-                              <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
-                              <?php
+                                 <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
+                                 <?php
                }
                ?>
             </select>
@@ -176,7 +176,7 @@ require_once 'header.php';
                <input type="hidden" name="pimage" class="pimage" value="<?php echo $product_detials['image1'] ?>">
                <input type="hidden" name="selected_size" class="selected_size" id="selectedSizeInput">
                <input type="hidden" id="qtyHidden" name="quantity" class="quantity">
-               <input type="hidden" name="user" id="user" value="<?php echo $user; ?>">
+               <input type="hidden" name="user" id="user" value="<?php echo $_SESSION['email']; ?>">
                <button class="btn btn-primary me-3 addCart" onclick="return checkLogin();">Add to Cart</button>
                <button class="btn btn-secondary addFavourites" onclick="return checkLogin();"><i class="bi bi-heart"></i> Add to Favorites</button>
             </form>
