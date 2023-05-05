@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 01, 2023 at 01:45 PM
+-- Generation Time: May 05, 2023 at 03:29 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -62,7 +62,8 @@ CREATE TABLE `cart_order` (
 --
 
 INSERT INTO `cart_order` (`id`, `product_name`, `product_price`, `size`, `qty`, `total_price`, `shop`, `user_id`, `status`) VALUES
-(7, 'Sri Lankan Batik Shirt – A852', 1600.00, 'medium', 1, 1.00, 5, 2, 'Processing');
+(7, 'Sri Lankan Batik Shirt – A852', 1600.00, 'medium', 1, 1.00, 5, 2, 'Processing'),
+(11, 'Batik Floral Detail Silk Dress', 27500.00, '', 1, 1.00, 6, 2, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -111,14 +112,6 @@ CREATE TABLE `design_orders` (
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `design_orders`
---
-
-INSERT INTO `design_orders` (`id`, `shop`, `note`, `design`, `email`, `price`, `user_id`, `status`) VALUES
-(2, 5, 'testing', 'vendordashboard/uploads/643d84700d917_screencapture-127-0-0-1-8000-2023-04-17-22_43_47.png', 'warunahello@gmail.com', 18069.00, 2, 'Cutting and sewing'),
-(3, 5, 'hklj', 'vendordashboard/uploads/6446c0a176c06_screenshot (17).png', 'waruna@gmail.com', 7587.00, 2, 'Proccessing');
-
 -- --------------------------------------------------------
 
 --
@@ -138,12 +131,29 @@ CREATE TABLE `favourites` (
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `favourites`
+-- Table structure for table `messages`
 --
 
-INSERT INTO `favourites` (`id`, `product_name`, `product_price`, `product_img`, `size`, `qty`, `total_price`, `shop`, `user_id`, `status`) VALUES
-(11, 'Batik Floral Detail Silk Dress', 27500.00, 'uploads/DBN22D1348_BLU_3.webp', '', 1, 1.00, 6, 2, 'Pending');
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `shop_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `message` varchar(1000) NOT NULL,
+  `incoming_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `shop_id`, `user_id`, `username`, `message`, `incoming_id`) VALUES
+(1, 7, 4, 'waruna', 'Hello', 0),
+(2, 7, 4, 'Buddhi', 'Hi', 1),
+(4, 7, 4, 'waruna', 'Hello', 0);
 
 -- --------------------------------------------------------
 
@@ -190,6 +200,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `product_description` text NOT NULL,
   `category` varchar(50) NOT NULL,
+  `fabric` varchar(255) NOT NULL,
   `product_code` varchar(50) NOT NULL,
   `image1` varchar(255) DEFAULT NULL,
   `image2` varchar(255) DEFAULT NULL,
@@ -197,15 +208,6 @@ CREATE TABLE `products` (
   `vendor_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `title`, `price`, `product_description`, `category`, `product_code`, `image1`, `image2`, `image3`, `vendor_id`, `created_at`) VALUES
-(7, 'Sri Lankan Batik Shirt – A852', '1600.00', 'jkljkljkl', 'Clothing', 'P20032', 'uploads/FP_ProductShoot_CeylonaBatiks_Batch2_16jan-136.jpg', 'uploads/FP_ProductShoot_CeylonaBatiks_Batch2_16jan-120.jpg', 'uploads/CBST055.jpg', 5, '2023-03-23 23:04:05'),
-(8, 'Sri Lankan Batik Shirt ', '2300.00', 'fsad', 'Clothing', 'P20032', 'uploads/CBST055.jpg', 'uploads/', 'uploads/', 5, '2023-03-26 04:46:19'),
-(11, 'Batik Floral Detail Silk Dress', '27500.00', 'Size – 8-18\r\n\r\nOccasion – Casual wear\r\n\r\nWash care – Use mild soap, Do not bleach ,Dry low heat, Do not tumble dry, Do not dry clean Wash dark colours, Separately use mild detergent\"', 'Clothing', 'P20032', 'uploads/DBN22D1348_BLU_3.webp', 'uploads/DBN22D1348_BLU_1.webp', 'uploads/DBN22D1348_BLU_4.webp', 6, '2023-04-09 17:09:23');
 
 -- --------------------------------------------------------
 
@@ -218,15 +220,6 @@ CREATE TABLE `product_quantity` (
   `size` varchar(10) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `product_quantity`
---
-
-INSERT INTO `product_quantity` (`product_id`, `size`, `quantity`) VALUES
-(7, 'large', 5),
-(7, 'medium', 5),
-(7, 'small', 5);
 
 -- --------------------------------------------------------
 
@@ -241,16 +234,6 @@ CREATE TABLE `ratings` (
   `review` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `ratings`
---
-
-INSERT INTO `ratings` (`id`, `shop`, `rating`, `review`) VALUES
-(1, 5, 3, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
-(2, 5, 4, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
-(3, 5, 4, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
-(4, 5, 4, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.');
-
 -- --------------------------------------------------------
 
 --
@@ -262,6 +245,7 @@ CREATE TABLE `stores` (
   `storename` varchar(255) DEFAULT NULL,
   `phonenumber` varchar(20) DEFAULT NULL,
   `ownername` varchar(255) DEFAULT NULL,
+  `customization` varchar(10) NOT NULL,
   `location` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
@@ -276,9 +260,11 @@ CREATE TABLE `stores` (
 -- Dumping data for table `stores`
 --
 
-INSERT INTO `stores` (`store_id`, `storename`, `phonenumber`, `ownername`, `location`, `address`, `email`, `password`, `document`, `thumb_img`, `banner_img`, `active`) VALUES
-(5, 'Nimal store', '0777123456', 'Nimal perera', 'location1', 'mahagirilla\r\nmahagirilla', 'warunapradeep407@gmail.com', '$2y$10$LAL6T4tqyaqJ1Nxaecq7netHKDelbMQ5YoR5lMywJeODRVvSHr.7u', 0x363431623633333064323538375f323032335f36425549533031384320506f7274666f6c696f312047726f75702043572e706466, 'uploads/64267599b88c0_banner5.jpeg', 'uploads/64343b08f2f7d_shop3.png', 1),
-(6, 'Buddhi bathik', '0777123456', 'Buddhi', 'Matara', 'mahagirilla, mahagirilla', 'buddhi@gmail.com', '$2y$10$Q37pQwdOdBty3ILT2LDIm.8ADQPxwTjfSe5lSpkAA3MuS/0A3ZYwS', 0x363433326566626139333439365f7465737420646f632e646f6378, NULL, NULL, 1);
+INSERT INTO `stores` (`store_id`, `storename`, `phonenumber`, `ownername`, `customization`, `location`, `address`, `email`, `password`, `document`, `thumb_img`, `banner_img`, `active`) VALUES
+(9, 'Akira', '0777123654', 'Akira', 'yes', 'Colombo', 'Colombo 8', 'akira@gmail.com', '$2y$10$X42PJN8ijupc/xnuxz/HsuHNN.GpUggJTVGn3aLfiD5o0DSR7Ztty', 0x363435346165363131653438635f52616d7a616e20446f63756d656e742e646f6378, NULL, 'uploads/6454aed2d6d05_Akira.png', 0),
+(10, 'Alponso Batiks', '0777456432', 'Alponso Batiks', 'no', 'Colombo', 'Colombo 4', 'alponso@gmail.com', '$2y$10$PCS.Rle7vLUdnajlipjdWe3kdWPyg5r3AAUryBt.DvuxjQ7D2Hb5u', 0x363435346166386635643934305f52616d7a616e20446f63756d656e742e646f6378, NULL, 'uploads/6454b015ab21b_Alponso Batiks.png', 0),
+(11, 'Batiks By Maithree', '0777654321', 'Maithree', 'yes', 'Colombo', 'Colombo 10', 'maithree@gmail.com', '$2y$10$J.bWotDfphlRPF/iAOT18.DOJwzh7yFHy/Uyr74w4hxEIptp8dRda', 0x363435346230373064653733385f52616d7a616e20446f63756d656e742e646f6378, NULL, 'uploads/6454b098d3014_Batiks By Maithree.png', 0),
+(12, 'Buddhi Batiks', '0777890678', 'Buddhi', 'yes', 'Matara', 'Matara', 'buddhi@gmail.com', '$2y$10$dJBD02yBldtFtbDQhA2uges9SbxUHNcNoUKtClQIGs.yqPkQPukEC', 0x363435346266313762396137385f52616d7a616e20446f63756d656e742e646f6378, NULL, 'uploads/6454bf4c6586f_Buddhi Batiks.png', 0);
 
 -- --------------------------------------------------------
 
@@ -301,7 +287,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `email`, `phone`, `password`, `role`) VALUES
 (1, 'waruna', 'warunapradeep407@gmail.com', '0777123456', '$2y$10$XAdbYUjTSGvFmKsrit2i5eT2KplA4ZzAd/08gpfK8CMT1Xlcn1F2S', 'admin'),
-(2, 'waruna', 'waruna@gmail.com', '0769610260', '$2y$10$clb2AwMT17b8hcbVqGPkR.Sj8ZpxxGA6pp/niUbpofIz2Df5vIRnK', 'user');
+(4, 'waruna', 'waruna@gmail.com', '0777123456', '$2y$10$m8y0oEeLfUBq1kD1KWj3gOhzJKEYy/3PEQWoicHzqY8UjXea/rIAe', 'user');
 
 -- --------------------------------------------------------
 
@@ -367,6 +353,12 @@ ALTER TABLE `favourites`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -417,13 +409,19 @@ ALTER TABLE `vendor`
 -- AUTO_INCREMENT for table `design_orders`
 --
 ALTER TABLE `design_orders`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `favourites`
 --
 ALTER TABLE `favourites`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -435,25 +433,25 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `store_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `store_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
