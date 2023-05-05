@@ -1,74 +1,74 @@
 <?php
-   session_start();
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      // Collect the form data
-      $email = $_POST['email'];
-      $password = $_POST['password'];
-   
-      // Connect to the database
-      $host = 'localhost';
-      $user = 'root';
-      $pwd = '';
-      $dbname = 'bathik';
-      $conn = new mysqli($host, $user, $pwd, $dbname);
-      if ($conn->connect_error) {
-         die('Connection failed: ' . $conn->connect_error);
-      }
-   
-      // Check if the email exists in the database
-      $sql = "SELECT * FROM users WHERE email = '$email'";
-      $result = $conn->query($sql);
-      if ($result->num_rows == 1) {
-         // Verify the password
-         $row = $result->fetch_assoc();
-         if (password_verify($password, $row['password'])) {
-            // Login successful
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['phone'] = $row['phone'];
-            header('Location: dashboard');
-            exit;
-         } else {
-            // Incorrect password
-            $password_error = 'Incorrect password';
-         }
+session_start();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   // Collect the form data
+   $email = $_POST['email'];
+   $password = $_POST['password'];
+
+   // Connect to the database
+   $host = 'localhost';
+   $user = 'root';
+   $pwd = '';
+   $dbname = 'bathik';
+   $conn = new mysqli($host, $user, $pwd, $dbname);
+   if ($conn->connect_error) {
+      die('Connection failed: ' . $conn->connect_error);
+   }
+
+   // Check if the email exists in the database
+   $sql = "SELECT * FROM users WHERE email = '$email'";
+   $result = $conn->query($sql);
+   if ($result->num_rows == 1) {
+      // Verify the password
+      $row = $result->fetch_assoc();
+      if (password_verify($password, $row['password'])) {
+         // Login successful
+         $_SESSION['username'] = $row['username'];
+         $_SESSION['email'] = $row['email'];
+         $_SESSION['phone'] = $row['phone'];
+         header('Location: dashboard');
+         exit;
       } else {
-         // Email not found
-         $email_error = 'Email not found';
+         // Incorrect password
+         $password_error = 'Incorrect password';
       }
-   
-      $conn->close();
-   
-   
-   
+   } else {
+      // Email not found
+      $email_error = 'Email not found';
    }
-   
-   //  Connect to the database
-   $dsn = 'mysql:host=localhost;dbname=bathik';
-   $username = 'root';
-   $password = '';
-   $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-   $pdo = new PDO($dsn, $username, $password, $options);
-   
-   // Get product details
-   if (isset($_GET['id'])) {
-      $product_id = $_GET['id'];
-      // $store_id = $_GET['id'];
-   
-      // Select product details
-      $stmt = $pdo->query("SELECT * FROM products WHERE id='$product_id'");
-      $product_detials = $stmt->fetch();
-   
-      $stmt2 = $pdo->query("SELECT * FROM product_quantity WHERE product_id='$product_id'");
-   
-   }
-   
-   ?>
+
+   $conn->close();
+
+
+
+}
+
+//  Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+// Get product details
+if (isset($_GET['id'])) {
+   $product_id = $_GET['id'];
+   // $store_id = $_GET['id'];
+
+   // Select product details
+   $stmt = $pdo->query("SELECT * FROM products WHERE id='$product_id'");
+   $product_detials = $stmt->fetch();
+
+   $stmt2 = $pdo->query("SELECT * FROM product_quantity WHERE product_id='$product_id'");
+
+}
+
+?>
 <?php
-   // Include the header file
-   require_once 'header.php';
-   
-   ?>
+// Include the header file
+require_once 'header.php';
+
+?>
 <div class="modal fade" id="size-chart-modal" tabindex="-1" role="dialog" aria-labelledby="size-chart-modal-label" aria-hidden="true">
    <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -131,18 +131,18 @@
       <div class="col-md-6">
          <h2 class="fw-bold"> <?php echo $product_detials['title']; ?></h2>
          <p class="lead">Rs <?php echo $product_detials['price']; ?></p>
-         <p>Description of the product goes here.</p>
+         <p><?php echo $product_detials['product_description']; ?></p>
          <div class="mb-3">
             <label for="sizeSelect" class="form-label">Size</label>
             <select name="size" class="form-select" style="width: 150px;" id="sizeSelect">
                <option selected>Select size</option>
                <?php
-                  while ($size = $stmt2->fetch()) {
-                     ?>
-               <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
-               <?php
-                  }
+               while ($size = $stmt2->fetch()) {
                   ?>
+                  <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
+                  <?php
+               }
+               ?>
             </select>
          </div>
          <div class="mb-3">
@@ -182,10 +182,10 @@
 </div>
 <!-- End Single product -->
 <?php
-   // Include the footer file
-   require_once 'footer.php';
-   
-   ?>
+// Include the footer file
+require_once 'footer.php';
+
+?>
 <script>
    // Product image clicking changing
    function change_image(image){
