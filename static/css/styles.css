@@ -165,6 +165,12 @@ section {
     transition: all 0.3s ease;
 }
 
+.buttons .undo {
+    color: #6C757D;
+    border: 1px solid #6C757D;
+    transition: all 0.3s ease;
+}
+
 .clear-canvas:hover {
     color: #fff;
     background: #6C757D;
@@ -185,11 +191,11 @@ section {
     height: 100%;
 }
 
- 
- /* Media queries */
-@media(min-width:1600px){
-    #price{
+
+/* Media queries */
+@media(min-width:1600px) {
+    #price {
         position: absolute;
         margin-left: 70rem;
-     }
-   }
+    }
+}
