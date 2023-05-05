@@ -300,11 +300,11 @@ echo "Hello, $name!";
                            <div id="avatarlist">
 
                               <img style="cursor:pointer;" class="img-polaroid"
-                                 src="{{ url_for('static', filename='img/shirt.png') }}">
+                                 src="{{ url_for('static', filename='img/1.png') }}">
                               <img style="cursor:pointer;" class="img-polaroid"
-                                 src="{{ url_for('static', filename='img/flower.png') }}">
+                                 src="{{ url_for('static', filename='img/2.png') }}">
                               <img style="cursor:pointer;" class="img-polaroid"
-                                 src="{{ url_for('static', filename='img/pngegg (2).png') }}">
+                                 src="{{ url_for('static', filename='img/3.png') }}">
                            </div>
                            <div>
                               <hr>

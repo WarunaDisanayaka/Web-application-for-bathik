@@ -117,7 +117,7 @@ $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
 // Select all shops
-$stmt = $pdo->query('SELECT store_id,storename FROM stores');
+$stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="yes"');
 
 ?>
 <!-- Hero section start-->

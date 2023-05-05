@@ -1,126 +1,135 @@
 <?php
-   // Include the header file
-   require_once  'header.php';
-   ?>
+// Include the header file
+require_once 'header.php';
+?>
 <?php
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       // Collect the form data
-       $store_name = $_POST['store_name'];
-       $phone_number = $_POST['phone_number'];
-       $full_name = $_POST['full_name'];
-       $location = $_POST['location'];
-       $address = $_POST['address'];
-       $document = $_FILES['document'];
-       $email = $_POST['email'];
-       $password = $_POST['password'];
-       $confirmPassword = $_POST['confirm_password'];
-   
-       // Validate store name
-       if (empty($store_name) || !preg_match('/^[a-zA-Z0-9_ ]{4,}$/', $store_name)) {
-           $errors[] = 'Invalid store name. Please enter a valid store name with at least 4 characters.';
-       }
-   
-       // Validate phone number
-       if (empty($phone_number) || !preg_match('/^\d{10}$/', $phone_number)) {
-           $errors[] = 'Invalid phone number. Please enter a 10-digit phone number.';
-       }
-   
-       // Validate full name
-       if (empty($full_name) || !preg_match('/^[a-zA-Z ]{4,}$/', $full_name)) {
-           $errors[] = 'Invalid full name. Please enter a valid full name with at least 4 characters.';
-       }
-   
-       // Validate location
-       if (empty($location)) {
-           $errors[] = 'Please select a location.';
-       }
-   
-       // Validate address
-       if (empty($address)) {
-           $errors[] = 'Please enter an address.';
-       }
-   
-       // Validate document upload
-       $allowedExtensions = array('pdf', 'doc', 'docx');
-       $extension = pathinfo($document['name'], PATHINFO_EXTENSION);
-       if (empty($document) || !in_array($extension, $allowedExtensions)) {
-           $errors[] = 'Invalid document upload. Please upload a PDF, DOC, or DOCX file.';
-       }
-   
-       // Validate email
-       if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-           $errors[] = 'Invalid email. Please enter a valid email address.';
-       }
-   
-       // Validate password
-       if (empty($password) || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password)) {
-           $errors[] = 'Invalid password. Please enter a password with at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character.';
-       }
-   
-       // Validate confirm password
-       if ($password !== $confirmPassword) {
-           $errors[] = 'Passwords do not match. Please try again.';
-       }
-   
-       // Generate a secure hash of the password
-       $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-   
-       // If there are no errors, save the data to the database
-       if (empty($errors)) {
-           // Connect to the database
-           $host = 'localhost'; 
-           $user = 'root'; 
-           $pwd = ''; 
-           $dbname = 'bathik'; 
-           $conn = new mysqli($host, $user, $pwd, $dbname);
-           if ($conn->connect_error) {
-               die('Connection failed: ' . $conn->connect_error);
-           }
-   
-           // Move the uploaded document to the upload path
-           $uploadPath = 'uploads/'; // set your upload path here
-           $filename = uniqid() . '_' . $document['name'];
-           $destination = $uploadPath . $filename;
-           if (!move_uploaded_file($document['tmp_name'], $destination)) {
-               $errors[] = 'Failed to upload the document. Please try again.';
-           }
-   
-   
-           // Save the data to the database
-           $sql = "INSERT INTO stores (storename, phonenumber, ownername, location, address, email, password, document,active) 
-           VALUES ('$store_name', '$phone_number', '$full_name', '$location', '$address', '$email', '$hashed_password', '$filename',0)";
-           if ($conn->query($sql) === TRUE) {
-                // Form submitted successfully, show SweetAlert message
-       echo "<script>
-       swal({
-           title: 'Registration successful',
-           text: 'Thank you for registering!',
-           icon: 'success',
-           button: 'OK'
-       });
-   </script>";
-           } else {
-               //echo 'Error: ' . $sql . '<br>' . $conn->error;
-               // Form submitted successfully, show SweetAlert message
-       echo "<script>
-       swal({
-           title: 'Warning!',
-           text: 'Something went wrong!',
-           icon: 'warning',
-           button: 'OK'
-       });
-   </script>";
-           }
-   
-           $conn->close();
-       } else {
-           // // Display the errors
-           // foreach ($errors as $error) {
-           //     echo $error . '<br>';
-           // }
-       }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   // Collect the form data
+   $store_name = $_POST['store_name'];
+   $phone_number = $_POST['phone_number'];
+   $full_name = $_POST['full_name'];
+   $customization = $_POST['design'];
+   $location = $_POST['location'];
+   $address = $_POST['address'];
+   $document = $_FILES['document'];
+   $email = $_POST['email'];
+   $password = $_POST['password'];
+   $confirmPassword = $_POST['confirm_password'];
+
+   // Validate store name
+   if (empty($store_name) || !preg_match('/^[a-zA-Z0-9_ ]{4,}$/', $store_name)) {
+      $errors[] = 'Invalid store name. Please enter a valid store name with at least 4 characters.';
    }
-   ?>
+
+   // Validate phone number
+   if (empty($phone_number) || !preg_match('/^\d{10}$/', $phone_number)) {
+      $errors[] = 'Invalid phone number. Please enter a 10-digit phone number.';
+   }
+
+   // Validate full name
+   if (empty($full_name) || !preg_match('/^[a-zA-Z ]{4,}$/', $full_name)) {
+      $errors[] = 'Invalid full name. Please enter a valid full name with at least 4 characters.';
+   }
+
+   // Validate customization
+   if (empty($customization)) {
+      $errors[] = 'Please select design customization .';
+   }
+
+   // Validate location
+   if (empty($location)) {
+      $errors[] = 'Please select a location.';
+   }
+
+   // Validate address
+   if (empty($address)) {
+      $errors[] = 'Please enter an address.';
+   }
+
+   // Validate document upload
+   $allowedExtensions = array('pdf', 'doc', 'docx');
+   $extension = pathinfo($document['name'], PATHINFO_EXTENSION);
+   if (empty($document) || !in_array($extension, $allowedExtensions)) {
+      $errors[] = 'Invalid document upload. Please upload a PDF, DOC, or DOCX file.';
+   }
+
+   // Validate email
+   if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errors[] = 'Invalid email. Please enter a valid email address.';
+   }
+
+   // Validate password
+   if (empty($password) || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password)) {
+      $errors[] = 'Invalid password. Please enter a password with at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character.';
+   }
+
+   // Validate confirm password
+   if ($password !== $confirmPassword) {
+      $errors[] = 'Passwords do not match. Please try again.';
+   }
+
+   // Generate a secure hash of the password
+   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+   // If there are no errors, save the data to the database
+   if (empty($errors)) {
+      // Connect to the database
+      $host = 'localhost';
+      $user = 'root';
+      $pwd = '';
+      $dbname = 'bathik';
+      $conn = new mysqli($host, $user, $pwd, $dbname);
+      if ($conn->connect_error) {
+         die('Connection failed: ' . $conn->connect_error);
+      }
+
+      // Move the uploaded document to the upload path
+      $uploadPath = 'uploads/'; // set your upload path here
+      $filename = uniqid() . '_' . $document['name'];
+      $destination = $uploadPath . $filename;
+      if (!move_uploaded_file($document['tmp_name'], $destination)) {
+         $errors[] = 'Failed to upload the document. Please try again.';
+      }
+
+
+      // Save the data to the database
+      $sql = "INSERT INTO stores (storename, phonenumber, ownername,customization, location, address, email, password, document,active) 
+              VALUES ('$store_name', '$phone_number', '$full_name','$customization' ,'$location', '$address', '$email', '$hashed_password', '$filename',0)";
+      if ($conn->query($sql) === TRUE) {
+         // Form submitted successfully, show SweetAlert message
+         echo "<script>
+         swal({
+             title: 'Registration successful',
+             text: 'Thank you for registering!',
+             icon: 'success',
+             button: 'OK'
+         }).then(function() {
+             window.location.href = 'vendor_login.php';
+         });
+     </script>";
+
+      } else {
+         //echo 'Error: ' . $sql . '<br>' . $conn->error;
+         // Form submitted successfully, show SweetAlert message
+         echo "<script>
+          swal({
+              title: 'Warning!',
+              text: 'Something went wrong!',
+              icon: 'warning',
+              button: 'OK'
+          });
+      </script>";
+      }
+
+      $conn->close();
+   } else {
+      // // Display the errors
+      // foreach ($errors as $error) {
+      //     echo $error . '<br>';
+      // }
+   }
+}
+?>
 <!-- Hero section start-->
 <section class="hero" style="background-image: url('img/hero.png');">
    <div class="container">
@@ -140,15 +149,15 @@
             <div class="card-body">
                <h5 class="card-title text-center">Create your Vendor Account Here</h5>
                <?php
-                  // Form is invalid. Show the errors to the user.
-                  if (!empty($errors)) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                    foreach ($errors as $error) {
-                      echo '<p>' . $error . '</p>';
-                    }
-                    echo '</div>';
+               // Form is invalid. Show the errors to the user.
+               if (!empty($errors)) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                  foreach ($errors as $error) {
+                     echo '<p>' . $error . '</p>';
                   }
-                  ?>
+                  echo '</div>';
+               }
+               ?>
                <form method="POST" action="vendor_register.php" enctype="multipart/form-data">
                   <div class="mb-3">
                      <label for="storename" class="form-label">Store Name</label>
@@ -161,6 +170,13 @@
                   <div class="mb-3">
                      <label for="ownername" class="form-label">Owner's Full Name</label>
                      <input type="text" class="form-control" id="ownername" name="full_name" value="<?php echo isset($full_name) ? $full_name : ''; ?>">
+                  </div>
+                  <div class="mb-3">
+                     <label>Design Customization:</label><br>
+                     <input type="radio" id="basic" name="design" value="yes">
+                     <label for="basic">Yes</label><br>
+                     <input type="radio" id="premium" name="design" value="no">
+                     <label for="premium">No</label><br>
                   </div>
                   <div class="mb-3">
                      <label for="location" class="form-label">Select Location</label>
@@ -224,7 +240,7 @@
 </div>
 <!-- Register end -->
 <?php
-   // Include the footer file
-   require_once 'footer.php';
-   
-   ?>
+// Include the footer file
+require_once 'footer.php';
+
+?>
