@@ -177,7 +177,7 @@ $stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="
                   </div>
                   <div class="mb-3">
                      <label for="email" class="form-label">Price</label>
-                     <input type="number" class="form-control" id="email" name="price" value="<?php echo $pred_value; ?>" readonly>
+                     <input type="number" class="form-control" id="email" name="price" value="<?php echo "Rs " . $pred_value; ?>" readonly>
                   </div>
                   <div class="d-grid gap-2">
                      <button type="submit" class="btn btn-lg btn-dark">Submit</button>
