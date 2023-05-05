@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
+
 session_start();
 
 if (!isset($_SESSION['email'])) {
@@ -89,13 +91,13 @@ require_once 'header.php';
                      while ($order = $query->fetch_assoc()) {
 
                         ?>
-                                    <tr>
-                                       <td><?php echo $order['product_name']; ?></td>
-                                       <td><?php echo $order['product_price']; ?></td>
-                                       <td><?php echo $order['qty']; ?></td>
-                                       <td><?php echo $order['status']; ?></td>
-                                    </tr>
-                                    <?php
+                                       <tr>
+                                          <td><?php echo $order['product_name']; ?></td>
+                                          <td><?php echo $order['product_price']; ?></td>
+                                          <td><?php echo $order['qty']; ?></td>
+                                          <td><?php echo $order['status']; ?></td>
+                                       </tr>
+                                       <?php
                      }
                      ?>
                   </tbody>
@@ -128,12 +130,12 @@ require_once 'header.php';
                      <?php
                      while ($orderDesign = $query2->fetch_assoc()) {
                         ?>
-                                    <tr>
-                                       <td><img src="<?php echo $orderDesign['design']; ?>" style="width:250px;height:200px;" alt="" srcset=""></td>
-                                       <td><?php echo $orderDesign['price']; ?></td>
-                                       <td><?php echo $orderDesign['status']; ?></td>
-                                    </tr>
-                                    <?php
+                                       <tr>
+                                          <td><img src="<?php echo $orderDesign['design']; ?>" style="width:250px;height:200px;" alt="" srcset=""></td>
+                                          <td><?php echo $orderDesign['price']; ?></td>
+                                          <td><?php echo $orderDesign['status']; ?></td>
+                                       </tr>
+                                       <?php
                      }
                      ?>
                   </tbody>
@@ -154,52 +156,52 @@ require_once 'header.php';
          while ($row = $query3->fetch_assoc()) {
 
             ?>
-                        <li class="d-flex justify-content-between mb-4">
-                           <div class="card w-100">
-                              <div class="card-header d-flex justify-content-between p-3">
-                                 <p class="fw-bold mb-0"><?php echo $row['username'] ?></p>
-                              </div>
-                              <div class="card-body">
-                                 <p class="mb-0">
-                                    <?php echo $row['message'] ?>
-                                    <?php  $row['shop_id'] ?>
-                                    <?php  $row['user_id'] ?>
-                                 </p>
-                              </div>
-                              <a class="ms-3 float-end" href="#send-message-modal" role="button" data-bs-toggle="modal">
-        <i class="fas fa-paper-plane"></i>
-      </a>
+                           <li class="d-flex justify-content-between mb-4">
+                              <div class="card w-100">
+                                 <div class="card-header d-flex justify-content-between p-3">
+                                    <p class="fw-bold mb-0"><?php echo $row['username'] ?></p>
+                                 </div>
+                                 <div class="card-body">
+                                    <p class="mb-0">
+                                       <?php echo $row['message'] ?>
+                                       <?php $row['shop_id'] ?>
+                                       <?php $row['user_id'] ?>
+                                    </p>
+                                 </div>
+                                 <a class="ms-3 float-end" href="#send-message-modal" role="button" data-bs-toggle="modal">
+           <i class="fas fa-paper-plane"></i>
+         </a>
 
-      <div class="modal fade" id="send-message-modal" tabindex="-1" aria-labelledby="send-message-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="send-message-modal-label">Send Message</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form action="sendmessage.php" method="POST">
-                <div class="mb-3">
-                  <label for="message-text" class="form-label">Message:</label>
-                  <textarea class="form-control" name="message" id="message-text" rows="3"></textarea>
-                </div>
-                <input type="hidden" name="shop" value="<?php echo $row['shop_id'] ?>">
-                <input type="hidden" name="userid" value="<?php echo $row['user_id'] ?>">
-                <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Send</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+         <div class="modal fade" id="send-message-modal" tabindex="-1" aria-labelledby="send-message-modal-label" aria-hidden="true">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header">
+                 <h5 class="modal-title" id="send-message-modal-label">Send Message</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                 <form action="sendmessage.php" method="POST">
+                   <div class="mb-3">
+                     <label for="message-text" class="form-label">Message:</label>
+                     <textarea class="form-control" name="message" id="message-text" rows="3"></textarea>
+                   </div>
+                   <input type="hidden" name="shop" value="<?php echo $row['shop_id'] ?>">
+                   <input type="hidden" name="userid" value="<?php echo $row['user_id'] ?>">
+                   <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Send</button>
+                   </div>
+                 </form>
+               </div>
+             </div>
+           </div>
+         </div>
 
                         
-                           </div>
-                        </li>
-                        <?php
+                              </div>
+                           </li>
+                           <?php
          }
          ?>
       </div>
