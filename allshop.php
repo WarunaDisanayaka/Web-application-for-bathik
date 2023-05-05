@@ -48,7 +48,7 @@ require_once 'header.php';
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <form class="d-flex" action="index.php" method="get">
+      <form class="d-flex" action="allshop.php" method="get">
         <input class="form-control me-2" type="search" name="location" placeholder="Search your shop here..." aria-label="Search">
         <button class="btn btn-dark" type="submit">Search</button>
       </form>
