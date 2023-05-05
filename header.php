@@ -23,6 +23,13 @@ if (isset($_SESSION['email'])) {
       <script src="js/index.js"></script>
       <link rel="stylesheet" href="css/main.css">
       <title>Welcome to bathik</title>
+      <style>
+         .navbar-nav .nav-item.active > .nav-link {
+    color: black; /* Change the color to whatever you like */
+    font-weight: bold; /* Optionally add bold font weight */
+}
+
+      </style>
    </head>
    <body>
       <!-- Header started -->
@@ -97,5 +104,23 @@ if (isset($_SESSION['email'])) {
         }
        
       }
+
+      // get the current page URL
+var current_url = window.location.href;
+
+// select all navigation links
+var nav_links = document.querySelectorAll('.navbar-nav .nav-link');
+
+// iterate over the navigation links
+for (var i = 0; i < nav_links.length; i++) {
+    var nav_link = nav_links[i];
+    var nav_link_url = nav_link.getAttribute('href');
+    // check if the current URL matches the link URL
+    if (nav_link_url && current_url.indexOf(nav_link_url) !== -1) {
+        // if yes, add the "active" class to the <li> element
+        nav_link.parentNode.classList.add('active');
+    }
+}
+
 
       </script>
