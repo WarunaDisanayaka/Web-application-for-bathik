@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
 session_start();
 // Include the header file
 require_once 'header.php';
@@ -251,7 +252,7 @@ if (isset($_POST['filter'])) {
                   <div>
                      <label for="price">Price Range</label>
                      <input type="range" class="form-range" id="min_price" name="min_price" min="0" max="1000" step="50" value="0">
-                     <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="5000" step="50" value="1000">
+                     <input type="range" class="form-range" id="max_price" name="max_price" min="0" max="100000" step="50" value="100000">
                   </div>
                   <p id="price-output">Rs 0 - Rs 1000</p>
 
@@ -300,15 +301,15 @@ if (isset($_POST['filter'])) {
             <?php
             foreach ($products as $p) {
                ?>
-                           <div class="col-lg-3 mb-4">
-                              <div class="card border-0">
-                                 <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
-                                 <div class="card-body">
-                                    <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
+                                 <div class="col-lg-3 mb-4">
+                                    <div class="card border-0">
+                                       <img src="vendordashboard/<?php echo $p['image1'] ?>" alt="Product Image" class="card-img-top">
+                                       <div class="card-body">
+                                          <h6 class="card-title"><a href="single_product.php?id=<?php echo $p['id'] ?>"><?php echo $p['title'] ?></a></h6>
+                                       </div>
+                                    </div>
                                  </div>
-                              </div>
-                           </div>
-                        <?php
+                              <?php
             }
             ?>
          </div>
@@ -319,29 +320,29 @@ if (isset($_POST['filter'])) {
 <?php
 while ($rate = $ratings->fetch()) {
    ?>
-               <div class="container review-block">
-                  <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
-                  <div class="review-rating">
-                     <span class="star-rating">
-                        <?php
-                        $rating = $rate['rating'];
-                        for ($i = 1; $i <= 5; $i++) {
-                           if ($i <= $rating) {
-                              echo '<i class="fa fa-star checked"></i>';
-                           } else {
-                              // echo '<i class="fa fa-star"></i>';
-                           }
-                        }
-                        ?>
-                     </span>
-                  </div>
-               </div>
-               <hr style="height: 2px;
+                     <div class="container review-block">
+                        <p class="review-text"><?php echo substr($rate['review'], 0, 100) . '...' ?></p>
+                        <div class="review-rating">
+                           <span class="star-rating">
+                              <?php
+                              $rating = $rate['rating'];
+                              for ($i = 1; $i <= 5; $i++) {
+                                 if ($i <= $rating) {
+                                    echo '<i class="fa fa-star checked"></i>';
+                                 } else {
+                                    // echo '<i class="fa fa-star"></i>';
+                                 }
+                              }
+                              ?>
+                           </span>
+                        </div>
+                     </div>
+                     <hr style="height: 2px;
       background-color: #ccc;
       width: 50%;
       margin: 20px auto;
       margin-left:6rem;"> <!-- add a horizontal rule divider after each review -->
-            <?php
+                  <?php
 }
 ?>
 
