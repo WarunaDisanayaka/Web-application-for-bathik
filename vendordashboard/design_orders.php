@@ -1,48 +1,49 @@
 <?php
-   session_start();
-   
-   if (!isset($_SESSION['email'])) {
-      // Redirect to the login page
-      header("Location: ../vendor_login.php");
-      exit();
-   }
-   
-      // Connect to the database
-      $dsn = 'mysql:host=localhost;dbname=bathik';
-      $username = 'root';
-      $password = '';
-      $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-      $pdo = new PDO($dsn, $username, $password, $options);
-   
-      $shop = $_SESSION['store_id'];
-      
-      // Select all shops with images
-      $stmt = $pdo->query("SELECT * FROM design_orders WHERE shop='$shop'");
+session_start();
 
-      // Check if the form has been submitted
+if (!isset($_SESSION['email'])) {
+   // Redirect to the login page
+   header("Location: ../vendor_login.php");
+   exit();
+}
+
+// Connect to the database
+$dsn = 'mysql:host=localhost;dbname=bathik';
+$username = 'root';
+$password = '';
+$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+$pdo = new PDO($dsn, $username, $password, $options);
+
+$shop = $_SESSION['store_id'];
+
+// Select all shops with images
+$stmt = $pdo->query("SELECT * FROM design_orders WHERE shop='$shop'");
+
+// Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the selected action from the form data
    $action = $_POST['action'];
    $user_id = $_POST['userid'];
    $shop = $_SESSION['store_id'];
 
-   
+
 
    // Update the database with the new status
    $updateStatus = $pdo->prepare('UPDATE `design_orders` SET `status` = :status WHERE `user_id` = :user_id AND `shop` = :shop');
    $updateStatus->execute([
-       'status' => $action,
-       'user_id' => $user_id, // Replace with the actual user ID
-       'shop' => $shop, // Replace with the actual product ID
+      'status' => $action,
+      'user_id' => $user_id,
+      // Replace with the actual user ID
+      'shop' => $shop, // Replace with the actual product ID
    ]);
 
    // Redirect the user back to the same page to prevent form resubmission
    header('Location: ' . $_SERVER['REQUEST_URI']);
    exit();
 }
-      
-      
-      ?>
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -65,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div id="wrapper">
          <!-- Sidebar -->
          <?php
-            require_once  'sidebar.php';
-            ?>
+         require_once 'sidebar.php';
+         ?>
          <!-- End Sidebar -->
          <!-- Content Wrapper -->
          <div id="content-wrapper" class="d-flex flex-column">
@@ -108,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['username']?></span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['username'] ?></span>
                         <img class="img-profile rounded-circle"
                            src="img/undraw_profile.svg">
                         </a>
@@ -158,36 +159,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </thead>
                         <tbody>
                            <?php
-                              while ($row = $stmt->fetch()) {
-                                  
+                           while ($row = $stmt->fetch()) {
+
                               ?>
-                           <tr>
+                              <tr>
                               
-                              <td><img src="<?php echo str_replace('vendordashboard/', '', $row['design']); ?>" style="width:250px; height:200px;" alt=""></td>
-                              <td><?php echo $row['price'];?></td>
-                              <td><?php echo $row['status'];?></td>
-                              <form action="design_orders.php" method="POST">
-                              <input type="hidden" name="userid" value="<?php echo $row['user_id'];?>">
+                                 <td><img src="<?php echo str_replace('vendordashboard/', '', $row['design']); ?>" style="width:250px; height:200px;" alt=""></td>
+                                 <td><?php echo $row['price']; ?></td>
+                                 <td><?php echo $row['status']; ?></td>
+                                 <form action="design_orders.php" method="POST">
+                                 <input type="hidden" name="userid" value="<?php echo $row['user_id']; ?>">
                              
-                              <td>
-                                 <select name="action" class="form-select" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="Drawing the design">Drawing the design</option>
-                                    <option value="Fabric preparation">Fabric preparation</option>
-                                    <option value="Waxing/Dyeing">Waxing/Dyeing</option>
-                                    <option value="Cutting and sewing">Cutting and sewing</option>
-                                    <option value="Quality control">Quality control</option>
-                                    <option value="Package and shipping">Package and shipping</option>
-                                 </select>
-                              </td>
-                              <td>
-                              <button type="submit" class="btn btn-primary">Submit</button>
-                              </td>
-                              </form>
-                           </tr>
-                           <?php
-                              }
-                              ?>
+                                 <td>
+                                    <select name="action" class="form-select" aria-label="Default select example">
+                                       <option selected>Open this select menu</option>
+                                       <option value="Reject design">Reject design</option>
+                                       <option value="Drawing the design">Drawing the design</option>
+                                       <option value="Fabric preparation">Fabric preparation</option>
+                                       <option value="Waxing/Dyeing">Waxing/Dyeing</option>
+                                       <option value="Cutting and sewing">Cutting and sewing</option>
+                                       <option value="Quality control">Quality control</option>
+                                       <option value="Package and shipping">Package and shipping</option>
+                                    </select>
+                                 </td>
+                                 <td>
+                                 <button type="submit" class="btn btn-primary">Submit</button>
+                                 </td>
+                                 </form>
+                              </tr>
+                              <?php
+                           }
+                           ?>
                         </tbody>
                      </table>
                   </div>
