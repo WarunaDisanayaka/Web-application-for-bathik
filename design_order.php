@@ -10,7 +10,9 @@ $pred_value = $_GET['pred'];
 setcookie('pred', $pred_value);
 // echo "Predicted value: " . $pred_value;
 
-$_SESSION['pred'] = $pred_value;
+$price = "Rs ";
+
+$_SESSION['pred'] = $price . $pred_value;
 
 // echo $_SESSION['email'];
 
@@ -152,7 +154,7 @@ $stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="
                   <div class="mb-3">
                      <label for="location" class="form-label">Select Shop</label>
                      <select class="form-select" id="location" name="shop">
-                        <option value="">Select Location</option>
+                       
                         <?php
                         $stmt = $pdo->query('SELECT store_id, storename FROM stores');
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -177,7 +179,7 @@ $stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="
                   </div>
                   <div class="mb-3">
                      <label for="email" class="form-label">Price</label>
-                     <input type="number" class="form-control" id="email" name="price" value="<?php echo "Rs " . $pred_value; ?>" readonly>
+                     <input type="text" class="form-control" id="email" name="price" value="<?php echo $_SESSION['pred']; ?>" readonly>
                   </div>
                   <div class="d-grid gap-2">
                      <button type="submit" class="btn btn-lg btn-dark">Submit</button>
