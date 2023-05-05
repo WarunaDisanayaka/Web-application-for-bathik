@@ -1,16 +1,16 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['email'])) {
-   // Redirect to the login page
+// if (!isset($_SESSION['email'])) {
+//    // Redirect to the login page
 
-   // echo("Please login");
-   echo "<script>
-          alert('Please login to buy items!')
-          </script>";
-   exit();
+//    // echo("Please login");
+//    echo "<script>
+//           alert('Please login to buy items!')
+//           </script>";
+//    exit();
 
-}
+// }
 
 // Connect to the database
 $host = 'localhost';

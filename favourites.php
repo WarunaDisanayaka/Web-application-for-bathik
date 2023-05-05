@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$user_id = $_SESSION['userid'];
+
 //  Connect to the database
 $dsn = 'mysql:host=localhost;dbname=bathik';
 $username = 'root';
@@ -9,7 +11,7 @@ $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 $pdo = new PDO($dsn, $username, $password, $options);
 
 // Select cart details
-$stmt = $pdo->query("SELECT * FROM favourites");
+$stmt = $pdo->query("SELECT * FROM favourites WHERE user_id='$user_id'");
 
 // To product details
 $stmt2 = $pdo->query("SELECT * FROM cart");
@@ -52,25 +54,25 @@ require_once 'header.php';
                   $total = 0;
                   while ($cart = $stmt->fetch()) {
 
-                      ?>
-                              <tr>
-                                 <td>
-                                    <?php echo $cart['product_name'] ?>
-                                    <img src="vendordashboard/<?php echo $cart['product_img']; ?>" width="70"> 
-                                </td>
-                                 <td><?php echo $cart['product_price'] ?></td>
+                     ?>
+                                    <tr>
+                                       <td>
+                                          <?php echo $cart['product_name'] ?>
+                                          <img src="vendordashboard/<?php echo $cart['product_img']; ?>" width="70"> 
+                                      </td>
+                                       <td><?php echo $cart['product_price'] ?></td>
                    
                              
-                                 <td>
-                                    <a href="add_to_favourites.php?remove=<?= $cart['id'] ?>" onclick="return confirm('Are you sure want to remove this item?')">
-                                    <button class="btn btn-danger btn-remove" type="button">
-                                    <i class="fas fa-trash-alt"></i> 
-                                    </button>
-                                    </a>
-                                 </td>
-                              </tr>
-                              <?php
-                      //   $total = $total + ($cart['product_price'] * $cart['qty']);
+                                       <td>
+                                          <a href="add_to_favourites.php?remove=<?= $cart['id'] ?>" onclick="return confirm('Are you sure want to remove this item?')">
+                                          <button class="btn btn-danger btn-remove" type="button">
+                                          <i class="fas fa-trash-alt"></i> 
+                                          </button>
+                                          </a>
+                                       </td>
+                                    </tr>
+                                    <?php
+                     //   $total = $total + ($cart['product_price'] * $cart['qty']);
                   }
                   ?>
                </tbody>

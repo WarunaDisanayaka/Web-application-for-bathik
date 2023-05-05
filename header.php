@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (isset($_SESSION['email'])) {
+   $user = $_SESSION['email'];
+}
+?>
 <!doctype html>
 <html lang="en">
    <head>
@@ -39,8 +45,8 @@
                      <a class="nav-link" href="allshop.php">Shops</a>
                   </li>
                   <li class="nav-item">
-                  <a class="nav-link" href="http://127.0.0.1:8000/" target="_blank">Personalization</a>
-
+                  <a class="nav-link" href="http://127.0.0.1:8000/" onclick="return checkLogin();" target="_blank">Personalization</a>
+                  <input type="hidden" name="user" id="user" value="<?php echo $user; ?>">
                   </li>
                   <li class="nav-item">
                   <a class="nav-link" href="favourites.php">Favorites</a>
@@ -76,4 +82,20 @@
                }
             });
          }
+
+         
+    function checkLogin() {
+        var userId = document.getElementById('user').value;
+        if (!<?php echo isset($_SESSION['userid']) ? 'true' : 'false'; ?>) {
+         swal({
+              title: 'Warning!',
+              text: 'Please login to you account!',
+              icon: 'warning',
+              button: 'OK'
+          });
+            return false;
+        }
+       
+      }
+
       </script>

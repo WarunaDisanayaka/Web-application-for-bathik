@@ -4,7 +4,7 @@ session_start();
 if (!isset($_SESSION['email'])) {
     // Redirect to the login page
 
-    echo ("Please login");
+    // echo ("Please login");
     exit();
 
 }
@@ -26,7 +26,7 @@ if (isset($_POST['pid'])) {
     $shop = $_SESSION['shop'];
     $user_id = $_SESSION['userid'];
     $qty = 1;
-   
+
     $sql = "SELECT id FROM favourites WHERE id='$pid'";
     $result = $conn->query($sql);
 

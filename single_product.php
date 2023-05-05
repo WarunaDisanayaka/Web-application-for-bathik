@@ -2,6 +2,9 @@
 error_reporting(E_ERROR | E_PARSE);
 
 session_start();
+if (isset($_SESSION['email'])) {
+   $user = $_SESSION['email'];
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    // Collect the form data
    $email = $_POST['email'];
@@ -141,8 +144,8 @@ require_once 'header.php';
                <?php
                while ($size = $stmt2->fetch()) {
                   ?>
-                     <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
-                     <?php
+                           <option value="<?php echo $size['size'] ?>"><?php echo $size['size'] ?></option>
+                           <?php
                }
                ?>
             </select>
@@ -173,8 +176,9 @@ require_once 'header.php';
                <input type="hidden" name="pimage" class="pimage" value="<?php echo $product_detials['image1'] ?>">
                <input type="hidden" name="selected_size" class="selected_size" id="selectedSizeInput">
                <input type="hidden" id="qtyHidden" name="quantity" class="quantity">
-               <button class="btn btn-primary me-3 addCart">Add to Cart</button>
-               <button class="btn btn-secondary addFavourites"><i class="bi bi-heart"></i> Add to Favorites</button>
+               <input type="hidden" name="user" id="user" value="<?php echo $user; ?>">
+               <button class="btn btn-primary me-3 addCart" onclick="return checkLogin();">Add to Cart</button>
+               <button class="btn btn-secondary addFavourites" onclick="return checkLogin();"><i class="bi bi-heart"></i> Add to Favorites</button>
             </form>
          </div>
          <p class="mt-3"><small>Category: <?php echo $product_detials['category']; ?></small></p>
@@ -265,6 +269,19 @@ require_once 'footer.php';
    });
    });
    
+   function checkLogin() {
+        var userId = document.getElementById('user').value;
+        if (!<?php echo isset($_SESSION['userid']) ? 'true' : 'false'; ?>) {
+         swal({
+              title: 'Warning!',
+              text: 'Please login to you account!',
+              icon: 'warning',
+              button: 'OK'
+          });
+            return false;
+        }
+       
+      }
    
    
    

@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    $email = $_POST['email'];
    $price = $_POST['price'];
    $user_id = $_SESSION['userid'];
+   setcookie('pred', $_POST['price'], time() + 3600); // Set cookie for 1 hour
+
 
 
    // Validate shop
@@ -178,7 +180,7 @@ $stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="
                   </div>
                   <div class="mb-3">
                      <label for="email" class="form-label">Price</label>
-                     <input type="text" class="form-control" id="email" name="price" value="Rs <?php echo $_SESSION['pred']; ?>" readonly>
+                     <input type="text" class="form-control" id="email" name="price" value="<?php echo isset($_COOKIE['pred']) ? $_COOKIE['pred'] : $_SESSION['pred']; ?>" readonly>
                   </div>
                   <div class="d-grid gap-2">
                      <button type="submit" class="btn btn-lg btn-dark">Submit</button>
