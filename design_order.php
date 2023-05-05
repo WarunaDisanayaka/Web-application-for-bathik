@@ -8,7 +8,7 @@ setcookie('pred', $_GET['pred']);
 
 $pred_value = $_GET['pred'];
 setcookie('pred', $pred_value);
-echo "Predicted value: " . $pred_value;
+// echo "Predicted value: " . $pred_value;
 
 $_SESSION['pred'] = $pred_value;
 
