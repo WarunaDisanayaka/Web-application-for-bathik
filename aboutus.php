@@ -48,7 +48,7 @@ require_once 'header.php';
     <div class="row">
       <div class="col-lg-6">
         <h2>About Us</h2>
-        <p>Welcome to Batik Serendip! Our platform was inspired by a deep love and appreciation for Sri Lanka's rich cultural heritage of batik. We recognized the need to preserve this traditional art form and make it accessible to individuals across the globe.
+        <p style="text-align: justify;">Welcome to Batik Serendip! Our platform was inspired by a deep love and appreciation for Sri Lanka's rich cultural heritage of batik. We recognized the need to preserve this traditional art form and make it accessible to individuals across the globe.
 
 Our team faced many challenges during the development process, including sourcing high-quality batik fabrics, collaborating with local artisans, and designing a user-friendly platform that showcased the beauty and versatility of batik.
 

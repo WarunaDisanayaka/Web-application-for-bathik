@@ -26,7 +26,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query
-$sql = "SELECT store_id,storename, ownername, phonenumber, location, document, active FROM stores";
+$sql = "SELECT username,email, phone, role FROM users";
 
 // Execute query
 $result = $conn->query($sql);
@@ -182,7 +182,7 @@ try {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Stores</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Users</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -205,13 +205,10 @@ try {
   <thead>
     <tr>
       <th scope="col">No</th>
-      <th scope="col">Store Name</th>
-      <th scope="col">Owner</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
       <th scope="col">Phone</th>
-      <th scope="col">Location</th>
-      <th scope="col">Document</th>
-      <th scope="col">Status</th>
-      <th scope="col">Action</th>
+      <th scope="col">Role</th>
     </tr>
   </thead>
   <tbody>
@@ -223,23 +220,10 @@ try {
    
                 <tr>
                   <th scope="row"><?php echo $i; ?></th>
-                  <td><?php echo $row['storename'] ?></td>
-                  <td><?php echo $row['ownername'] ?></td>
-                  <td><?php echo $row['phonenumber'] ?></td>
-                  <td><?php echo $row['location'] ?></td>
-                  <td><a href="../uploads/<?php echo $row['document'] ?>" target="_blank"><?php echo $row['document'] ?></a></td>
-                  <td><?php if ($row['active'] == 0) {
-                      echo 'Not Confirmed';
-                  } else {
-                      echo 'Confirmed';
-                  } ?></td>
-                  <td>
-                  <button class="btn btn-success"><a href="stores.php?id=<?php echo $row['store_id']; ?>"style="text-decoration: none;"> <?php if ($row['active'] == 1) {
-                         echo "Activated";
-                     } else {
-                         echo "Activate";
-                     } ?></a></button>
-                  <button class="btn btn-success"><a href="activestores.php?id=<?php echo $row['store_id']; ?>"style="text-decoration: none;">Delete</a></button>
+                  <td><?php echo $row['username'] ?></td>
+                  <td><?php echo $row['email'] ?></td>
+                  <td><?php echo $row['phone'] ?></td>
+                  <td><?php echo $row['role'] ?></td>
                 </td>
                 </tr>
  

@@ -162,32 +162,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            while ($row = $stmt->fetch()) {
 
                               ?>
-                              <tr>
+                                 <tr>
                               
-                                 <td><img src="<?php echo str_replace('vendordashboard/', '', $row['design']); ?>" style="width:250px; height:200px;" alt=""></td>
-                                 <td><?php echo $row['price']; ?></td>
-                                 <td><?php echo $row['status']; ?></td>
-                                 <form action="design_orders.php" method="POST">
-                                 <input type="hidden" name="userid" value="<?php echo $row['user_id']; ?>">
+                                 <td><a href="<?php echo str_replace('vendordashboard/', '', $row['design']); ?>" target="_blank"><img src="<?php echo str_replace('vendordashboard/', '', $row['design']); ?>" style="width:250px; height:200px;" alt=""></a></td>
+                                    <td><?php echo $row['price']; ?></td>
+                                    <td><?php echo $row['status']; ?></td>
+                                    <form action="design_orders.php" method="POST">
+                                    <input type="hidden" name="userid" value="<?php echo $row['user_id']; ?>">
                              
-                                 <td>
-                                    <select name="action" class="form-select" aria-label="Default select example">
-                                       <option selected>Open this select menu</option>
-                                       <option value="Reject design">Reject design</option>
-                                       <option value="Drawing the design">Drawing the design</option>
-                                       <option value="Fabric preparation">Fabric preparation</option>
-                                       <option value="Waxing/Dyeing">Waxing/Dyeing</option>
-                                       <option value="Cutting and sewing">Cutting and sewing</option>
-                                       <option value="Quality control">Quality control</option>
-                                       <option value="Package and shipping">Package and shipping</option>
-                                    </select>
-                                 </td>
-                                 <td>
-                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                 </td>
-                                 </form>
-                              </tr>
-                              <?php
+                                    <td>
+                                       <select name="action" class="form-select" aria-label="Default select example">
+                                          <option selected>Open this select menu</option>
+                                          <option value="Reject design">Reject design</option>
+                                          <option value="Drawing the design">Drawing the design</option>
+                                          <option value="Fabric preparation">Fabric preparation</option>
+                                          <option value="Waxing/Dyeing">Waxing/Dyeing</option>
+                                          <option value="Cutting and sewing">Cutting and sewing</option>
+                                          <option value="Quality control">Quality control</option>
+                                          <option value="Package and shipping">Package and shipping</option>
+                                       </select>
+                                    </td>
+                                    <td>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    </td>
+                                    </form>
+                                 </tr>
+                                 <?php
                            }
                            ?>
                         </tbody>

@@ -51,7 +51,7 @@ echo "Hello, $name!";
 
       body {
          padding-top: 60px;
-         overflow: hidden;
+         overflow-x: hidden;
       }
 
       #canvas {
@@ -299,19 +299,20 @@ echo "Hello, $name!";
                            </div>
                            <div id="avatarlist">
 
-                              <img style="cursor:pointer;" class="img-polaroid"
+                              <img style="cursor:pointer;"  class="img-polaroid"
                                  src="{{ url_for('static', filename='img/1.png') }}">
                               <img style="cursor:pointer;" class="img-polaroid"
                                  src="{{ url_for('static', filename='img/2.png') }}">
                               <img style="cursor:pointer;" class="img-polaroid"
                                  src="{{ url_for('static', filename='img/3.png') }}">
+                              <img style="cursor:pointer;" class="img-polaroid"
+                                 src="{{ url_for('static', filename='img/pngegg (2).png') }}">
+                              <img style="cursor:pointer;" class="img-polaroid"
+                                 src="{{ url_for('static', filename='img/shirt.png') }}">
                            </div>
                            <div>
-                              <hr>
-                              <form action="" method="post" enctype="multipart/form-data">
-                                 <input type="file" name="fileToUpload" id="fileToUpload">
-                                 <input class="btn btn-primary" type="submit" value="Upload Custom Image" name="submit">
-                              </form>
+                              
+                              
 
                            </div>
                         </div>

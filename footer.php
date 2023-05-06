@@ -61,5 +61,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
     <script src="https://www.paypal.com/sdk/js?client-id=AQyk03Od-k6x6MDZZgAq7lflSneBJFm2uYzz4aoysVMyN6U15_r78xtVLsIwS8IDJ1Qdpm-RK5St5bl1&components=buttons"></script>
+
   </body>
 </html>
