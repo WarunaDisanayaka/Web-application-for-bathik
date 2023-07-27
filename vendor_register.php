@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      <textarea class="form-control" id="address" name="address" rows="3"><?php echo isset($address) ? $address : ''; ?></textarea>
                   </div>
                   <div class="mb-3">
-                     <label for="document" class="form-label">Upload Document</label>
+                     <label for="document" class="form-label">Upload PDF Document</label>
                      <input type="file" class="form-control" id="document" name="document">
                   </div>
                   <div class="mb-3">

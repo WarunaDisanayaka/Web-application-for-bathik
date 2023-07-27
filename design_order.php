@@ -85,13 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if ($conn->query($sql) === TRUE) {
          // Form submitted successfully, show SweetAlert message
          echo "<script>
-          swal({
-              title: 'Order submit successful',
-              text: 'Thank you for submitting order!',
-              icon: 'success',
-              button: 'OK'
-          });
-      </script>";
+         Swal.fire({
+           title: 'Order submit successful',
+           text: 'Thank you for submitting your order!',
+           icon: 'success',
+           showConfirmButton: false,
+           timer: 2000
+         }).then(() => {
+           window.location.href = 'my_account.php'; // Replace with your desired redirect URL
+         });
+       </script>";
       } else {
          //echo 'Error: ' . $sql . '<br>' . $conn->error;
          // Form submitted successfully, show SweetAlert message
@@ -173,7 +176,7 @@ $stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="
                      <textarea class="form-control" id="note" name="note" rows="3"><?php echo isset($address) ? $address : ''; ?></textarea>
                   </div>
                   <div class="mb-3">
-                     <label for="document" class="form-label">Upload Document</label>
+                     <label for="document" class="form-label">Upload Design Screen Shot</label>
                      <input type="file" class="form-control" id="document" name="document">
                   </div>
                   <div class="mb-3">
@@ -184,6 +187,44 @@ $stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="
                      <label for="email" class="form-label">Price</label>
                      <input type="text" class="form-control" id="email" name="price" value="<?php echo isset($_COOKIE['pred']) ? $_COOKIE['pred'] : $_SESSION['pred']; ?>" readonly>
                   </div>
+                  <div class="mb-3">
+  <label class="form-label">Card Type</label>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="cardType" id="visa" value="visa" checked>
+    <label class="form-check-label" for="visa">Visa</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="cardType" id="master" value="master">
+    <label class="form-check-label" for="master">Master</label>
+  </div>
+</div>
+                  <div class="mb-3">
+                  <label class="form-label" for="typeText">Card Number</label>
+                  <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
+                    placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                  </div>
+                  <div class="mb-3">
+                  <label class="form-label" for="typeName">Cardholder's Name</label>
+                  <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
+                    placeholder="Cardholder's Name" />
+                  </div>
+
+                  <div class="input-group mb-3">
+  <label class="input-group-text" for="expMMYYYY">Expire Date</label>
+  <input type="text" id="expMM" class="form-control form-control-lg" placeholder="MM" pattern="(0[1-9]|1[0-2])" maxlength="2" required>
+  <span class="input-group-text">/</span>
+  <input type="text" id="expYYYY" class="form-control form-control-lg" placeholder="YYYY" pattern="\d{4}" maxlength="4" required>
+</div>
+
+                  <div class="mb-3">
+                  <label class="form-label" for="typeText2">CVV</label>
+                  <input type="password" id="typeText2" class="form-control form-control-lg"
+                    placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                  
+
+                  </div>
+                  
+                              
                   <div class="d-grid gap-2">
                      <button type="submit" class="btn btn-lg btn-dark">Submit</button>
                   </div>
@@ -193,6 +234,11 @@ $stmt = $pdo->query('SELECT store_id,storename FROM stores WHERE customization="
       </div>
    </div>
 </div>
+<script>
+    function showPaymentConfirmation() {
+     
+    }
+  </script>
 <!-- Register end -->
 <?php
 // Include the footer file

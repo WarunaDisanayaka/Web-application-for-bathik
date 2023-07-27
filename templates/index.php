@@ -386,7 +386,7 @@ echo "Hello, $name!";
                         <canvas id="canvas"></canvas>
                         <!--	EDITOR      -->
                         <div id="shirtDiv" class="page"
-                           style="width: 530px; height: 520px; position: relative; background-color: rgb(255, 255, 255);">
+                           style="width: 530px; height: 520px; position: relative; background-color: rgb(255, 255, 255);border:0;">
                            <img src="{{ url_for('static', filename='img/crew_front.png') }}">
                            <div id="drawingArea"
                               style="position: absolute;top: 2.8rem;left: 7.6rem;z-index: 10;width: 200px;height: 589px;">
@@ -433,8 +433,11 @@ echo "Hello, $name!";
                   </form>
                   <h4>Rs <span id="result"></span></h4>
                </div>
-               <a href="{{ url_for('myfunction') }}" id="checkout" class="btn btn-primary">Checkout</a>
-               <button id="download" class="btn btn-primary">Download</button>
+         
+               <button id="download" class="btn btn-primary">Download</button><b>First Download</b>
+              
+               <br><br>
+               <a href="{{ url_for('myfunction') }}" id="checkout" class="btn btn-primary">Checkout</a>Then checkout
                <div class="src-preview">
                   <div class="screenshot">
                      <i id="close-btn" class="fa-solid fa-xmark"></i>
